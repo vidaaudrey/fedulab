@@ -1,0 +1,62 @@
+# project: cj81wcvlw07hi0104t85mhqhj
+# version: 31
+
+type File implements Node {
+  contentType: String!
+  id: ID! @isUnique
+  createdAt: DateTime!
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Idea implements Node {
+  category: [IdeaCategory!]
+  courseraVideoUrl: String
+  coverBackgroundUrl: String!
+  createdAt: DateTime!
+  createdBy: User @relation(name: "IdeasOnCreators")
+  description: String!
+  displayOrder: Int!
+  estimatedFinishTime: DateTime!
+  howToContribute: String!
+  id: ID! @isUnique
+  slackUrl: String
+  tagline: String!
+  title: String!
+  updatedAt: DateTime!
+  youtubeVideoUrl: String
+  contributors: [User!]! @relation(name: "IdeasOnContributors")
+}
+
+type Makeathon implements Node {
+  id: ID! @isUnique
+  logo: String!
+  logo2x: String!
+  ordinal: Int! @isUnique
+  slogan: String!
+  startTime: DateTime!
+}
+
+type User implements Node {
+  avatar: String!
+  contributingIdeas: [Idea!]! @relation(name: "IdeasOnContributors")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  email: String!
+  userName: String!
+  myIdeas: [Idea!]! @relation(name: "IdeasOnCreators")
+  updatedAt: DateTime!
+}
+
+enum PresentationMode {
+  VIDEO
+  LIVE
+  VIDEO_AND_LIVE
+}
+
+enum IdeaCategory {
+  GENERAL
+}
