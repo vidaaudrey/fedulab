@@ -1,5 +1,5 @@
 # project: cj81wcvlw07hi0104t85mhqhj
-# version: 31
+# version: 33
 
 type File implements Node {
   contentType: String!
@@ -19,7 +19,7 @@ type Idea implements Node {
   createdAt: DateTime!
   createdBy: User @relation(name: "IdeasOnCreators")
   description: String!
-  displayOrder: Int!
+  displayOrder: Int! @defaultValue(value: 1)
   estimatedFinishTime: DateTime!
   howToContribute: String!
   id: ID! @isUnique
