@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.4.0",
     "flow-bin": "^0.55.0",
+    "lint-staged": "^4.2.3",
+    "prettier": "^1.7.0",
+    "prettier-eslint": "^8.1.1",
+    "prettier-eslint-cli": "^4.3.2",
     "react-scripts": "1.0.13"
   },
   "dependencies": {
@@ -15,6 +22,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "flow": "flow"
+    "flow": "node_modules/.bin/flow",
+    "format": "prettier-eslint --write \"src/**/*.js\" ",
+    "precommit": "lint-staged",
+    "prettier": "prettier-eslint"
+  },
+  "lint-staged": {
+    "src/*.+(js|jsx)": [
+      "prettier-eslint --parser flow --write",
+      "git add"
+    ]
   }
 }
