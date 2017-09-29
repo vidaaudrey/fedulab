@@ -10,6 +10,7 @@
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-jest": "^21.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "flow-bin": "^0.55.0",
     "lint-staged": "^4.2.3",
@@ -29,7 +30,7 @@
     "react-test-renderer": "^15.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_PATH=src/ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
