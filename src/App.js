@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import logo from 'logo.svg';
+import logo from 'src/logo.svg';
 
-import type { RouterMatch } from 'types/common';
-import 'App.css';
+import type { RouterMatch } from 'src/types/common';
+import 'src/App.css';
 
 type MatchProps = { match: RouterMatch };
 
