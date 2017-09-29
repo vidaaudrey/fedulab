@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
-  plugins: ['react', 'jest'],
+  parser: 'babel-eslint',
+  plugins: ['react', 'jest', 'flowtype'],
   extends: ['prettier', 'airbnb'],
   rules: {
     'react/jsx-uses-react': 2,
