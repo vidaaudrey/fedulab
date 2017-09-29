@@ -12,7 +12,7 @@ Run tests and get coverage : `yarn test:cover`
 - [x] 2. [Schema Design](learn/2_Schema_Design.md)
 - [x] 3. [Add Flow, Linting and Prettier](learn/3_Add_Flow_Linting_and_Prettier.md)
 - [x] 4. [Test Setup](learn/4_Test_Setup.md)
-- [x] 5. PWA Demo
+- [x] 5. [PWA Demo](learn/learn/5_PWA_DEMO.md)
 - [ ] Commitizen 
 - [ ] Storybook
 - [ ] Add Coursera related dependencies
