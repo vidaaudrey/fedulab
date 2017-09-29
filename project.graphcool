@@ -1,5 +1,5 @@
 # project: cj81wcvlw07hi0104t85mhqhj
-# version: 33
+# version: 36
 
 type File implements Node {
   contentType: String!
@@ -29,6 +29,8 @@ type Idea implements Node {
   updatedAt: DateTime!
   youtubeVideoUrl: String
   contributors: [User!]! @relation(name: "IdeasOnContributors")
+  makeathon: Makeathon @relation(name: "IdeasOnMakeathon")
+  slug: String! @isUnique
 }
 
 type Makeathon implements Node {
@@ -38,6 +40,7 @@ type Makeathon implements Node {
   ordinal: Int! @isUnique
   slogan: String!
   startTime: DateTime!
+  ideas: [Idea!]! @relation(name: "IdeasOnMakeathon")
 }
 
 type User implements Node {
@@ -45,8 +48,8 @@ type User implements Node {
   contributingIdeas: [Idea!]! @relation(name: "IdeasOnContributors")
   createdAt: DateTime!
   id: ID! @isUnique
-  email: String!
-  userName: String!
+  email: String! @isUnique
+  userName: String! @isUnique
   myIdeas: [Idea!]! @relation(name: "IdeasOnCreators")
   updatedAt: DateTime!
 }
