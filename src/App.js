@@ -1,74 +1,75 @@
 // @flow
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import logo from 'src/logo.svg';
+import { graphql, gql } from 'react-apollo';
+import { compose, withHandlers } from 'recompose';
 
-import type { RouterMatch } from 'src/types/common';
+import IdeaList from 'src/components/IdeaList';
+import UserCreate from 'src/components/UserCreate';
+import IdeaCreate from 'src/components/IdeaCreate';
+import About from 'src/components/About';
+import UserMenu from 'src/components/UserMenu';
+import Home from 'src/components/Home';
+
+import { AUTH_KEY } from 'src/constants/config';
 import 'src/App.css';
 
-type MatchProps = { match: RouterMatch };
+function App({ data, loading, isLoggedIn, onLogout, ...rest }: Props) {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/ideas">Ideas</Link>
+          </li>
+          <li>
+            <Link to="/add-idea">Add Idea</Link>
+          </li>
+        </ul>
+        <hr />
+        <Route
+          path="/"
+          render={({ match, history }) => (
+            <div className="main">
+              <UserMenu isLoggedIn={isLoggedIn} loading={loading} onLogout={onLogout} />
+              {isLoggedIn && <IdeaCreate match={match} />}
+            </div>
+          )}
+        />
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-    <img src={logo} className="App-logo" alt="logo" />
-  </div>
-);
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-);
-
-const Topic = ({ match }: MatchProps) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-);
-
-const Topics = ({ match }: MatchProps) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>Rendering with React</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>Components</Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route exact path={match.url} render={() => <h3>Please select a topic.</h3>} />
-  </div>
-);
-
-const Page = () => (
-  <Router>
-    <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/topics">Topics</Link>
-        </li>
-      </ul>
-      <hr />
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
-    </div>
-  </Router>
-);
-
-export default function App() {
-  return <Page />;
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/ideas" component={IdeaList} />
+        <Route path="/add-idea" component={IdeaCreate} />
+        <Route path="/signup" component={UserCreate} />
+      </div>
+    </Router>
+  );
 }
+
+const userQuery = gql`
+  query userQuery {
+    user {
+      id
+    }
+  }
+`;
+export default compose(
+  graphql(userQuery, {
+    options: { fetchPolicy: 'network-only' },
+    props: ({ data, data: { loading, user } }) => ({ loading, isLoggedIn: !!user, data }),
+  }),
+  withHandlers({
+    onLogout: () => () => {
+      window.localStorage.removeItem(AUTH_KEY);
+      // eslint-disable-next-line
+      location.reload();
+    },
+  }),
+)(App);

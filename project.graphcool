@@ -1,5 +1,5 @@
 # project: cj81wcvlw07hi0104t85mhqhj
-# version: 36
+# version: 44
 
 type File implements Node {
   contentType: String!
@@ -44,14 +44,26 @@ type Makeathon implements Node {
 }
 
 type User implements Node {
-  avatar: String!
   contributingIdeas: [Idea!]! @relation(name: "IdeasOnContributors")
   createdAt: DateTime!
   id: ID! @isUnique
-  email: String! @isUnique
   userName: String! @isUnique
   myIdeas: [Idea!]! @relation(name: "IdeasOnCreators")
   updatedAt: DateTime!
+  auth0UserId: String @isUnique
+  picture: String!
+  name: String!
+  email: String @isUnique
+  emailAddress: String @isUnique
+  password: String
+}
+
+type Post implements Node {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  description: String!
+  imageUrl: String!
 }
 
 enum PresentationMode {

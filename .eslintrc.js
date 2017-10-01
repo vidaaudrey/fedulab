@@ -12,6 +12,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'import/no-unresolved': 0,
     'import/extensions': 0,
+    'no-restricted-globals': 0,
   },
   globals: {
     toJson: true,
