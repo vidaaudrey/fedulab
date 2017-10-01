@@ -1,6 +1,6 @@
 
 # Setup Apollo and and Auth0
-[Commit]()
+[Commit](https://github.com/vidaaudrey/fedulab/commit/706d75ab80179c4f11980f8e67324652bbf3af64)
 
 We're follow [this GraphCool tutorial](https://www.graph.cool/docs/tutorials/react-apollo-auth0-pheiph4ooj/) to add Auth0. If you have any questions on setting up Apollo, please refer [Freecom Tutorial: Apollo Setup & GraphQL Queries/Mutations in React (2/6)](https://www.graph.cool/docs/tutorials/freecom-2-apollo-queries-mutations-oe8ahyo2ei/);
 

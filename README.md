@@ -13,7 +13,7 @@ Run tests and get coverage : `yarn test:cover`
 - [x] 3. [Add Flow, Linting and Prettier](learn/3_Add_Flow_Linting_and_Prettier.md)
 - [x] 4. [Test Setup](learn/4_Test_Setup.md)
 - [x] 5. [PWA Demo](learn/5_PWA_DEMO.md)
-- [ ] 6. [Setup Apollo and Auth0](learn/6_SETUP_APOLLO_AND_ADD_AUTH0.md)
+- [x] 6. [Setup Apollo and Auth0](learn/6_SETUP_APOLLO_AND_ADD_AUTH0.md)
 - [ ] 7. Add UI dependencies
 - [ ] Setup Subscription
 - [ ] Commitizen 
