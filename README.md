@@ -14,12 +14,13 @@ Run tests and get coverage : `yarn test:cover`
 - [x] 4. [Test Setup](learn/4_Test_Setup.md)
 - [x] 5. [PWA Demo](learn/5_PWA_DEMO.md)
 - [x] 6. [Setup Apollo and Auth0](learn/6_SETUP_APOLLO_AND_ADD_AUTH0.md)
-- [ ] 7. Add UI dependencies
+- [ ] 7. Add UI dependencies (coursera-ui)
+- [ ] Hover edit 
+- [ ] Static Deploy
 - [ ] Setup Subscription
 - [ ] Commitizen 
 - [ ] Storybook
-- [ ] Add Coursera related dependencies
-- [ ] 
+- [ ] Setup CI 
 - [ ]
 - [ ]
 - [ ]

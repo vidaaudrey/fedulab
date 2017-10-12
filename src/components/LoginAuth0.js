@@ -1,5 +1,7 @@
 // @flow
 import React from 'react';
+import { Button } from 'antd';
+
 import { compose, setDisplayName, withProps, withHandlers } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
@@ -10,11 +12,12 @@ import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 type Props = {
   onShowLogin: () => void,
 };
+
 function LoginAuth0({ onShowLogin }: Props) {
   return (
-    <button onClick={onShowLogin} className="dib pa3 white bg-blue dim pointer">
-      Log in with Auth0
-    </button>
+    <Button type="default" onClick={onShowLogin}>
+      Login
+    </Button>
   );
 }
 
@@ -33,7 +36,9 @@ export default compose(
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
         window.localStorage.setItem('auth0IdToken', authResult.idToken);
-        history.push('/signup');
+        // TODO(Audrey): figure out why history push doesn't trigger GQL requery
+        window.location.pathname = '/';
+        // history.push('/');
       });
     });
     return { lock };

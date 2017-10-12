@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
+
 import 'src/index.css';
 import App from 'src/App';
 import registerServiceWorker from 'src/registerServiceWorker';
@@ -32,11 +35,13 @@ networkInterface.use([
 ]);
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Router>
-      <App />
-    </Router>
-  </ApolloProvider>,
+  <LocaleProvider locale={enUS}>
+    <ApolloProvider client={client}>
+      <Router>
+        <App />
+      </Router>
+    </ApolloProvider>
+  </LocaleProvider>,
   document.getElementById('root'),
 );
 registerServiceWorker();

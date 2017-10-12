@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Button } from 'antd';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 import LoginAuth0 from 'src/components/LoginAuth0';
 
@@ -16,9 +17,9 @@ export default function UserMenu({ loading, isLoggedIn, onLogout }: Props) {
       {!loading &&
         isLoggedIn && (
           <div className="pv3">
-            <button className="dib bg-red white pa3 pointer dim" onClick={onLogout}>
+            <Button type="default" onClick={onLogout}>
               Logout
-            </button>
+            </Button>
           </div>
         )}
       {!loading &&
