@@ -18,7 +18,7 @@ type Props = {
 function LoggedOutHome({ loading, isLoggedIn, error, ...rest }: Props) {
   // Redirect if user is logged in.
   if (isLoggedIn) {
-    return <Redirect to={{ pathname: '/' }} />;
+    return <Redirect to={{ pathname: '/add-idea' }} />;
   }
 
   return (

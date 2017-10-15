@@ -12,11 +12,12 @@ import gql from 'graphql-tag';
 import IdeaTypeSelect from 'src/components/IdeaTypeSelect';
 import { urlRegex } from 'src/utils/validators';
 
-import { DEFAULT_COVER_BG, DEFAULT_CATEGORIES } from 'src/constants/appConstants';
+import { DEFAULT_COVER_BG, DEFAULT_CATEGORIES, COURSERA_NAMES } from 'src/constants/appConstants';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
+const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: {
@@ -45,6 +46,7 @@ type Props = {
   handleSubmit: () => void,
   checkCategory: () => void,
   checkUrl: () => void,
+  onContributorsListChange: ([String]) => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
   form: Object,
@@ -79,6 +81,7 @@ function IdeaCreateForm({
   idea,
   toggleNeedMyLaptop,
   togglePresentLive,
+  onContributorsListChange,
 }: Props) {
   const { getFieldDecorator } = form;
 
@@ -123,6 +126,21 @@ function IdeaCreateForm({
           rules: [{ pattern: '.{0}|.{3,120}', message: '3 - 120 characters' }],
           initialValue: idea.howToContribute,
         })(<Input placeholder="How others can contribute" />)}
+      </FormItem>
+      {/* <FormItem {...formItemLayout} label="Contributors" hasFeedback>
+        {getFieldDecorator('contributorsText', {
+          initialValue: idea.contributorsText,
+        })(<Input placeholder="List of contributors" />)}
+      </FormItem> */}
+      <FormItem {...formItemLayout} label="Contributors" hasFeedback>
+        <Select
+          mode="tags"
+          style={{ width: '100%' }}
+          onChange={onContributorsListChange}
+          tokenSeparators={[',']}
+        >
+          {COURSERA_NAMES.map(name => <Option key={name}>{name}</Option>)}
+        </Select>
       </FormItem>
       <FormItem {...formItemLayout} label="Slack URL" hasFeedback>
         {getFieldDecorator('slackUrl', {
@@ -210,6 +228,7 @@ const DEFAULT_IDEA = {
 const CreateIdeaMutation = gql`
   mutation createIdeaMutation(
     $contributorsIds: [ID!]
+    $contributorsText: String
     $createdById: ID
     $makeathonId: ID
     $category: [IdeaCategory!]
@@ -230,6 +249,7 @@ const CreateIdeaMutation = gql`
   ) {
     createIdea(
       contributorsIds: $contributorsIds
+      contributorsText: $contributorsText
       createdById: $createdById
       makeathonId: $makeathonId
       category: $category
@@ -268,8 +288,16 @@ const IdeaCreateFormHOC = compose(
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
+  withState('contributorsList', 'contributorsListSet', []),
   withHandlers({
-    handleSubmit: ({ form, needMyLaptop, presentLive, createIdea, history }) => (e) => {
+    handleSubmit: ({
+      form,
+      needMyLaptop,
+      presentLive,
+      createIdea,
+      history,
+      contributorsList,
+    }) => (e) => {
       e.preventDefault();
       form.validateFields((err, values) => {
         if (!err) {
@@ -278,6 +306,7 @@ const IdeaCreateFormHOC = compose(
           const estimatedFinishTime = projectDuration[1].toISOString();
           const variables = {
             ...otherValues,
+            contributorText: contributorsList.join(', '),
             startTime,
             estimatedFinishTime,
             createdById: 'cj898xsy8zdfe0172p603308w',
@@ -314,6 +343,10 @@ const IdeaCreateFormHOC = compose(
           );
         }
       });
+    },
+    onContributorsListChange: ({ contributorsListSet }) => (value) => {
+      contributorsListSet(value);
+      console.warn('value', value);
     },
     checkUrl: ({ form }) => (rule, value, callback) => {
       if (value && !value.match(urlRegex)) {
