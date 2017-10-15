@@ -1,7 +1,7 @@
 # project: cj81wcvlw07hi0104t85mhqhj
-# version: 44
+# version: 72
 
-type File implements Node {
+type File @model {
   contentType: String!
   id: ID! @isUnique
   createdAt: DateTime!
@@ -12,7 +12,7 @@ type File implements Node {
   url: String! @isUnique
 }
 
-type Idea implements Node {
+type Idea @model {
   category: [IdeaCategory!]
   courseraVideoUrl: String
   coverBackgroundUrl: String!
@@ -31,19 +31,25 @@ type Idea implements Node {
   contributors: [User!]! @relation(name: "IdeasOnContributors")
   makeathon: Makeathon @relation(name: "IdeasOnMakeathon")
   slug: String! @isUnique
+  startTime: DateTime @defaultValue(value: "2017-10-31T22:14:37.275")
+  comments: [Comment!]! @relation(name: "CommentOnIdea")
+  needMyLaptop: Boolean @defaultValue(value: false)
+  presentLive: Boolean @defaultValue(value: false)
+  contributorsText: String @defaultValue(value: "")
+  likedByUsers: [User!]! @relation(name: "IdeaOnUser")
 }
 
-type Makeathon implements Node {
+type Makeathon @model {
   id: ID! @isUnique
   logo: String!
   logo2x: String!
-  ordinal: Int! @isUnique
+  ordinal: Int! @isUnique @defaultValue(value: 9)
   slogan: String!
   startTime: DateTime!
   ideas: [Idea!]! @relation(name: "IdeasOnMakeathon")
 }
 
-type User implements Node {
+type User @model {
   contributingIdeas: [Idea!]! @relation(name: "IdeasOnContributors")
   createdAt: DateTime!
   id: ID! @isUnique
@@ -56,14 +62,34 @@ type User implements Node {
   email: String @isUnique
   emailAddress: String @isUnique
   password: String
+  posts: [Post!]! @relation(name: "PostOnUser")
+  comments: [Comment!]! @relation(name: "CommentOnUser")
+  myLikedIdeas: [Idea!]! @relation(name: "IdeaOnUser")
 }
 
-type Post implements Node {
+type Post @model {
   id: ID! @isUnique
   createdAt: DateTime!
   updatedAt: DateTime!
   description: String!
   imageUrl: String!
+  user: User @relation(name: "PostOnUser")
+}
+
+type Comment @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  content: String!
+  id: ID! @isUnique
+  title: String!
+  author: User @relation(name: "CommentOnUser")
+  idea: Idea @relation(name: "CommentOnIdea")
+}
+
+type Like @model {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum PresentationMode {
@@ -74,4 +100,12 @@ enum PresentationMode {
 
 enum IdeaCategory {
   GENERAL
+  B2B
+  B2C
+  DEGREE
+}
+
+enum LikeType {
+  IDEA
+  COMMENTS
 }
