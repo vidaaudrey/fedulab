@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "fedulab9",
+    "default": "fedulab9"
+  }
+}

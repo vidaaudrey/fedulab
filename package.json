@@ -31,6 +31,7 @@
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-15": "^1.0.0",
     "enzyme-to-json": "^3.0.0",
+    "firebase-tools": "^3.13.1",
     "moment": "^2.18.1",
     "optics-agent": "^1.1.7",
     "prop-types": "^15.6.0",
@@ -63,7 +64,8 @@
     "prettier": "prettier-eslint",
     "light": "lighthouse: http://localhost:5000",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy": "firebase deploy"
   },
   "lint-staged": {
     "src/*.+(js|jsx)": [
