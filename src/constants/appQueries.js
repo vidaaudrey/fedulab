@@ -30,8 +30,8 @@ export const IdeaDetailQuery = gql`
 `;
 
 export const IdeaListQuery = gql`
-  query IdeaListQuery {
-    allIdeas {
+  query IdeaListQuery($isPresenting: Boolean) {
+    allIdeas(filter: { isPresenting: $isPresenting }) {
       id
       title
       tagline
@@ -43,6 +43,10 @@ export const IdeaListQuery = gql`
       createdAt
       contributors {
         name
+      }
+      createdBy {
+        name
+        id
       }
     }
   }

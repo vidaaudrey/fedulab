@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
+import HumanTime from 'src/components/HumanTime';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
@@ -63,12 +64,12 @@ function IdeaDetail({
           src={coverBackgroundUrl}
         />
       </div>
-      <div className="custom-card text-primary">
+      <div className="custom-card">
         <h3>{title}</h3>
-        <small>
+        <small className="text-secondary">
           By {createdBy.name}, Contributors:{allContributorNames}
         </small>
-        <span>{moment(createdAt).fromNow()}</span>
+        <HumanTime time={createdAt} />
         <h4>{tagline}</h4>
         <span>{category}</span>
         <p style={{ color: 'gray' }}>{description}</p>

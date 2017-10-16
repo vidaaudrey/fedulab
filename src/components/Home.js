@@ -17,7 +17,12 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-export default function Home({ match }: MatchProps) {
+type Props = {
+  userId: string,
+  isSuperuser: boolean,
+};
+
+export default function Home({ isSuperuser, userId }: Props) {
   return (
     <div>
       <div className="bg-primary text-xs-center">
@@ -25,7 +30,7 @@ export default function Home({ match }: MatchProps) {
       </div>
       {/* <Button>Normal</Button>
       <Button primary>Primary</Button> */}
-      <IdeaList />
+      <IdeaList isSuperuser={isSuperuser} userId={userId} />
     </div>
   );
 }

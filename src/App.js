@@ -39,7 +39,7 @@ function App({
   }
 
   return (
-    <Layout style={{ color: 'white' }}>
+    <Layout style={{ color: 'black' }}>
       <Header style={{ position: 'fixed', width: '100%', display: 'flex' }}>
         <Link className="logo" to="/">
           Fedulab for Make-a-thon
@@ -85,8 +85,11 @@ function App({
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
         <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
+          <Route
+            exact
+            path="/"
+            render={props => <Home {...props} userId={userId} isSuperuser={isSuperuser} />}
+          />
           <Route
             exact
             path="/ideas/:ideaSlug"
@@ -109,6 +112,7 @@ function App({
             path="/ideas"
             render={props => <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
+          <Route path="/about" component={About} />
           <Route exact path="/signup" component={UserCreate} />
         </div>
       </Content>

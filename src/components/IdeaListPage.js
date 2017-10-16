@@ -8,7 +8,7 @@ import IdeaList from 'src/components/IdeaList';
 export function IdeaListPage({ ...rest }) {
   return (
     <div>
-      <IdeaList />
+      <IdeaList {...rest} />
     </div>
   );
 }

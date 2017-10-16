@@ -1,9 +1,12 @@
 // @flow
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Row, Col } from 'antd';
+import { Box } from '@coursera/coursera-ui';
+import { Row, Col, Input, Checkbox } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import { compose, withProps } from 'recompose';
+import { compose, withProps, withHandlers, withState } from 'recompose';
+
+import { Search } from 'js-search';
 import { graphql } from 'react-apollo';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
@@ -11,27 +14,58 @@ import IdeaListItem from 'src/components/IdeaListItem';
 
 import { IdeaListQuery } from 'src/constants/appQueries';
 
+const AntSearch = Input.Search;
+
 type Props = {
-  data: Object,
+  allIdeas: [Object],
+  filteredIdeas: [Object],
+  userId: string,
   isSuperuser: boolean,
-  userId: boolean,
+  isPresenting: boolean,
+  onChange: (SyntheticInputEvent<>) => void,
+  toggleIsPresenting: boolean => void,
+  searchText: string,
 };
 
-export function IdeaList({ data, userId, isSuperuser, ...rest }: MatchProps) {
-  const ideas = data.allIdeas || [];
-
+export function IdeaList({
+  allIdeas = [],
+  filteredIdeas = [],
+  userId,
+  isSuperuser,
+  onChange,
+  isPresenting,
+  toggleIsPresenting,
+  searchText,
+  ...rest
+}: Props) {
   return (
     <div>
       <h2>Ideas</h2>
-      {ideas.length === 0 && (
-        <div className="text-xs-center">
+      <Box flexWrap="wrap" alignItems="center">
+        <AntSearch placeholder="input search text" style={{ width: 200 }} onChange={onChange} />
+        <span className="p-x-1">
+          <Checkbox onChange={toggleIsPresenting} checked={!!isPresenting}>
+            Presenting
+          </Checkbox>
+        </span>
+      </Box>
+      {allIdeas.length === 0 && (
+        <div className="text-xs-center p-a-3">
           <h2>There are no ideas.</h2>
           <Link to="/add-idea">Add My Idea</Link>
         </div>
       )}
+      {allIdeas.length > 0 &&
+        filteredIdeas.length === 0 && (
+          <div className="text-xs-center p-a-3">
+            <h2>
+              No results found for <span className="text-danger">{searchText}</span>
+            </h2>
+          </div>
+        )}
       <Row gutter={16}>
         <QueueAnim>
-          {ideas.map(idea => (
+          {filteredIdeas.map(idea => (
             <Col xs={24} sm={12} md={8} lg={6} key={idea.id} className="p-a-1 m-b-2">
               <IdeaListItem idea={idea} key={idea.id} isSuperuser={isSuperuser} userId={userId} />
             </Col>
@@ -44,7 +78,44 @@ export function IdeaList({ data, userId, isSuperuser, ...rest }: MatchProps) {
 
 export default compose(
   withRouter,
-  graphql(IdeaListQuery),
+  withState('isPresenting', 'isPresentingSet', undefined),
+  graphql(IdeaListQuery, {
+    options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
+  }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
   withGQLLoadingOrError(),
+  withState('searchText', 'searchTextSet', ''),
+  withProps(({ data, searchText }) => {
+    if (searchText.length === 0) {
+      return { filteredIdeas: data.allIdeas, allIdeas: data.allIdeas };
+    }
+    console.warn('search', searchText, data.allIdeas);
+
+    const search = new Search(['id']);
+    search.addIndex('title');
+    search.addIndex('contributorsText');
+    search.addIndex('description');
+    search.addIndex('category');
+    search.addIndex('slug');
+    search.addIndex('contributorsText');
+    search.addIndex(['createdBy', 'name']);
+    search.addDocuments(data.allIdeas);
+    return {
+      filteredIdeas: search.search(searchText),
+      allIdeas: data.allIdeas,
+    };
+  }),
+  withHandlers({
+    onChange: ({ searchTextSet }) => (ev) => {
+      searchTextSet(ev.currentTarget.value);
+    },
+    toggleIsPresenting: ({ isPresenting, isPresentingSet }) => () => {
+      // Only toggle between all ideas and presenting ideas
+      if (isPresenting) {
+        isPresentingSet(undefined);
+      } else {
+        isPresentingSet(true);
+      }
+    },
+  }),
 )(IdeaList);

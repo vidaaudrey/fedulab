@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
 
 import IdeaActions from 'src/components/IdeaActions';
+import HumanTime from 'src/components/HumanTime';
 
 const MAX_WIDTH = 560;
 
@@ -28,6 +29,9 @@ export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) 
       </div>
       <div className="custom-card p-a-1">
         <h3>{idea.title}</h3>
+        <span className="font-sm text-secondary">
+          By {idea.createdBy.name} <HumanTime time={idea.createdAt} />
+        </span>
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{idea.description}</p>
         <IdeaActions
