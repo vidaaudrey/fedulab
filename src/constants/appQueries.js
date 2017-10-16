@@ -1,5 +1,34 @@
 import gql from 'graphql-tag';
 
+export const IdeaDetailQuery = gql`
+  query IdeaDetailQuery($slug: String!) {
+    Idea(slug: $slug) {
+      id
+      title
+      tagline
+      displayOrder
+      slug
+      description
+      category
+      courseraVideoUrl
+      coverBackgroundUrl
+      howToContribute
+      slackUrl
+      youtubeVideoUrl
+      createdAt
+      updatedAt
+      createdBy {
+        name
+        id
+      }
+      contributors {
+        name
+        id
+      }
+    }
+  }
+`;
+
 export const IdeaListQuery = gql`
   query IdeaListQuery {
     allIdeas {
@@ -11,6 +40,7 @@ export const IdeaListQuery = gql`
       description
       coverBackgroundUrl
       isPresenting
+      createdAt
       contributors {
         name
       }

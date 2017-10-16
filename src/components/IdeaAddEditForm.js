@@ -16,6 +16,7 @@ import {
   CreateIdeaMutation,
   UpdateIdeaMutation,
   DeleteIdeaMutation,
+  IdeaListQuery,
 } from 'src/constants/appQueries';
 
 const { TextArea } = Input;
@@ -348,7 +349,10 @@ const IdeaAddEditFormFormHOC = compose(
               createdById: userId,
               contributorsIds: [],
             };
-            createIdea({ variables })
+            createIdea({
+              variables,
+              refetchQueries: [{ query: IdeaListQuery }],
+            })
               .then((res) => {
                 console.warn('res', res);
                 isCreateSuccessSet(true);

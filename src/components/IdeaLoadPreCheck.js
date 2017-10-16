@@ -17,9 +17,9 @@ export default function IdeaLoadPreCheck({ loading, error, idea, slug }: Props) 
       {!idea && (
         <div className="p-a-1">
           <h2>
-            Idea with slug:
+            Idea with slug
             <span className="text-danger"> {slug} </span>
-            not not found
+            not found
           </h2>
           View <Link to="/ideas"> All Ideas </Link>
         </div>

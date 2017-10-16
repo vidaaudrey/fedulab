@@ -3,10 +3,13 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import moment from 'moment';
 
+import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
+
+import { IdeaDetailQuery } from 'src/constants/appQueries';
 
 import type { RouterMatch } from 'src/types/common';
 
@@ -28,9 +31,9 @@ function IdeaDetail({
   isSuperuser,
   ...rest
 }: Props) {
-  if (loading || error || !idea) {
-    return <IdeaLoadPreCheck loading={loading} error={error} idea={idea} slug={slug} />;
-  }
+  // if (loading || error || !idea) {
+  //   return <IdeaLoadPreCheck loading={loading} error={error} idea={idea} slug={slug} />;
+  // }
   const {
     id,
     title,
@@ -44,19 +47,28 @@ function IdeaDetail({
     youtubeVideoUrl,
     contributors,
     createdBy,
+    createdAt,
   } = idea;
   const allContributorNames = contributors.map(item => item.name).join(',  ');
-
+  const createdAtMoment = moment(createdAt);
+  console.warn('ideaDetail', idea, createdAtMoment);
   return (
     <div>
       <div className="custom-image">
-        <img alt="example" width="100%" src={coverBackgroundUrl} />
+        <img
+          alt="example"
+          width="100%"
+          height="200"
+          className="overflow-hidden"
+          src={coverBackgroundUrl}
+        />
       </div>
-      <div className="custom-card">
+      <div className="custom-card text-primary">
         <h3>{title}</h3>
         <small>
           By {createdBy.name}, Contributors:{allContributorNames}
         </small>
+        <span>{moment(createdAt).fromNow()}</span>
         <h4>{tagline}</h4>
         <span>{category}</span>
         <p style={{ color: 'gray' }}>{description}</p>
@@ -76,37 +88,12 @@ function IdeaDetail({
   );
 }
 
-const IdeaDetailQuery = gql`
-  query IdeaDetailQuery($slug: String!) {
-    Idea(slug: $slug) {
-      id
-      title
-      tagline
-      displayOrder
-      slug
-      description
-      category
-      courseraVideoUrl
-      coverBackgroundUrl
-      howToContribute
-      slackUrl
-      youtubeVideoUrl
-      createdBy {
-        name
-        id
-      }
-      contributors {
-        name
-        id
-      }
-    }
-  }
-`;
-
 export default compose(
   withRouter,
   withProps(({ match }) => ({
     slug: match.params.ideaSlug,
+    dataFieldName: 'Idea',
   })),
   graphql(IdeaDetailQuery),
+  withGQLLoadingOrError(IdeaLoadPreCheck),
 )(IdeaDetail);

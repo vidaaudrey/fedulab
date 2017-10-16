@@ -23,16 +23,13 @@ function IdeaActions({ id, slug, onDeleteIdea, canDelete, ...rest }: Props) {
           Delete Idea
         </Button>
       )}
-      <Link to={`/ideas/${slug}/edit`}>Edit</Link>
+      <Link to={`/ideas/${slug}/edit/`}>Edit</Link>
     </div>
   );
 }
 
 export default compose(
   withRouter,
-  withProps(({ match }) => ({
-    slug: match.params.ideaSlug,
-  })),
   graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
   withHandlers({
     onDeleteIdea: ({ deleteIdea, id, history, shouldRedirectToListAfterDelete }) => (e) => {

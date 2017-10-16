@@ -41,7 +41,9 @@ function App({
   return (
     <Layout style={{ color: 'white' }}>
       <Header style={{ position: 'fixed', width: '100%', display: 'flex' }}>
-        <div className="logo">Fedulab for Make-a-thon</div>
+        <Link className="logo" to="/">
+          Fedulab for Make-a-thon
+        </Link>
         <Menu
           theme="dark"
           mode="horizontal"
