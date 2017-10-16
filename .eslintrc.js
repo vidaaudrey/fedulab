@@ -7,6 +7,7 @@ module.exports = {
     'react/jsx-uses-react': 2,
     'react/jsx-uses-vars': 2,
     'react/jsx-filename-extension': 0,
+    'react/require-default-props': 0,
     'jsx-a11y/href-no-hash': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'import/no-extraneous-dependencies': 0,

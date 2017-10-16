@@ -52,6 +52,26 @@ export const IdeaListQuery = gql`
   }
 `;
 
+export const IdeaNextQuery = gql`
+  query IdeaNextQuery($first: Int, $after: String) {
+    allIdeas(first: $first, after: $after) {
+      id
+      slug
+      title
+    }
+  }
+`;
+
+export const IdeaPrevQuery = gql`
+  query IdeaPrevQuery($last: Int, $before: String) {
+    allIdeas(last: $last, before: $before) {
+      id
+      slug
+      title
+    }
+  }
+`;
+
 export const IdeaEditQuery = gql`
   query IdeaEditQuery($slug: String!) {
     Idea(slug: $slug) {

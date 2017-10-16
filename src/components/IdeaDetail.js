@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Box } from '@coursera/coursera-ui';
 import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -9,6 +10,8 @@ import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
 import HumanTime from 'src/components/HumanTime';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
+import IdeaNext from 'src/components/IdeaNext';
+import IdeaPrev from 'src/components/IdeaPrev';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
 
@@ -32,9 +35,6 @@ function IdeaDetail({
   isSuperuser,
   ...rest
 }: Props) {
-  // if (loading || error || !idea) {
-  //   return <IdeaLoadPreCheck loading={loading} error={error} idea={idea} slug={slug} />;
-  // }
   const {
     id,
     title,
@@ -51,8 +51,7 @@ function IdeaDetail({
     createdAt,
   } = idea;
   const allContributorNames = contributors.map(item => item.name).join(',  ');
-  const createdAtMoment = moment(createdAt);
-  console.warn('ideaDetail', idea, createdAtMoment);
+
   return (
     <div>
       <div className="custom-image">
@@ -84,6 +83,14 @@ function IdeaDetail({
           id={id}
           slug={slug}
         />
+        <Box rootClassName="m-y-1" justifyContent="between" flexWrap="wrap">
+          <div className="p-r-1">
+            <IdeaPrev last={1} before={idea.id} />
+          </div>
+          <div className="p-l-1">
+            <IdeaNext first={1} after={idea.id} />
+          </div>
+        </Box>
       </div>
     </div>
   );
