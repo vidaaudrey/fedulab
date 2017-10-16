@@ -1,24 +1,50 @@
 // @flow
 import React from 'react';
 import { Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { compose, withHandlers } from 'recompose';
+
+import IdeaActions from 'src/components/IdeaActions';
 
 const MAX_WIDTH = 560;
 
-export default function IdeaListItem({ idea }) {
+type Props = {
+  idea: Object,
+  isSuperuser: boolean,
+  userId: boolean,
+  onCardClick: () => void,
+};
+
+export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) {
   const allContributorNames = idea.contributors.map(item => item.name).join(',  ');
   return (
-    <Link to={`/ideas/${idea.slug}`}>
-      <Card style={{ width: '100%', maxWidth: MAX_WIDTH, height: 420 }} bodyStyle={{ padding: 0 }}>
-        <div className="custom-image">
-          <img alt="example" width="100%" src={idea.coverBackgroundUrl} />
-        </div>
-        <div className="custom-card p-a-1">
-          <h3>{idea.title}</h3>
-          <h4>{allContributorNames}</h4>
-          <p style={{ color: 'gray' }}>{idea.description}</p>
-        </div>
-      </Card>
-    </Link>
+    <Card
+      onClick={onCardClick}
+      style={{ width: '100%', maxWidth: MAX_WIDTH, height: 420 }}
+      bodyStyle={{ padding: 0 }}
+    >
+      <div className="custom-image">
+        <img alt="example" width="100%" src={idea.coverBackgroundUrl} />
+      </div>
+      <div className="custom-card p-a-1">
+        <h3>{idea.title}</h3>
+        <h4>{allContributorNames}</h4>
+        <p style={{ color: 'gray' }}>{idea.description}</p>
+        <IdeaActions
+          canDelete={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
+          id={idea.id}
+          slug={idea.slug}
+        />
+      </div>
+    </Card>
   );
 }
+
+export default compose(
+  withRouter,
+  withHandlers({
+    onCardClick: ({ history, idea }) => () => {
+      history.push(`/ideas/${idea.slug}`);
+    },
+  }),
+)(IdeaListItem);

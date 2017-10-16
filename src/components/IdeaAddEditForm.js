@@ -12,13 +12,17 @@ import IdeaTypeSelect from 'src/components/IdeaTypeSelect';
 import { urlRegex } from 'src/utils/validators';
 
 import { DEFAULT_COVER_BG, DEFAULT_CATEGORIES, COURSERA_NAMES } from 'src/constants/appConstants';
-import { CreateIdeaMutation, UpdateIdeaMutation } from 'src/constants/appQueries';
+import {
+  CreateIdeaMutation,
+  UpdateIdeaMutation,
+  DeleteIdeaMutation,
+} from 'src/constants/appQueries';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
-
+const DATE_FORMAT = 'YYYY-MM-DD';
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -44,11 +48,17 @@ const tailFormItemLayout = {
 
 type Props = {
   isEditingMode: boolean,
+  isPresenting: boolean,
+  isSuperuser: boolean,
+  canDelete: boolean,
+  isCreateSuccess: boolean,
   handleSubmit: () => void,
+  onDeleteIdea: () => void,
   checkCategory: () => void,
   checkUrl: () => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
+  toggleIsPresenting: boolean => void,
   form: Object,
   category: Array<string>,
   idea: {
@@ -69,14 +79,19 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
 
 function IdeaAddEditFormForm({
   isEditingMode,
+  isCreateSuccess,
+  isSuperuser,
+  isPresenting,
+  canDelete,
   handleSubmit,
   form,
-  category,
   checkCategory,
   checkUrl,
   idea,
   toggleNeedMyLaptop,
   togglePresentLive,
+  toggleIsPresenting,
+  onDeleteIdea,
 }: Props) {
   const { getFieldDecorator } = form;
 
@@ -113,7 +128,7 @@ function IdeaAddEditFormForm({
       <FormItem {...formItemLayout} label="Category">
         {getFieldDecorator('category', {
           rules: [{ validator: checkCategory }],
-          initialValue: category,
+          initialValue: idea.category,
         })(<IdeaTypeSelect />)}
       </FormItem>
 
@@ -193,11 +208,32 @@ function IdeaAddEditFormForm({
           <span className="p-l-1">{" I'm presenting Live"}</span>
         </div>
       </FormItem>
+      {isSuperuser && (
+        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+          <div>
+            <Switch defaultChecked={idea.isPresenting} onChange={toggleIsPresenting} />
+            <span className="p-l-1">Presenting in the final round (Edit by SU only)</span>
+          </div>
+        </FormItem>
+      )}
       <FormItem style={{ textAlign: 'right' }}>
-        <Button type="primary" htmlType="submit">
-          {isEditingMode ? 'Update Idea' : 'Add Idea'}
-        </Button>
-        {isEditingMode && <Link to={`/ideas/${idea.slug}`}>Preview </Link>}
+        {!isCreateSuccess && (
+          <Button type="primary" htmlType="submit">
+            {isEditingMode ? 'Update Idea' : 'Add Idea'}
+          </Button>
+        )}
+        {isEditingMode &&
+          canDelete && (
+            <Button type="danger" onClick={onDeleteIdea} className="m-x-1">
+              Delete Idea
+            </Button>
+          )}
+        {(isEditingMode || isCreateSuccess) && (
+          <Link className="m-r-1" to={`/ideas/${idea.slug}`}>
+              Preview
+          </Link>
+        )}
+        {isCreateSuccess && <Link to={`/ideas/${idea.slug}/edit`}>Edit</Link>}
       </FormItem>
     </Form>
   );
@@ -222,44 +258,62 @@ const DEFAULT_IDEA = {
 };
 
 const IdeaAddEditFormFormHOC = compose(
-  withProps(({ idea, ...rest }) => {
+  withRouter,
+  withProps(({ idea, userId, isSuperuser, ...rest }) => {
     const isEditingMode = !!idea;
-    console.warn('props', idea, isEditingMode);
-
-    const ideaLocal = { ...idea } || DEFAULT_IDEA;
-    ideaLocal.startTime = moment(idea.startTime || DEFAULT_IDEA.startTime, 'YYYY-MM-DD');
+    // Normalize the editing and creation data
+    const ideaLocal = isEditingMode ? { ...idea } : DEFAULT_IDEA;
+    ideaLocal.startTime = moment(ideaLocal.startTime || DEFAULT_IDEA.startTime, DATE_FORMAT);
     ideaLocal.estimatedFinishTime = moment(
-      idea.estimatedFinishTime || DEFAULT_IDEA.estimatedFinishTime,
-      'YYYY-MM-DD',
+      ideaLocal.estimatedFinishTime || DEFAULT_IDEA.estimatedFinishTime,
+      DATE_FORMAT,
     );
-    ideaLocal.contributorsText =
-      idea.contributorsText !== '' ? idea.contributorsText.split(',') : [];
+
+    console.warn(
+      'props',
+      idea,
+      isEditingMode,
+      ideaLocal,
+      ideaLocal.contributorsText,
+      ideaLocal.startTime,
+      ideaLocal.estimatedFinishTime,
+    );
+    let contributorsText = [];
+    if (typeof ideaLocal.contributorsText === 'string' && ideaLocal.contributorsText !== '') {
+      contributorsText = ideaLocal.contributorsText.split(',');
+    }
+
+    ideaLocal.contributorsText = contributorsText;
+    const ideaCreatedById = idea && idea.createdBy && idea.createdBy.id;
 
     return {
+      canDelete: isSuperuser || ideaCreatedById === userId,
       isEditingMode,
       idea: ideaLocal,
-      category: idea.category,
+      category: ideaLocal.category,
       ...rest,
     };
   }),
-  withRouter,
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
   graphql(UpdateIdeaMutation, { name: 'updateIdea' }),
+  graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
-  withState('isUpdateSuccess', 'isUpdateSuccessSet', false),
+  withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
+  withState('isCreateSuccess', 'isCreateSuccessSet', false),
   withHandlers({
     handleSubmit: ({
       idea,
       form,
       needMyLaptop,
       presentLive,
+      isPresenting,
       createIdea,
       updateIdea,
       history,
       userId,
       isEditingMode,
-      isUpdateSuccessSet,
+      isCreateSuccessSet,
     }) => (e) => {
       e.preventDefault();
       form.validateFields((err, values) => {
@@ -269,13 +323,14 @@ const IdeaAddEditFormFormHOC = compose(
           const estimatedFinishTime = projectDuration[1].toISOString();
           const baseVariables = {
             ...otherValues,
+            needMyLaptop,
+            presentLive,
+            isPresenting,
             contributorsText: contributorsText.join(','),
             startTime,
             estimatedFinishTime,
           };
 
-          console.warn('before update', values, baseVariables, contributorsText);
-          
           if (isEditingMode) {
             const variables = {
               ...idea,
@@ -285,7 +340,6 @@ const IdeaAddEditFormFormHOC = compose(
             updateIdea({ variables })
               .then((res) => {
                 console.warn('res', res);
-                isUpdateSuccessSet(true);
               })
               .catch(error => console.warn('error', error));
           } else {
@@ -297,15 +351,24 @@ const IdeaAddEditFormFormHOC = compose(
             createIdea({ variables })
               .then((res) => {
                 console.warn('res', res);
-                const slug = res.data && res.data.createIdea.slug;
-                if (slug) {
-                  history.push(`/ideas/${slug}/edit`);
-                }
+                isCreateSuccessSet(true);
+                // const slug = res.data && res.data.createIdea.slug;
+                // if (slug) {
+                //   history.push(`/ideas/${slug}/edit`);
+                // }
               })
               .catch(error => console.warn('error', error));
           }
         }
       });
+    },
+    onDeleteIdea: ({ deleteIdea, idea, history }) => () => {
+      deleteIdea({ variables: { id: idea.id } })
+        .then((res) => {
+          console.warn('res', res);
+          history.push('/ideas');
+        })
+        .catch(error => console.warn('error', error));
     },
     checkUrl: ({ form }) => (rule, value, callback) => {
       if (value && !value.match(urlRegex)) {

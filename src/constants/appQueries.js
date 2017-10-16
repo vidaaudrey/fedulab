@@ -1,5 +1,56 @@
 import gql from 'graphql-tag';
 
+export const IdeaListQuery = gql`
+  query IdeaListQuery {
+    allIdeas {
+      id
+      title
+      tagline
+      displayOrder
+      slug
+      description
+      coverBackgroundUrl
+      isPresenting
+      contributors {
+        name
+      }
+    }
+  }
+`;
+
+export const IdeaEditQuery = gql`
+  query IdeaEditQuery($slug: String!) {
+    Idea(slug: $slug) {
+      id
+      contributorsText
+      category
+      courseraVideoUrl
+      coverBackgroundUrl
+      description
+      displayOrder
+      estimatedFinishTime
+      howToContribute
+      needMyLaptop
+      presentLive
+      isPresenting
+      slackUrl
+      slug
+      startTime
+      tagline
+      title
+      youtubeVideoUrl
+      createdBy {
+        name
+        id
+      }
+      contributors {
+        name
+        id
+      }
+    }
+  }
+`;
+
 export const CreateIdeaMutation = gql`
   mutation createIdeaMutation(
     $contributorsIds: [ID!]
@@ -15,6 +66,7 @@ export const CreateIdeaMutation = gql`
     $howToContribute: String!
     $needMyLaptop: Boolean
     $presentLive: Boolean
+    $isPresenting: Boolean
     $slackUrl: String
     $slug: String!
     $startTime: DateTime!
@@ -36,6 +88,7 @@ export const CreateIdeaMutation = gql`
       howToContribute: $howToContribute
       needMyLaptop: $needMyLaptop
       presentLive: $presentLive
+      isPresenting: $isPresenting
       slackUrl: $slackUrl
       slug: $slug
       startTime: $startTime
@@ -69,6 +122,7 @@ export const UpdateIdeaMutation = gql`
     $howToContribute: String!
     $needMyLaptop: Boolean
     $presentLive: Boolean
+    $isPresenting: Boolean
     $slackUrl: String
     $slug: String!
     $startTime: DateTime!
@@ -91,6 +145,7 @@ export const UpdateIdeaMutation = gql`
       howToContribute: $howToContribute
       needMyLaptop: $needMyLaptop
       presentLive: $presentLive
+      isPresenting: $isPresenting
       slackUrl: $slackUrl
       slug: $slug
       startTime: $startTime
@@ -105,6 +160,16 @@ export const UpdateIdeaMutation = gql`
       tagline
       slug
       contributorsText
+    }
+  }
+`;
+
+export const DeleteIdeaMutation = gql`
+  mutation deleteIdeaMutation($id: ID!) {
+    deleteIdea(id: $id) {
+      id
+      title
+      slug
     }
   }
 `;

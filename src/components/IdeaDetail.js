@@ -1,9 +1,12 @@
 // @flow
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+
+import IdeaActions from 'src/components/IdeaActions';
+import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 
 import type { RouterMatch } from 'src/types/common';
 
@@ -12,17 +15,24 @@ type MatchProps = { match: RouterMatch };
 type Props = {
   match: MatchProps,
   data: Object,
+  userId: String,
+  isSuperuser: boolean,
+  slug: string,
 };
 
-function IdeaDetail({ match, data, ...rest }: Props) {
-  if (data.loading) {
-    return <h2>Loading</h2>;
+function IdeaDetail({
+  match,
+  data: { loading, error, Idea: idea },
+  slug,
+  userId,
+  isSuperuser,
+  ...rest
+}: Props) {
+  if (loading || error || !idea) {
+    return <IdeaLoadPreCheck loading={loading} error={error} idea={idea} slug={slug} />;
   }
-  if (data.error) {
-    return <h2>Error loading the data</h2>;
-  }
-
   const {
+    id,
     title,
     tagline,
     description,
@@ -34,7 +44,7 @@ function IdeaDetail({ match, data, ...rest }: Props) {
     youtubeVideoUrl,
     contributors,
     createdBy,
-  } = data.Idea;
+  } = idea;
   const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
@@ -55,6 +65,12 @@ function IdeaDetail({ match, data, ...rest }: Props) {
         <p>{slackUrl}</p>
         <p>{courseraVideoUrl}</p>
         <p>{courseraVideoUrl}</p>
+        <IdeaActions
+          shouldRedirectToListAfterDelete
+          canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
+          id={id}
+          slug={slug}
+        />
       </div>
     </div>
   );

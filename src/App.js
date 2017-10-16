@@ -23,7 +23,17 @@ import 'antd/dist/antd.css';
 
 const { Header, Content, Footer } = Layout;
 
-function App({ data, loading, userId, isLoggedIn, onLogout, ...rest }: Props) {
+function App({
+  data,
+  loading,
+  userId,
+  isSuperuser,
+  username,
+  picture,
+  isLoggedIn,
+  onLogout,
+  ...rest
+}: Props) {
   if (!isLoggedIn) {
     return <LoggedOutHome />;
   }
@@ -55,7 +65,13 @@ function App({ data, loading, userId, isLoggedIn, onLogout, ...rest }: Props) {
           path="/"
           render={({ match, history }) => (
             <div className="userMenuWrapper">
-              <UserMenu isLoggedIn={isLoggedIn} loading={loading} onLogout={onLogout} />
+              <UserMenu
+                name={username}
+                picture={picture}
+                isLoggedIn={isLoggedIn}
+                loading={loading}
+                onLogout={onLogout}
+              />
             </div>
           )}
         />
@@ -69,18 +85,28 @@ function App({ data, loading, userId, isLoggedIn, onLogout, ...rest }: Props) {
         <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
-          <Route exact path="/ideas/:ideaSlug" component={IdeaDetail} />
+          <Route
+            exact
+            path="/ideas/:ideaSlug"
+            render={props => <IdeaDetail {...props} userId={userId} isSuperuser={isSuperuser} />}
+          />
           <Route
             exact
             path="/ideas/:ideaSlug/edit"
-            render={props => <IdeaEdit {...props} userId={userId} />}
+            render={props => <IdeaEdit {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route
             exact
             path="/add-idea"
-            render={props => <IdeaAddEditForm {...props} userId={userId} />}
+            render={props => (
+              <IdeaAddEditForm {...props} userId={userId} isSuperuser={isSuperuser} />
+            )}
           />
-          <Route exact path="/ideas" component={IdeaListPage} />
+          <Route
+            exact
+            path="/ideas"
+            render={props => <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />}
+          />
           <Route exact path="/signup" component={UserCreate} />
         </div>
       </Content>
@@ -94,6 +120,8 @@ const userQuery = gql`
     user {
       id
       name
+      picture
+      isSuperuser
     }
   }
 `;
@@ -105,6 +133,8 @@ export default compose(
       loading,
       isLoggedIn: !!user,
       userId: user && user.id,
+      isSuperuser: user && user.isSuperuser,
+      picture: user && user.picture,
       data,
     }),
   }),
