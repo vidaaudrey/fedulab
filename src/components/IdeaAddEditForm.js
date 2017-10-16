@@ -2,17 +2,17 @@
 import React from 'react';
 import { Form, Row, Input, DatePicker, Col, Button, Select, InputNumber, Switch } from 'antd';
 import { compose, withState, withProps, withHandlers } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import randomString from 'randomstring';
 
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import IdeaTypeSelect from 'src/components/IdeaTypeSelect';
 import { urlRegex } from 'src/utils/validators';
 
 import { DEFAULT_COVER_BG, DEFAULT_CATEGORIES, COURSERA_NAMES } from 'src/constants/appConstants';
+import { CreateIdeaMutation, UpdateIdeaMutation } from 'src/constants/appQueries';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -43,10 +43,10 @@ const tailFormItemLayout = {
 };
 
 type Props = {
+  isEditingMode: boolean,
   handleSubmit: () => void,
   checkCategory: () => void,
   checkUrl: () => void,
-  onContributorsListChange: ([String]) => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
   form: Object,
@@ -55,11 +55,6 @@ type Props = {
     title: String,
     description: String,
   },
-};
-
-const DEFAULT_DATE_RANGE = {
-  START: moment('2017-11-01', 'YYYY-MM-DD'),
-  END: moment('2017-11-03', 'YYYY-MM-DD'),
 };
 
 function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }) {
@@ -72,7 +67,8 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
   );
 }
 
-function IdeaCreateForm({
+function IdeaAddEditFormForm({
+  isEditingMode,
   handleSubmit,
   form,
   category,
@@ -81,13 +77,14 @@ function IdeaCreateForm({
   idea,
   toggleNeedMyLaptop,
   togglePresentLive,
-  onContributorsListChange,
 }: Props) {
   const { getFieldDecorator } = form;
 
   return (
     <Form onSubmit={handleSubmit} className="login-form">
-      <h2 className="text-xs-center font-lg m-b-2">Add My Idea</h2>
+      <h2 className="text-xs-center font-lg m-b-2">
+        {isEditingMode ? 'Editing Idea' : 'Add My Idea'}
+      </h2>
       <SectionTitle title="Basic Information" />
       <FormItem {...formItemLayout} label="Title" hasFeedback>
         {getFieldDecorator('title', {
@@ -127,26 +124,24 @@ function IdeaCreateForm({
           initialValue: idea.howToContribute,
         })(<Input placeholder="How others can contribute" />)}
       </FormItem>
-      {/* <FormItem {...formItemLayout} label="Contributors" hasFeedback>
+      <FormItem {...formItemLayout} label="Contributors" hasFeedback>
         {getFieldDecorator('contributorsText', {
           initialValue: idea.contributorsText,
-        })(<Input placeholder="List of contributors" />)}
-      </FormItem> */}
-      <FormItem {...formItemLayout} label="Contributors" hasFeedback>
-        <Select
-          mode="tags"
-          style={{ width: '100%' }}
-          onChange={onContributorsListChange}
-          tokenSeparators={[',']}
-        >
-          {COURSERA_NAMES.map(name => <Option key={name}>{name}</Option>)}
-        </Select>
+        })(
+          <Select mode="tags" style={{ width: '100%' }} tokenSeparators={[',']}>
+            {COURSERA_NAMES.map(name => <Option key={name}>{name}</Option>)}
+          </Select>,
+        )}
       </FormItem>
       <FormItem {...formItemLayout} label="Slack URL" hasFeedback>
         {getFieldDecorator('slackUrl', {
-          rules: [{ validator: checkUrl }],
           initialValue: idea.slackUrl,
-        })(<Input type="url" placeholder="Slack url for your project" />)}
+        })(
+          <Input
+            addonBefore="https://coursera.slack.com/messages/"
+            placeholder="Slack url for your project"
+          />,
+        )}
       </FormItem>
       <FormItem {...formItemLayout} label="Project Time">
         {getFieldDecorator('projectDuration', {
@@ -200,8 +195,9 @@ function IdeaCreateForm({
       </FormItem>
       <FormItem style={{ textAlign: 'right' }}>
         <Button type="primary" htmlType="submit">
-          Add Idea
+          {isEditingMode ? 'Update Idea' : 'Add Idea'}
         </Button>
+        {isEditingMode && <Link to={`/ideas/${idea.slug}`}>Preview </Link>}
       </FormItem>
     </Form>
   );
@@ -212,141 +208,104 @@ const DEFAULT_IDEA = {
   coverBackgroundUrl: DEFAULT_COVER_BG,
   description: 'Lorem ipsum dolor, sit amet consectetur adipisicing el',
   displayOrder: 1,
-  estimatedFinishTime: DEFAULT_DATE_RANGE.END,
   howToContribute: "Join us and let's talk more!",
   makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
   needMyLaptop: false,
   presentLive: false,
-  slackUrl: 'https://coursera.slack.com/messages',
+  slackUrl: 'https://coursera.slack.com/messages/makeathon',
   slug: `my-awesome-new-idea-${randomString.generate({ length: 4, capitalization: 'lowercase' })}`,
-  startTime: DEFAULT_DATE_RANGE.START,
   tagline: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, dicta!',
   title: 'My Awesome New Idea',
   youtubeVideoUrl: 'https://www.youtube.com/watch?v=I-ovzUNno7g&t=50s',
+  startTime: '2017-11-01T07:00:00.000Z',
+  estimatedFinishTime: '2017-11-03T07:00:00.000Z',
 };
 
-const CreateIdeaMutation = gql`
-  mutation createIdeaMutation(
-    $contributorsIds: [ID!]
-    $contributorsText: String
-    $createdById: ID
-    $makeathonId: ID
-    $category: [IdeaCategory!]
-    $courseraVideoUrl: String
-    $coverBackgroundUrl: String!
-    $description: String!
-    $displayOrder: Int!
-    $estimatedFinishTime: DateTime!
-    $howToContribute: String!
-    $needMyLaptop: Boolean
-    $presentLive: Boolean
-    $slackUrl: String
-    $slug: String!
-    $startTime: DateTime!
-    $tagline: String!
-    $title: String!
-    $youtubeVideoUrl: String
-  ) {
-    createIdea(
-      contributorsIds: $contributorsIds
-      contributorsText: $contributorsText
-      createdById: $createdById
-      makeathonId: $makeathonId
-      category: $category
-      courseraVideoUrl: $courseraVideoUrl
-      coverBackgroundUrl: $coverBackgroundUrl
-      description: $description
-      displayOrder: $displayOrder
-      estimatedFinishTime: $estimatedFinishTime
-      howToContribute: $howToContribute
-      needMyLaptop: $needMyLaptop
-      presentLive: $presentLive
-      slackUrl: $slackUrl
-      slug: $slug
-      startTime: $startTime
-      tagline: $tagline
-      title: $title
-      youtubeVideoUrl: $youtubeVideoUrl
-    ) {
-      id
-      category
-      title
-      description
-      tagline
-      slug
-    }
-  }
-`;
+const IdeaAddEditFormFormHOC = compose(
+  withProps(({ idea, ...rest }) => {
+    const isEditingMode = !!idea;
+    console.warn('props', idea, isEditingMode);
 
-const IdeaCreateFormHOC = compose(
-  withProps(({ isEditingMode, idea = DEFAULT_IDEA, ...rest }) => ({
-    idea,
-    category: idea.category,
-    ...rest,
-  })),
+    const ideaLocal = { ...idea } || DEFAULT_IDEA;
+    ideaLocal.startTime = moment(idea.startTime || DEFAULT_IDEA.startTime, 'YYYY-MM-DD');
+    ideaLocal.estimatedFinishTime = moment(
+      idea.estimatedFinishTime || DEFAULT_IDEA.estimatedFinishTime,
+      'YYYY-MM-DD',
+    );
+    ideaLocal.contributorsText =
+      idea.contributorsText !== '' ? idea.contributorsText.split(',') : [];
+
+    return {
+      isEditingMode,
+      idea: ideaLocal,
+      category: idea.category,
+      ...rest,
+    };
+  }),
   withRouter,
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
+  graphql(UpdateIdeaMutation, { name: 'updateIdea' }),
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
-  withState('contributorsList', 'contributorsListSet', []),
+  withState('isUpdateSuccess', 'isUpdateSuccessSet', false),
   withHandlers({
     handleSubmit: ({
+      idea,
       form,
       needMyLaptop,
       presentLive,
       createIdea,
+      updateIdea,
       history,
-      contributorsList,
+      userId,
+      isEditingMode,
+      isUpdateSuccessSet,
     }) => (e) => {
       e.preventDefault();
       form.validateFields((err, values) => {
         if (!err) {
-          const { projectDuration, ...otherValues } = values;
+          const { projectDuration, contributorsText, ...otherValues } = values;
           const startTime = projectDuration[0].toISOString();
           const estimatedFinishTime = projectDuration[1].toISOString();
-          const variables = {
+          const baseVariables = {
             ...otherValues,
-            contributorText: contributorsList.join(', '),
+            contributorsText: contributorsText.join(','),
             startTime,
             estimatedFinishTime,
-            createdById: 'cj898xsy8zdfe0172p603308w',
-            makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
-            contributorsIds: ['cj898xsy8zdfe0172p603308w'],
           };
-          createIdea({
-            variables: {
-              ...otherValues,
-              startTime,
-              estimatedFinishTime,
-              createdById: 'cj898xsy8zdfe0172p603308w',
-              makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
-              contributorsIds: ['cj898xsy8zdfe0172p603308w'],
-            },
-          })
-            .then((res) => {
-              console.warn('res', res);
-              const slug = res.data && res.data.createIdea.slug;
-              if (slug) {
-                history.push(`/ideas/${slug}`);
-              }
-            })
-            .catch(error => console.warn('error', error));
 
-          console.log(
-            'Received values of form: ',
-            variables,
-            values,
-            startTime,
-            estimatedFinishTime,
-            needMyLaptop,
-            presentLive,
-          );
+          console.warn('before update', values, baseVariables, contributorsText);
+          
+          if (isEditingMode) {
+            const variables = {
+              ...idea,
+              ...baseVariables,
+            };
+
+            updateIdea({ variables })
+              .then((res) => {
+                console.warn('res', res);
+                isUpdateSuccessSet(true);
+              })
+              .catch(error => console.warn('error', error));
+          } else {
+            const variables = {
+              ...baseVariables,
+              createdById: userId,
+              contributorsIds: [],
+            };
+            createIdea({ variables })
+              .then((res) => {
+                console.warn('res', res);
+                const slug = res.data && res.data.createIdea.slug;
+                if (slug) {
+                  history.push(`/ideas/${slug}/edit`);
+                }
+              })
+              .catch(error => console.warn('error', error));
+          }
         }
       });
-    },
-    onContributorsListChange: ({ contributorsListSet }) => (value) => {
-      contributorsListSet(value);
-      console.warn('value', value);
     },
     checkUrl: ({ form }) => (rule, value, callback) => {
       if (value && !value.match(urlRegex)) {
@@ -363,6 +322,6 @@ const IdeaCreateFormHOC = compose(
       }
     },
   }),
-)(IdeaCreateForm);
+)(IdeaAddEditFormForm);
 
-export default Form.create()(IdeaCreateFormHOC);
+export default Form.create()(IdeaAddEditFormFormHOC);

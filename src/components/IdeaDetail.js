@@ -77,9 +77,11 @@ const IdeaDetailQuery = gql`
       youtubeVideoUrl
       createdBy {
         name
+        id
       }
       contributors {
         name
+        id
       }
     }
   }

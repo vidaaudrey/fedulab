@@ -1,14 +1,15 @@
 // @flow
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
 
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
 import UserCreate from 'src/components/UserCreate';
-import IdeaCreate from 'src/components/IdeaCreate';
+import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
+import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
 import UserMenu from 'src/components/UserMenu';
 import Home from 'src/components/Home';
@@ -22,7 +23,7 @@ import 'antd/dist/antd.css';
 
 const { Header, Content, Footer } = Layout;
 
-function App({ data, loading, isLoggedIn, onLogout, ...rest }: Props) {
+function App({ data, loading, userId, isLoggedIn, onLogout, ...rest }: Props) {
   if (!isLoggedIn) {
     return <LoggedOutHome />;
   }
@@ -69,8 +70,17 @@ function App({ data, loading, isLoggedIn, onLogout, ...rest }: Props) {
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route exact path="/ideas/:ideaSlug" component={IdeaDetail} />
+          <Route
+            exact
+            path="/ideas/:ideaSlug/edit"
+            render={props => <IdeaEdit {...props} userId={userId} />}
+          />
+          <Route
+            exact
+            path="/add-idea"
+            render={props => <IdeaAddEditForm {...props} userId={userId} />}
+          />
           <Route exact path="/ideas" component={IdeaListPage} />
-          <Route exact path="/add-idea" component={IdeaCreate} />
           <Route exact path="/signup" component={UserCreate} />
         </div>
       </Content>
@@ -83,6 +93,7 @@ const userQuery = gql`
   query userQuery {
     user {
       id
+      name
     }
   }
 `;
@@ -90,7 +101,12 @@ const userQuery = gql`
 export default compose(
   graphql(userQuery, {
     options: { fetchPolicy: 'network-only' },
-    props: ({ data, data: { loading, user } }) => ({ loading, isLoggedIn: !!user, data }),
+    props: ({ data, data: { loading, user } }) => ({
+      loading,
+      isLoggedIn: !!user,
+      userId: user && user.id,
+      data,
+    }),
   }),
   withHandlers({
     onLogout: () => () => {
