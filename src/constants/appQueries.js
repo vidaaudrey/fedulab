@@ -25,6 +25,12 @@ export const IdeaDetailQuery = gql`
         name
         id
       }
+      likes {
+        id
+        user {
+          id
+        }
+      }
     }
   }
 `;
@@ -47,6 +53,12 @@ export const IdeaListQuery = gql`
       createdBy {
         name
         id
+      }
+      likes {
+        id
+        user {
+          id
+        }
       }
     }
   }
@@ -224,6 +236,46 @@ export const DeleteIdeaMutation = gql`
       id
       title
       slug
+    }
+  }
+`;
+
+export const IdeaLikeMutation = gql`
+  mutation IdeaLikeMutation($ideaId: ID!, $userId: ID!) {
+    createLike(ideaId: $ideaId, userId: $userId) {
+      id
+      createdAt
+      idea {
+        id
+        title
+        likes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export const IdeaUnlikeMutation = gql`
+  mutation IdeaUnlikeMutation($myLikeId: ID!) {
+    deleteLike(id: $myLikeId) {
+      createdAt
+      id
+      idea {
+        id
+        likes {
+          id
+          user {
+            id
+          }
+        }
+      }
     }
   }
 `;

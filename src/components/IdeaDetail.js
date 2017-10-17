@@ -11,6 +11,7 @@ import HumanTime from 'src/components/HumanTime';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 import IdeaNext from 'src/components/IdeaNext';
 import IdeaPrev from 'src/components/IdeaPrev';
+import IdeaLike from 'src/components/IdeaLike';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
 
@@ -62,6 +63,8 @@ function IdeaDetail({
           By {createdBy.name}, Contributors:{allContributorNames}
         </small>
         <HumanTime time={createdAt} />
+        <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
+
         <h4>{tagline}</h4>
         <span>{category}</span>
         <p style={{ color: 'gray' }}>{description}</p>

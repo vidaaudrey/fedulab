@@ -2,20 +2,22 @@
 import React from 'react';
 import { Button } from 'antd';
 
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 
 import { DeleteIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';
 
 type Props = {
-  id: string,
-  slug: string,
-  onDeleteIdea: () => void,
   canDelete: boolean,
+  id: string,
+  isSuperuser: boolean,
+  onDeleteIdea: () => void,
+  onEdit: () => void,
+  slug: string,
 };
 
-function IdeaActions({ id, slug, onDeleteIdea, canDelete, ...rest }: Props) {
+function IdeaActions({ id, slug, onDeleteIdea, onEdit, isSuperuser, canDelete, ...rest }: Props) {
   return (
     <div>
       {canDelete && (
@@ -23,7 +25,7 @@ function IdeaActions({ id, slug, onDeleteIdea, canDelete, ...rest }: Props) {
           Delete Idea
         </Button>
       )}
-      <Link to={`/ideas/${slug}/edit/`}>Edit</Link>
+      {isSuperuser && <Button onClick={onEdit}>Edit</Button>}
     </div>
   );
 }
@@ -55,6 +57,14 @@ export default compose(
           }
         })
         .catch(error => console.warn('error', error));
+    },
+    onEdit: ({ history, slug }) => (e) => {
+      if (e && e.stopPropagation) {
+        e.stopPropagation();
+      } else if (window.event) {
+        window.event.cancelBubble = true;
+      }
+      history.replace(`/ideas/${slug}/edit/`);
     },
   }),
 )(IdeaActions);

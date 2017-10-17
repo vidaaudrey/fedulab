@@ -6,6 +6,7 @@ import { compose, withHandlers } from 'recompose';
 
 import IdeaActions from 'src/components/IdeaActions';
 import HumanTime from 'src/components/HumanTime';
+import IdeaLike from 'src/components/IdeaLike';
 
 const MAX_WIDTH = 560;
 
@@ -18,6 +19,7 @@ type Props = {
 
 export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) {
   const allContributorNames = idea.contributors.map(item => item.name).join(',  ');
+
   return (
     <Card
       onClick={onCardClick}
@@ -38,7 +40,10 @@ export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) 
           canDelete={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
           id={idea.id}
           slug={idea.slug}
+          isSuperuser={isSuperuser}
         />
+
+        <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
       </div>
     </Card>
   );

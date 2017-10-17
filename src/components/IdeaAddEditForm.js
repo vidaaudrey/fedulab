@@ -349,10 +349,6 @@ const IdeaAddEditFormFormHOC = compose(
               .then((res) => {
                 console.warn('res', res);
                 isCreateSuccessSet(true);
-                // const slug = res.data && res.data.createIdea.slug;
-                // if (slug) {
-                //   history.push(`/ideas/${slug}/edit`);
-                // }
               })
               .catch(error => console.warn('error', error));
           }
