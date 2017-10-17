@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { Button } from 'antd';
-
 import { compose, setDisplayName, withProps, withHandlers } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
@@ -24,7 +23,7 @@ function LoginAuth0({ onShowLogin }: Props) {
 export default compose(
   setDisplayName('LoginAuth0HOC'),
   withRouter,
-  withProps(({ history, onAuthFinished }) => {
+  withProps(({ history, createUser }) => {
     const lock = new Auth0Lock(CLIENT_ID, DOMAIN);
 
     lock.on('authenticated', (authResult) => {
@@ -36,9 +35,8 @@ export default compose(
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
         window.localStorage.setItem('auth0IdToken', authResult.idToken);
-        // TODO(Audrey): figure out why history push doesn't trigger GQL requery
-        window.location.pathname = '/';
-        // history.push('/');
+
+        history.replace('/signup');
       });
     });
     return { lock };

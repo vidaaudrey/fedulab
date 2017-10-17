@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from 'antd';
 
 import { withRouter, Link } from 'react-router-dom';
-import { compose, withProps, withHandlers } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 
 import { DeleteIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';

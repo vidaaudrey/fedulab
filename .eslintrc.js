@@ -14,6 +14,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/extensions': 0,
     'no-restricted-globals': 0,
+    'no-useless-escape': 0,
   },
   globals: {
     toJson: true,

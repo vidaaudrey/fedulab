@@ -1,15 +1,6 @@
 // @flow
 import React from 'react';
-
-import {
-  branch,
-  compose,
-  renderComponent,
-  setDisplayName,
-  setPropTypes,
-  renderNothing,
-  withProps,
-} from 'recompose';
+import { branch, compose, renderComponent, setDisplayName } from 'recompose';
 
 type Props = {
   loading: boolean,

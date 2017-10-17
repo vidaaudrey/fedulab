@@ -1,8 +1,5 @@
 // @flow
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { compose, withProps } from 'recompose';
-import { graphql } from 'react-apollo';
 import moment from 'moment';
 
 type Props = {

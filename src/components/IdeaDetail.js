@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
 import { Box } from '@coursera/coursera-ui';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import moment from 'moment';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
@@ -15,12 +14,7 @@ import IdeaPrev from 'src/components/IdeaPrev';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
 
-import type { RouterMatch } from 'src/types/common';
-
-type MatchProps = { match: RouterMatch };
-
 type Props = {
-  match: MatchProps,
   data: Object,
   userId: String,
   isSuperuser: boolean,
@@ -28,7 +22,6 @@ type Props = {
 };
 
 function IdeaDetail({
-  match,
   data: { loading, error, Idea: idea },
   slug,
   userId,

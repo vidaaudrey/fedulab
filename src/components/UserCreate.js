@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { compose, setDisplayName, withHandlers } from 'recompose';
+import { compose, setDisplayName, withHandlers, lifecycle, withProps, withState } from 'recompose';
 
 import { graphql, gql } from 'react-apollo';
+import { withGQLLoadingOrError } from 'src/components/withBranches';
 
 type Props = {
   data: {
@@ -11,10 +12,12 @@ type Props = {
     user: ?Object,
   },
   onCreateUser: () => void,
+  isCreatingUser: boolean,
 };
-function UserCreate({ data, onCreateUser }: Props) {
-  if (data.loading) {
-    return <div>Loading</div>;
+
+function UserCreate({ data, onCreateUser, isCreatingUser }: Props) {
+  if (isCreatingUser) {
+    return <span>Creating users...</span>;
   }
 
   // Redirect if user is logged in or did not finish Auth0 Lock dialog
@@ -73,8 +76,11 @@ export default compose(
   setDisplayName('UserCreateHOC'),
   graphql(CreateUserMutation, { name: 'createUser' }),
   graphql(userQuery, { options: { fetchPolicy: 'network-only' } }),
+  withProps(() => ({ shouldRenderNothing: true })),
+  withGQLLoadingOrError(),
+  withState('isCreatingUser', 'isCreatingUserSet', false),
   withHandlers({
-    onCreateUser: ({ history, createUser }) => () => {
+    onCreateUser: ({ history, createUser, isCreatingUserSet }) => () => {
       const profile = JSON.parse(window.localStorage.getItem('profile'));
 
       const variables = {
@@ -85,14 +91,27 @@ export default compose(
         picture: profile.picture,
       };
 
+      isCreatingUserSet(true);
       createUser({ variables })
         .then((response) => {
-          history.replace('/');
+          console.warn('user created', response);
+          // TODO(Audrey): figure out why history doesn't trigger GQL requery
+          // history.replace('/home');
+          window.location.pathname = '/home';
         })
         .catch((e) => {
           console.error(e);
+          isCreatingUserSet(false);
           history.replace('/');
         });
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { data, onCreateUser } = this.props;
+      if (!(data.user || window.localStorage.getItem('auth0IdToken') === null)) {
+        onCreateUser();
+      }
     },
   }),
 )(UserCreate);

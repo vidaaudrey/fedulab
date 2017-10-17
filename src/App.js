@@ -51,7 +51,7 @@ function App({
           style={{ lineHeight: '64px', flex: 1 }}
         >
           <Menu.Item key="1">
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </Menu.Item>
           <Menu.Item key="3">
             <Link to="/ideas">Ideas</Link>
@@ -87,7 +87,7 @@ function App({
         <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
           <Route
             exact
-            path="/"
+            path="/home"
             render={props => <Home {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route

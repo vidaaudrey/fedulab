@@ -1,25 +1,30 @@
 // @flow
 import React from 'react';
 import { Box } from '@coursera/coursera-ui';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import { graphql, gql, compose } from 'react-apollo';
 
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 import LoginAuth0 from 'src/components/LoginAuth0';
 import MakeAThonAnim from 'src/components/MakeAThonAnim';
+import UserCreate from 'src/components/UserCreate';
 
 type Props = {
   loading: Boolean,
   isLoggedIn: Boolean,
   error: any,
+  location: {
+    pathname: string,
+  },
+  history: Object,
 };
 
-function LoggedOutHome({ loading, isLoggedIn, error, ...rest }: Props) {
-  // Redirect if user is logged in.
-  // if (isLoggedIn) {
-  //   return <Redirect to={{ pathname: '/add-idea' }} />;
-  // }
+function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest }: Props) {
+  // Redirect if user is logged in, or not loggedin but the path is not the route path
+  if (isLoggedIn && location.pathname !== '/home') {
+    return <Redirect to={{ pathname: '/home' }} />;
+  }
 
   return (
     <Box
@@ -41,6 +46,7 @@ function LoggedOutHome({ loading, isLoggedIn, error, ...rest }: Props) {
             />
             <MakeAThonAnim />
             <h1 className="color-white m-b-1">Welcome to 9th Make-a-thon</h1>
+            <Route path="/signup" component={UserCreate} />
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
           </Box>
         )}
@@ -57,6 +63,7 @@ const userQuery = gql`
 `;
 
 export default compose(
+  withRouter,
   graphql(userQuery, {
     options: { fetchPolicy: 'network-only' },
     props: ({ data, data: { loading, user, error } }) => ({

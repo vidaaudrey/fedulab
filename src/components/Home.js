@@ -1,12 +1,12 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 import IdeaList from 'src/components/IdeaList';
 import Banner from 'src/components/Banner';
 
+/* Use styled  for styling components 
 const Button = styled.button`
-  /* Adapt the colours based on primary prop */
   background: ${props => (props.primary ? 'palevioletred' : 'white')};
   color: ${props => (props.primary ? 'white' : 'palevioletred')};
 
@@ -16,7 +16,7 @@ const Button = styled.button`
   border: 2px solid palevioletred;
   border-radius: 3px;
 `;
-
+*/
 type Props = {
   userId: string,
   isSuperuser: boolean,

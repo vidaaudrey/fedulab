@@ -3,7 +3,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';

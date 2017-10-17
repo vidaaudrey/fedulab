@@ -1,12 +1,11 @@
 // @flow
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { compose, withProps } from 'recompose';
+import { compose } from 'recompose';
 import { graphql } from 'react-apollo';
 import _ from 'underscore';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
-import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 
 import { IdeaPrevQuery } from 'src/constants/appQueries';
 
