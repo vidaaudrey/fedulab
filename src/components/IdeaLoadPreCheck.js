@@ -14,16 +14,18 @@ export default function IdeaLoadPreCheck({ loading, error, idea, slug }: Props) 
     <div>
       {loading && <h2>Loading</h2>}
       {error && <h2>Error loading the data</h2>}
-      {!idea && (
-        <div className="p-a-1">
-          <h2>
-            Idea with slug
-            <span className="text-danger"> {slug} </span>
-            not found
-          </h2>
-          View <Link to="/ideas"> All Ideas </Link>
-        </div>
-      )}
+      {!loading &&
+        !error &&
+        !idea && (
+          <div className="p-a-1">
+            <h2>
+              Idea with slug
+              <span className="text-danger"> {slug} </span>
+              not found
+            </h2>
+            View <Link to="/ideas"> All Ideas </Link>
+          </div>
+        )}
     </div>
   );
 }

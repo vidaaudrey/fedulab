@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
 
@@ -32,9 +32,22 @@ function IdeaEdit({
     return <IdeaLoadPreCheck loading={loading} error={error} idea={idea} slug={slug} />;
   }
 
-  return (
-    <div>{idea && <IdeaAddEditForm idea={idea} userId={userId} isSuperuser={isSuperuser} />}</div>
-  );
+  const isIdeaOwner = idea.createdBy && idea.createdBy.id;
+  if (isSuperuser || isIdeaOwner) {
+    return (
+      <div>
+        {idea && (
+          <IdeaAddEditForm
+            idea={idea}
+            userId={userId}
+            isSuperuser={isSuperuser}
+            isIdeaOwner={isIdeaOwner}
+          />
+        )}
+      </div>
+    );
+  }
+  return <Redirect to={`/ideas/${idea.slug}`} />;
 }
 
 export default compose(

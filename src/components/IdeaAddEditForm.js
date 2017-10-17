@@ -47,25 +47,27 @@ const tailFormItemLayout = {
   },
 };
 
+type Idea = {
+  title: String,
+  description: String,
+};
+
 type Props = {
+  canDelete: boolean,
+  category: Array<string>,
+  checkCategory: () => void,
+  checkUrl: () => void,
+  form: Object,
+  handleSubmit: () => void,
+  idea: Idea,
+  isCreateSuccess: boolean,
   isEditingMode: boolean,
   isPresenting: boolean,
   isSuperuser: boolean,
-  canDelete: boolean,
-  isCreateSuccess: boolean,
-  handleSubmit: () => void,
   onDeleteIdea: () => void,
-  checkCategory: () => void,
-  checkUrl: () => void,
+  toggleIsPresenting: boolean => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
-  toggleIsPresenting: boolean => void,
-  form: Object,
-  category: Array<string>,
-  idea: {
-    title: String,
-    description: String,
-  },
 };
 
 function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }) {
@@ -79,20 +81,20 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
 }
 
 function IdeaAddEditFormForm({
-  isEditingMode,
-  isCreateSuccess,
-  isSuperuser,
-  isPresenting,
   canDelete,
-  handleSubmit,
-  form,
   checkCategory,
   checkUrl,
+  form,
+  handleSubmit,
   idea,
+  isCreateSuccess,
+  isEditingMode,
+  isPresenting,
+  isSuperuser,
+  onDeleteIdea,
+  toggleIsPresenting,
   toggleNeedMyLaptop,
   togglePresentLive,
-  toggleIsPresenting,
-  onDeleteIdea,
 }: Props) {
   const { getFieldDecorator } = form;
 
@@ -260,7 +262,7 @@ const DEFAULT_IDEA = {
 
 const IdeaAddEditFormFormHOC = compose(
   withRouter,
-  withProps(({ idea, userId, isSuperuser, ...rest }) => {
+  withProps(({ idea, userId, isSuperuser, isIdeaOwner, ...rest }) => {
     const isEditingMode = !!idea;
     // Normalize the editing and creation data
     const ideaLocal = isEditingMode ? { ...idea } : DEFAULT_IDEA;
@@ -270,15 +272,6 @@ const IdeaAddEditFormFormHOC = compose(
       DATE_FORMAT,
     );
 
-    console.warn(
-      'props',
-      idea,
-      isEditingMode,
-      ideaLocal,
-      ideaLocal.contributorsText,
-      ideaLocal.startTime,
-      ideaLocal.estimatedFinishTime,
-    );
     let contributorsText = [];
     if (typeof ideaLocal.contributorsText === 'string' && ideaLocal.contributorsText !== '') {
       contributorsText = ideaLocal.contributorsText.split(',');
@@ -288,7 +281,7 @@ const IdeaAddEditFormFormHOC = compose(
     const ideaCreatedById = idea && idea.createdBy && idea.createdBy.id;
 
     return {
-      canDelete: isSuperuser || ideaCreatedById === userId,
+      canDelete: isSuperuser || isIdeaOwner,
       isEditingMode,
       idea: ideaLocal,
       category: ideaLocal.category,
