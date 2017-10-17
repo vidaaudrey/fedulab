@@ -11,6 +11,7 @@ import UserCreate from 'src/components/UserCreate';
 import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
 import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
+import MyDashboard from 'src/components/MyDashboard';
 import UserMenu from 'src/components/UserMenu';
 import Home from 'src/components/Home';
 import LoggedOutHome from 'src/components/LoggedOutHome';
@@ -113,6 +114,7 @@ function App({
             render={props => <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route path="/about" component={About} />
+          <Route path="/me" component={MyDashboard} />
           <Route exact path="/signup" component={UserCreate} />
         </div>
       </Content>
