@@ -1,29 +1,35 @@
 // @flow
 import React from 'react';
+import { Box } from '@coursera/coursera-ui';
 import { Button } from 'antd';
-import { compose, setDisplayName, withProps, withHandlers } from 'recompose';
+import { compose, setDisplayName, withProps, withHandlers, withState } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import _ from 'underscore';
 
 import Auth0Lock from 'auth0-lock';
-
+import { ENABLE_NON_COURSERA_SIGN_IN } from 'src/constants/appConstants';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 
 type Props = {
   onShowLogin: () => void,
 };
 
-function LoginAuth0({ onShowLogin }: Props) {
+function LoginAuth0({ onShowLogin, error }: Props) {
   return (
-    <Button type="default" onClick={onShowLogin}>
-      Login
-    </Button>
+    <Box flexDirection="column">
+      <Button type="default" onClick={onShowLogin} className="m-b-1">
+        Login
+      </Button>
+      {error && <span className="text-error">Please login with your Coursera credential</span>}
+    </Box>
   );
 }
 
 export default compose(
   setDisplayName('LoginAuth0HOC'),
   withRouter,
-  withProps(({ history, createUser }) => {
+  withState('error', 'errorSet', null),
+  withProps(({ history, createUser, errorSet }) => {
     const lock = new Auth0Lock(CLIENT_ID, DOMAIN);
 
     lock.on('authenticated', (authResult) => {
@@ -32,11 +38,17 @@ export default compose(
           console.warn('error');
           return;
         }
-        localStorage.setItem('accessToken', authResult.accessToken);
-        localStorage.setItem('profile', JSON.stringify(profile));
-        window.localStorage.setItem('auth0IdToken', authResult.idToken);
-
-        history.replace('/signup');
+        const emailSplits = profile.email && profile.email.split('@');
+        if (_(emailSplits).last() === 'coursera.org' || ENABLE_NON_COURSERA_SIGN_IN) {
+          localStorage.setItem('accessToken', authResult.accessToken);
+          localStorage.setItem('profile', JSON.stringify(profile));
+          window.localStorage.setItem('auth0IdToken', authResult.idToken);
+          // TODO(Audrey): user history?
+          window.location.pathname = '/home';
+          // history.replace('/signup');
+        } else {
+          errorSet(true);
+        }
       });
     });
     return { lock };
