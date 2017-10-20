@@ -9,6 +9,7 @@ import 'assets/react-toolbox/theme.css';
 import theme from 'assets/react-toolbox/theme.js';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 
+import Header from 'src/components/Header';
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
 import UserCreate from 'src/components/UserCreate';
@@ -16,17 +17,16 @@ import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
 import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
 import MyDashboard from 'src/components/MyDashboard';
-import UserMenu from 'src/components/UserMenu';
 import Home from 'src/components/Home';
 import LoggedOutHome from 'src/components/LoggedOutHome';
 
 import { AUTH_KEY } from 'src/constants/config';
 
-import 'src/styles/utilities.css';
-import 'src/styles/App.css';
 import 'antd/dist/antd.css';
+import '@coursera/coursera-ui/css/utilities.css';
+import 'src/styles/App.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 function App({
   data,
@@ -44,45 +44,14 @@ function App({
   }
 
   return (
-    <Layout style={{ color: 'black' }}>
-      <Header style={{ position: 'fixed', width: '100%', display: 'flex' }}>
-        <Link className="logo" to="/">
-          Fedulab for Make-a-thon
-        </Link>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          style={{ lineHeight: '64px', flex: 1 }}
-        >
-          <Menu.Item key="1">
-            <Link to="/home">Home</Link>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Link to="/ideas">Ideas</Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="/add-idea">Add Idea</Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/about">About</Link>
-          </Menu.Item>
-        </Menu>
-        <Route
-          path="/"
-          render={({ match, history }) => (
-            <div className="userMenuWrapper">
-              <UserMenu
-                name={username}
-                picture={picture}
-                isLoggedIn={isLoggedIn}
-                loading={loading}
-                onLogout={onLogout}
-              />
-            </div>
-          )}
-        />
-      </Header>
+    <Layout style={{ color: '#424242', background: '#f5f5f5' }}>
+      <Header
+        name={username}
+        picture={picture}
+        isLoggedIn={isLoggedIn}
+        loading={loading}
+        onLogout={onLogout}
+      />
       <Content style={{ padding: '0 50px', marginTop: 64 }}>
         <Breadcrumb style={{ margin: '12px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>

@@ -25,7 +25,7 @@
     "source-map-explorer": "^1.5.0"
   },
   "dependencies": {
-    "@coursera/coursera-ui": "^0.2.14",
+    "@coursera/coursera-ui": "0.2.20-rc",
     "antd": "^2.13.4",
     "aphrodite": "^1.2.4",
     "auth0-lock": "^10.22.0",
@@ -38,7 +38,7 @@
     "moment": "^2.18.1",
     "optics-agent": "^1.1.7",
     "prop-types": "^15.6.0",
-    "randomstring": "^1.1.5",
+    "random-string": "^0.2.0",
     "rc-banner-anim": "^0.5.16",
     "rc-queue-anim": "^1.2.3",
     "rc-tween-one": "^1.4.5",
@@ -70,6 +70,7 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "deploy": "firebase deploy",
+    "bdeploy": "npm run build && firebase deploy",
     "toolbox": "react-toolbox-themr"
   },
   "lint-staged": {
@@ -81,7 +82,8 @@
   "reactToolbox": {
     "include": [
       "BUTTON",
-      "DATE_PICKER"
+      "DATE_PICKER",
+      "MENU"
     ],
     "customProperties": {
       "animation-duration": "0.3s",

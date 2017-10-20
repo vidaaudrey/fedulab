@@ -2,13 +2,14 @@
 # yarn lockfile v1
 
 
-"@coursera/coursera-ui@^0.2.14":
-  version "0.2.14"
-  resolved "https://artifactory.dkandu.me/artifactory/api/npm/coursera-npm-packages/@coursera/coursera-ui/-/@coursera/coursera-ui-0.2.14.tgz#bd0feb1cbbd4d68743549a7acc66ca7382a52e72"
+"@coursera/coursera-ui@0.2.20-rc":
+  version "0.2.20-rc"
+  resolved "https://artifactory.dkandu.me/artifactory/api/npm/coursera-npm-packages/@coursera/coursera-ui/-/@coursera/coursera-ui-0.2.20-rc.tgz#26b850f7aeb8f47031947fb7ab0852256a0c5317"
   dependencies:
     classnames "^2.2.5"
     copy-to-clipboard "^3.0.6"
     get-node-dimensions "^1.2.0"
+    immutable "^3.8.2"
     js-search "^1.4.2"
     jsuri "^1.3.1"
     prop-types "^15.5.10"
@@ -20,6 +21,7 @@
     react-modal "^1.7.3"
     react-select "^1.0.0-rc.4"
     react-select-fast-filter-options "^0.2.2"
+    react-virtualized "^9.10.1"
     react-virtualized-select "^2.4.0"
     sinon "^4.0.1"
 
@@ -641,13 +643,13 @@ array-union@^1.0.1:
   dependencies:
     array-uniq "^1.0.1"
 
-array-uniq@1.0.2, array-uniq@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
-
 array-uniq@^1.0.1, array-uniq@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
+
+array-uniq@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
 
 array-unique@^0.2.1:
   version "0.2.1"
@@ -5782,6 +5784,10 @@ immutable@^3.7.3, immutable@^3.7.4, immutable@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
+immutable@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
+
 immutable@~3.7.4:
   version "3.7.6"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
@@ -9299,6 +9305,10 @@ randexp@^0.4.2:
     discontinuous-range "1.0.0"
     ret "~0.1.10"
 
+random-string@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/random-string/-/random-string-0.2.0.tgz#a46e4375352beda9a0d7b0d19ed6d321ecd1d82d"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -9311,12 +9321,6 @@ randombytes@^2.0.0, randombytes@^2.0.1:
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.0.5.tgz#dc009a246b8d09a177b4b7a0ae77bc570f4b1b79"
   dependencies:
     safe-buffer "^5.1.0"
-
-randomstring@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/randomstring/-/randomstring-1.1.5.tgz#6df0628f75cbd5932930d9fe3ab4e956a18518c3"
-  dependencies:
-    array-uniq "1.0.2"
 
 range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
@@ -10062,6 +10066,16 @@ react-virtualized@^8.0.5:
     classnames "^2.2.3"
     dom-helpers "^2.4.0 || ^3.0.0"
     loose-envify "^1.3.0"
+
+react-virtualized@^9.10.1:
+  version "9.11.1"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.11.1.tgz#984b59987d9f9f58937bf15f365c659b198a4968"
+  dependencies:
+    babel-runtime "^6.23.0"
+    classnames "^2.2.3"
+    dom-helpers "^2.4.0 || ^3.0.0"
+    loose-envify "^1.3.0"
+    prop-types "^15.5.4"
 
 "react@^15 || ^16", "react@^15.6.1 || ^16.0.0", react@^15.6.2:
   version "15.6.2"

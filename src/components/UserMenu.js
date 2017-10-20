@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
-import { Button } from 'antd';
+import IconMenu from 'react-toolbox/lib/menu/IconMenu';
+import MenuItem from 'react-toolbox/lib/menu/MenuItem';
+import MenuDivider from 'react-toolbox/lib/menu/MenuDivider';
 import { Link } from 'react-router-dom';
-
-import { CLIENT_ID, DOMAIN } from 'src/constants/config';
-import LoginAuth0 from 'src/components/LoginAuth0';
 
 type Props = {
   loading: boolean,
@@ -18,14 +17,13 @@ export default function UserMenu({ loading, isLoggedIn, onLogout }: Props) {
       <Link to="/me" className="p-x-1 d-inline-block">
         Me
       </Link>
-      {loading && <h2>Loading</h2>}
-      {!loading &&
-        isLoggedIn && (
-          <Button type="default" onClick={onLogout}>
-            Logout
-          </Button>
-        )}
-      {!loading && !isLoggedIn && <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />}
+      <IconMenu icon="more_vert" position="topRight" menuRipple>
+        <MenuItem value="download" icon="get_app" caption="Download" />
+        <MenuItem value="help" icon="favorite" caption="Favorite" />
+        <MenuItem value="settings" icon="open_in_browser" caption="Open in app" />
+        <MenuDivider />
+        <MenuItem value="signout" icon="exit_to_app" caption="Logout" onClick={onLogout} />
+      </IconMenu>
     </div>
   );
 }

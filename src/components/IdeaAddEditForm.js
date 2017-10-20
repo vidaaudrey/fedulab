@@ -4,7 +4,7 @@ import { Form, Row, Input, DatePicker, Col, Button, Select, InputNumber, Switch 
 import { compose, withState, withProps, withHandlers } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
-import randomString from 'randomstring';
+import randomString from 'random-string';
 
 import { graphql } from 'react-apollo';
 
@@ -252,7 +252,7 @@ const DEFAULT_IDEA = {
   needMyLaptop: false,
   presentLive: false,
   slackUrl: 'https://coursera.slack.com/messages/makeathon',
-  slug: `my-awesome-new-idea-${randomString.generate({ length: 4, capitalization: 'lowercase' })}`,
+  slug: `my-awesome-new-idea-${randomString({ length: 4 })}`,
   tagline: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, dicta!',
   title: 'My Awesome New Idea',
   youtubeVideoUrl: 'https://www.youtube.com/watch?v=I-ovzUNno7g&t=50s',
