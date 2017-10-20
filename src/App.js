@@ -5,6 +5,10 @@ import { Route, Link } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
 
+import 'assets/react-toolbox/theme.css';
+import theme from 'assets/react-toolbox/theme.js';
+import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
+
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
 import UserCreate from 'src/components/UserCreate';
@@ -134,6 +138,12 @@ const userQuery = gql`
   }
 `;
 
+const AppWithTheme = props => (
+  <ThemeProvider theme={theme}>
+    <App {...props} />
+  </ThemeProvider>
+);
+
 export default compose(
   graphql(userQuery, {
     options: { fetchPolicy: 'network-only' },
@@ -153,4 +163,4 @@ export default compose(
       location.reload();
     },
   }),
-)(App);
+)(AppWithTheme);

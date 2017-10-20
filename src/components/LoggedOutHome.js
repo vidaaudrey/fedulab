@@ -7,8 +7,9 @@ import { graphql, gql, compose } from 'react-apollo';
 
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 import LoginAuth0 from 'src/components/LoginAuth0';
-import MakeAThonAnim from 'src/components/MakeAThonAnim';
+// import MakeAThonAnim from 'src/components/MakeAThonAnim';
 import UserCreate from 'src/components/UserCreate';
+import Logo from 'src/assets/logo_light.svg';
 
 type Props = {
   loading: Boolean,
@@ -28,23 +29,18 @@ function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest 
 
   return (
     <Box
-      style={{ width: '100vw', height: '100vh', backgroundColor: 'gray' }}
+      style={{ width: '100vw', height: '100vh' }}
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
     >
+      <img src={Logo} alt="fedulab" />
       {loading && <h1>Loading</h1>}
       {error && <h1>Error: {error}</h1>}
       {!loading &&
         !isLoggedIn &&
         !error && (
           <Box flexDirection="column" justifyContent="center" alignItems="center">
-            <img
-              className="m-b-2"
-              src="https://s3.amazonaws.com/fedulab/web/logo_light.png"
-              alt="Fedulabe"
-            />
-            <MakeAThonAnim />
             <h1 className="color-white m-b-1">Welcome to 9th Make-a-thon</h1>
             <Route path="/signup" component={UserCreate} />
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
@@ -52,7 +48,8 @@ function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest 
         )}
     </Box>
   );
-}``
+}
+('');
 
 const userQuery = gql`
   query userQuery {
