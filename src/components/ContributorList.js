@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { StyleSheet, css, Box, transition } from '@coursera/coursera-ui';
+import { Box } from '@coursera/coursera-ui';
 import _ from 'underscore';
 
 import ContributorListItem from 'src/components/ContributorListItem';

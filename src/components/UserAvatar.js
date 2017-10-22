@@ -1,5 +1,5 @@
 // @flow
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Avatar from 'react-toolbox/lib/avatar';
 
 export default function UserAvatar({ user: { displayName, picture }, size = 44 }) {

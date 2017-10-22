@@ -14,7 +14,7 @@ import Header from 'src/components/Header';
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
 import UserCreate from 'src/components/UserCreate';
-import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
+import IdeaAdd from 'src/components/IdeaAdd';
 import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
 import Gallery from 'src/components/Gallery';
@@ -84,9 +84,7 @@ function App({
           <Route
             exact
             path="/add-idea"
-            render={props => (
-              <IdeaAddEditForm {...props} userId={userId} isSuperuser={isSuperuser} />
-            )}
+            render={props => <IdeaAdd {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route
             exact

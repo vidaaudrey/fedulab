@@ -5,7 +5,6 @@ import QueueAnim from 'rc-queue-anim';
 import { compose, withProps } from 'recompose';
 
 import { Link } from 'react-router-dom';
-import _ from 'underscore';
 import { graphql } from 'react-apollo';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';

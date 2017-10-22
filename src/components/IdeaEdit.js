@@ -35,15 +35,17 @@ function IdeaEdit({
   const isIdeaOwner = idea.createdBy && idea.createdBy.id;
   if (isSuperuser || isIdeaOwner) {
     return (
-      <div>
-        {idea && (
-          <IdeaAddEditForm
-            idea={idea}
-            userId={userId}
-            isSuperuser={isSuperuser}
-            isIdeaOwner={isIdeaOwner}
-          />
-        )}
+      <div className="EditIdea m-t-3 p-y-1">
+        <div className="max-text-width bg-white p-a-2 m-x-auto">
+          {idea && (
+            <IdeaAddEditForm
+              idea={idea}
+              userId={userId}
+              isSuperuser={isSuperuser}
+              isIdeaOwner={isIdeaOwner}
+            />
+          )}
+        </div>
       </div>
     );
   }

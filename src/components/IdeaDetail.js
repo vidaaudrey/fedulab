@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Box } from '@coursera/coursera-ui';
+import { Box, css } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -12,6 +12,8 @@ import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 import IdeaNext from 'src/components/IdeaNext';
 import IdeaPrev from 'src/components/IdeaPrev';
 import IdeaLike from 'src/components/IdeaLike';
+
+import animationUtils from 'src/utils/animationUtils';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
 
@@ -47,7 +49,7 @@ function IdeaDetail({
   const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
-    <div>
+    <div {...css('IdeaDetail m-t-2 p-t-1', animationUtils.fadeInSlow)}>
       <div className="custom-image">
         <img
           alt="example"
@@ -57,30 +59,36 @@ function IdeaDetail({
           src={coverBackgroundUrl}
         />
       </div>
-      <div className="custom-card">
-        <h3>{title}</h3>
-        <small className="text-secondary">
-          By {createdBy.name}, Contributors:{allContributorNames}
-        </small>
-        <HumanTime time={createdAt} />
-        <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
-
-        <h4>{tagline}</h4>
-        <span>{category}</span>
-        <p style={{ color: 'gray' }}>{description}</p>
-        <p>{howToContribute}</p>
-        <p>{youtubeVideoUrl}</p>
-        <p>{slackUrl}</p>
-        <p>{courseraVideoUrl}</p>
-        <p>{courseraVideoUrl}</p>
-        <IdeaActions
-          shouldRedirectToListAfterDelete
-          canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
-          canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
-          id={id}
-          slug={slug}
-        />
-        <Box rootClassName="m-y-1" justifyContent="between" flexWrap="wrap">
+      <Box
+        key={id}
+        justifyContent="center"
+        flexDirection="column"
+        rootClassName="max-text-width m-x-auto"
+      >
+        <div className="p-a-2 bg-white m-b-1">
+          <h3>{title}</h3>
+          <small className="text-secondary">
+            By {createdBy.name}, Contributors:{allContributorNames}
+          </small>
+          <IdeaActions
+            shouldRedirectToListAfterDelete
+            canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
+            canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
+            id={id}
+            slug={slug}
+          />
+          <HumanTime time={createdAt} />
+          <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
+          <h4>{tagline}</h4>
+          <span>{category}</span>
+          <p style={{ color: 'gray' }}>{description}</p>
+          <p>{howToContribute}</p>
+          <p>{youtubeVideoUrl}</p>
+          <p>{slackUrl}</p>
+          <p>{courseraVideoUrl}</p>
+          <p>{courseraVideoUrl}</p>
+        </div>
+        <Box rootClassName="m-b-1 bg-white p-a-2" justifyContent="between" flexWrap="wrap">
           <div className="p-r-1">
             <IdeaPrev last={1} before={idea.id} />
           </div>
@@ -88,7 +96,7 @@ function IdeaDetail({
             <IdeaNext first={1} after={idea.id} />
           </div>
         </Box>
-      </div>
+      </Box>
     </div>
   );
 }

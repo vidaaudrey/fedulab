@@ -45,7 +45,6 @@ function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest 
     </Box>
   );
 }
-('');
 
 const userQuery = gql`
   query userQuery {

@@ -10,7 +10,7 @@ import ITEM_SEARCH from 'src/assets/gallery/item_search.gif';
 import EVERYWHERE from 'src/assets/gallery/everywhere.jpg';
 
 // Currently not using the LIST data
-const LIST = [
+export const LIST = [
   {
     img: REFUGEES,
     title: 'Coursera for Refugees',

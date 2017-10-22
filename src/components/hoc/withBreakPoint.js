@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { breakPoint } from '@coursera/coursera-ui';
 import { hoistStatics } from 'recompose';
 import Media from 'react-media';

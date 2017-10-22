@@ -5,12 +5,10 @@ import GalleryIdeaList from 'src/components/GalleryIdeaList';
 
 export default function Gallery() {
   return (
-    <div>
-      <div className="bg-light p-y-3 m-t-3">
-        <Container>
-          <GalleryIdeaList />
-        </Container>
-      </div>
+    <div className="bg-light p-y-3 m-t-3">
+      <Container>
+        <GalleryIdeaList />
+      </Container>
     </div>
   );
 }

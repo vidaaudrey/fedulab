@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { Form, Row, Input, DatePicker, Col, Button, Select, InputNumber, Switch } from 'antd';
+import { Form, Row, Input, DatePicker, Col, Select, InputNumber, Switch } from 'antd';
+import Button from 'react-toolbox/lib/button/Button';
 import { compose, withState, withProps, withHandlers } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
@@ -74,7 +75,7 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
   return (
     <Row>
       <Col xs={tailFormItemLayout.wrapperCol.xs} sm={tailFormItemLayout.wrapperCol.sm}>
-        <Tag className="p-t-2 m-b-1">{title}</Tag>
+        <Tag className="p-t-2 m-b-1 font-weight-200">{title}</Tag>
       </Col>
     </Row>
   );
@@ -100,9 +101,12 @@ function IdeaAddEditFormForm({
 
   return (
     <Form onSubmit={handleSubmit} className="login-form">
-      <h2 className="text-xs-center font-lg m-b-2">
-        {isEditingMode ? 'Editing Idea' : 'Add My Idea'}
-      </h2>
+      <div className="text-xs-center m-b-2">
+        <h2 className="font-xl font-weight-200">
+          {isEditingMode ? 'Editing Idea' : 'Add My Idea'}{' '}
+        </h2>
+        <span className="font-weight-200">Learn-Make-Teach</span>
+      </div>
       <SectionTitle title="Basic Information" />
       <FormItem {...formItemLayout} label="Title" hasFeedback>
         {getFieldDecorator('title', {
@@ -219,18 +223,19 @@ function IdeaAddEditFormForm({
           </div>
         </FormItem>
       )}
-      <FormItem style={{ textAlign: 'right' }}>
+      <FormItem style={{ textAlign: 'right' }} className="p-t-2 m-b-1">
         {!isCreateSuccess && (
-          <Button type="primary" htmlType="submit">
-            {isEditingMode ? 'Update Idea' : 'Add Idea'}
-          </Button>
+          <Button
+            className="m-r-1s"
+            type="submit"
+            label={isEditingMode ? 'Update Idea' : 'Add Idea'}
+            raised
+            primary
+            onClick={handleSubmit}
+          />
         )}
         {isEditingMode &&
-          canDelete && (
-            <Button type="danger" onClick={onDeleteIdea} className="m-x-1">
-              Delete Idea
-            </Button>
-          )}
+          canDelete && <Button className="m-r-1s" label={'Delete Idea'} onClick={onDeleteIdea} />}
         {(isEditingMode || isCreateSuccess) && (
           <Link className="m-r-1" to={`/ideas/${idea.slug}`}>
               Preview
@@ -242,7 +247,7 @@ function IdeaAddEditFormForm({
   );
 }
 
-const DEFAULT_IDEA = {
+const getDefaultIdea = () => ({
   category: DEFAULT_CATEGORIES,
   coverBackgroundUrl: DEFAULT_COVER_BG,
   description: 'Lorem ipsum dolor, sit amet consectetur adipisicing el',
@@ -258,12 +263,14 @@ const DEFAULT_IDEA = {
   youtubeVideoUrl: 'https://www.youtube.com/watch?v=I-ovzUNno7g&t=50s',
   startTime: '2017-11-01T07:00:00.000Z',
   estimatedFinishTime: '2017-11-03T07:00:00.000Z',
-};
+});
 
 const IdeaAddEditFormFormHOC = compose(
   withRouter,
   withProps(({ idea, userId, isSuperuser, isIdeaOwner, ...rest }) => {
     const isEditingMode = !!idea;
+    // Must use function for getting unique slug
+    const DEFAULT_IDEA = getDefaultIdea();
     // Normalize the editing and creation data
     const ideaLocal = isEditingMode ? { ...idea } : DEFAULT_IDEA;
     ideaLocal.startTime = moment(ideaLocal.startTime || DEFAULT_IDEA.startTime, DATE_FORMAT);
@@ -278,7 +285,6 @@ const IdeaAddEditFormFormHOC = compose(
     }
 
     ideaLocal.contributorsText = contributorsText;
-    const ideaCreatedById = idea && idea.createdBy && idea.createdBy.id;
 
     return {
       canDelete: isSuperuser || isIdeaOwner,
@@ -342,13 +348,15 @@ const IdeaAddEditFormFormHOC = compose(
               createdById: userId,
               contributorsIds: [],
             };
+
             createIdea({
               variables,
               refetchQueries: [{ query: IdeaListQuery }],
             })
               .then((res) => {
                 console.warn('res', res);
-                isCreateSuccessSet(true);
+                history.push(`/ideas/${res.data.createIdea.slug}`);
+                // isCreateSuccessSet(true);
               })
               .catch(error => console.warn('error', error));
           }

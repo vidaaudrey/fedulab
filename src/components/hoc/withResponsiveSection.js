@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   css,
@@ -11,7 +12,6 @@ import {
 import { SvgChevronRight, SvgChevronDown, SvgChevronUp } from '@coursera/coursera-ui/svg';
 import Button from 'react-toolbox/lib/button/Button';
 import { compose, pure, hoistStatics, withState, withHandlers, setDisplayName } from 'recompose';
-import _ from 'underscore';
 
 import Measure from 'react-measure';
 import withBreakPoint from 'src/components/hoc/withBreakPoint';

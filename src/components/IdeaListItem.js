@@ -7,6 +7,7 @@ import { compose, withHandlers } from 'recompose';
 import IdeaActions from 'src/components/IdeaActions';
 import HumanTime from 'src/components/HumanTime';
 import IdeaLike from 'src/components/IdeaLike';
+import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
 
@@ -36,12 +37,15 @@ export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) 
         </span>
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{idea.description}</p>
-        <IdeaActions
-          canDelete={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
-          id={idea.id}
-          slug={idea.slug}
-          isSuperuser={isSuperuser}
-        />
+        {ENABLE_QUICK_ADMIN_OP && (
+          <IdeaActions
+            canDelete={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
+            canEdit={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
+            id={idea.id}
+            slug={idea.slug}
+            isSuperuser={isSuperuser}
+          />
+        )}
 
         <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
       </div>
