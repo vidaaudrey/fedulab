@@ -1,11 +1,14 @@
 // @flow
 import React from 'react';
+import { Container } from '@coursera/coursera-ui';
 // import styled from 'styled-components';
 
-import IdeaList from 'src/components/IdeaList';
+import PopularIdeas from 'src/components/PopularIdeas';
 import BannerStatic from 'src/components/BannerStatic';
 import LearnMakeTeach from 'src/components/LearnMakeTeach';
 import JoinDiscussion from 'src/components/JoinDiscussion';
+import AboutMakeAThon from 'src/components/AboutMakeAThon';
+import GallerySection from 'src/components/GallerySection';
 
 /* Use styled  for styling components 
 const Button = styled.button`
@@ -27,13 +30,20 @@ type Props = {
 export default function Home({ isSuperuser, userId }: Props) {
   return (
     <div>
-      <div className="bg-primary text-xs-center">
+      <div className="Home bg-primary text-xs-center">
         <BannerStatic />
       </div>
       <LearnMakeTeach />
       {/* <Button>Normal</Button>
       <Button primary>Primary</Button> */}
-      <IdeaList isSuperuser={isSuperuser} userId={userId} />
+      <div className="bg-light p-y-3">
+        <Container>
+          <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
+          <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
+        </Container>
+      </div>
+      <GallerySection />
+      <AboutMakeAThon />
       <JoinDiscussion />
     </div>
   );

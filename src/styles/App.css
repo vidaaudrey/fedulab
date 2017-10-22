@@ -3,6 +3,7 @@ body {
   background-color: #f2f2f2;
   font-family: "Roboto", Helvetica, Arial, sans-serif;
   position: relative;
+  -webkit-font-smoothing: antialiased;
 }
 
 .App {
@@ -43,8 +44,26 @@ body {
   color: #fff;
 }
 
+.bg-light {
+  background: #f7f7f7;
+}
+
+.bg-dark {
+  background: #000;
+  color: #f2f2f2;
+}
 .font-weight-200 {
   font-weight: 200;
+}
+.font-weight-900 {
+  font-weight: 900;
+}
+
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* style overrides */

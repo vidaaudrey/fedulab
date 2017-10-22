@@ -24,7 +24,9 @@ export default function BannerStatic({ match }: MatchProps) {
       alignItems="center"
     >
       <div className="p-a-3">
-        <h1 className="font-xxl color-white font-weight-bold">Welcome to the 9th Make-A-Thon</h1>
+        <h1 className="color-white font-weight-900" style={{ fontSize: '4.8rem' }}>
+          Welcome to the 9th Make-A-Thon
+        </h1>
         <h2 className="m-b-1 color-white">Learn-Make-Teach</h2>
         <Link to="/add-idea">
           <Button

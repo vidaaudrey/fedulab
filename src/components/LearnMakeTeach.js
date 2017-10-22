@@ -25,7 +25,7 @@ const CONFIG = [
 ];
 export default function LearnMakeTeach() {
   return (
-    <div className="LearnMakeTeach bg-white text-xs-center p-y-2">
+    <div className="LearnMakeTeach text-xs-center bg-white p-y-3">
       <Container>
         <Row gutter={16}>
           {CONFIG.map(({ title, icon, description }) => (
