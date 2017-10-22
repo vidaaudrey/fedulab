@@ -1,5 +1,6 @@
 // @flow
 
+export const SLACK_URL = 'https://coursera.slack.com/messages/makeathon';
 export const ENABLE_NON_COURSERA_SIGN_IN = false;
 export const DEFAULT_COVER_BG =
   'http://www.webdesignhot.com/wp-content/uploads/2015/11/Abstract-Colorful-Geometric-Shapes-Background-Vector-Illustration.jpg';

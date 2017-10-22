@@ -83,13 +83,14 @@
     "include": [
       "BUTTON",
       "DATE_PICKER",
-      "MENU"
+      "MENU",
+      "AVATAR"
     ],
     "customProperties": {
       "animation-duration": "0.3s",
       "color-primary": "var(--palette-deep-orange-700)",
-      "color-accent": "var(--palette-pink-a200)",
-      "color-accent-dark": "var(--palette-pink-700)",
+      "color-accent": "var(--palette-light-blue-a200)",
+      "color-accent-dark": "var(--palette-light-blue-700)",
       "color-primary-contrast": "var(--color-dark-contrast)",
       "color-accent-contrast": "var(--color-dark-contrast)"
     },

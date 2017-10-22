@@ -32,16 +32,10 @@ export default function HeaderAlt({ username, picture, isLoggedIn, loading, onLo
             defaultSelectedKeys={['1']}
             style={{ lineHeight: '68px', borderBottom: 'none' }}
           >
-            <Menu.Item key="1">
-              <Link to="/home">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="3">
+            <Menu.Item key="2">
               <Link to="/ideas">Ideas</Link>
             </Menu.Item>
-            <Menu.Item key="4">
-              <Link to="/add-idea">Add Idea</Link>
-            </Menu.Item>
-            <Menu.Item key="2">
+            <Menu.Item key="3">
               <Link to="/about">About</Link>
             </Menu.Item>
           </Box>

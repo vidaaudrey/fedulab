@@ -29,6 +29,7 @@ function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest 
 
   return (
     <Box
+      rootClassName="LoggedOutHome bg-white"
       style={{ width: '100vw', height: '100vh' }}
       flexDirection="column"
       justifyContent="center"

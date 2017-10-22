@@ -4,6 +4,8 @@ import React from 'react';
 
 import IdeaList from 'src/components/IdeaList';
 import BannerStatic from 'src/components/BannerStatic';
+import LearnMakeTeach from 'src/components/LearnMakeTeach';
+import JoinDiscussion from 'src/components/JoinDiscussion';
 
 /* Use styled  for styling components 
 const Button = styled.button`
@@ -28,9 +30,11 @@ export default function Home({ isSuperuser, userId }: Props) {
       <div className="bg-primary text-xs-center">
         <BannerStatic />
       </div>
+      <LearnMakeTeach />
       {/* <Button>Normal</Button>
       <Button primary>Primary</Button> */}
       <IdeaList isSuperuser={isSuperuser} userId={userId} />
+      <JoinDiscussion />
     </div>
   );
 }
