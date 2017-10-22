@@ -9,6 +9,7 @@ import _ from 'underscore';
 import Auth0Lock from 'auth0-lock';
 import { ENABLE_NON_COURSERA_SIGN_IN } from 'src/constants/appConstants';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
+import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 
 type Props = {
   onShowLogin: () => void,
@@ -18,7 +19,14 @@ type Props = {
 function LoginAuth0({ onShowLogin, error }: Props) {
   return (
     <Box flexDirection="column">
-      <Button icon="navigate_next" label="Start" raised primary onClick={onShowLogin} />
+      <Button
+        style={{ height: BUTTON_LG_HEIGHT, width: 160 }}
+        icon="navigate_next"
+        label="Start"
+        raised
+        primary
+        onClick={onShowLogin}
+      />
       {error && (
         <span className="text-error">Please login with your Coursera credential {error}</span>
       )}

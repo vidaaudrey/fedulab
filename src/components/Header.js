@@ -12,6 +12,7 @@ const { Header } = Layout;
 export default function HeaderAlt({ username, picture, isLoggedIn, loading, onLogout }: Props) {
   return (
     <Header
+      className="shadow"
       style={{
         position: 'fixed',
         width: '100%',

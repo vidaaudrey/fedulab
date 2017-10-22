@@ -3,7 +3,7 @@ import React from 'react';
 // import styled from 'styled-components';
 
 import IdeaList from 'src/components/IdeaList';
-import Banner from 'src/components/Banner';
+import BannerStatic from 'src/components/BannerStatic';
 
 /* Use styled  for styling components 
 const Button = styled.button`
@@ -26,7 +26,7 @@ export default function Home({ isSuperuser, userId }: Props) {
   return (
     <div>
       <div className="bg-primary text-xs-center">
-        <Banner />
+        <BannerStatic />
       </div>
       {/* <Button>Normal</Button>
       <Button primary>Primary</Button> */}

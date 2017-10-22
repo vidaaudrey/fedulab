@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Route, Link } from 'react-router-dom';
+import { Layout, Breadcrumb } from 'antd';
+import { Route } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
 
@@ -18,6 +18,7 @@ import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
 import MyDashboard from 'src/components/MyDashboard';
 import Home from 'src/components/Home';
+import Footer from 'src/components/Footer';
 import LoggedOutHome from 'src/components/LoggedOutHome';
 
 import { AUTH_KEY } from 'src/constants/config';
@@ -26,7 +27,7 @@ import 'antd/dist/antd.css';
 import '@coursera/coursera-ui/css/utilities.css';
 import 'src/styles/App.css';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 function App({
   data,
@@ -52,13 +53,13 @@ function App({
         loading={loading}
         onLogout={onLogout}
       />
-      <Content style={{ padding: '0 50px', marginTop: 64 }}>
+      <Content>
         <Breadcrumb style={{ margin: '12px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
+        <div>
           <Route
             exact
             path="/home"
@@ -91,7 +92,7 @@ function App({
           <Route exact path="/signup" component={UserCreate} />
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Fedulab for Make-A-Thon ©2017 @Coursera</Footer>
+      <Footer />
     </Layout>
   );
 }
