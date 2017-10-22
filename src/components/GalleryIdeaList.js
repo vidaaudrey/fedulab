@@ -1,19 +1,11 @@
 // @flow
 import React from 'react';
-import { StyleSheet, css, color, transition } from '@coursera/coursera-ui';
 import { Row, Col } from 'antd';
+import QueueAnim from 'rc-queue-anim';
 
-import { Link } from 'react-router-dom';
 import GalleryIdeaItem from 'src/components/GalleryIdeaItem';
 
 import { MAKEATHON_8_IDEAS } from 'src/constants/makeathonData';
-
-const styles = StyleSheet.create({
-  GalleryIdeaList: {
-    minHeight: 104,
-  },
-  transition: transition.easeOut(),
-});
 
 type Props = {
   ideas: [Object],
@@ -27,12 +19,14 @@ const GalleryIdeaList = ({ ideas = MAKEATHON_8_IDEAS }: Props) => (
         Browse {ideas.length} ideas from Coursera 8th Make-A-Thon
       </span>
     </div>
-    <Row gutter={24} className="m-b-3">
-      {ideas.map(idea => (
-        <Col key={idea.id} xs={12} md={8} lg={6}>
-          <GalleryIdeaItem idea={idea} />
-        </Col>
-      ))}
+    <Row className="m-b-3">
+      <QueueAnim>
+        {ideas.map(idea => (
+          <Col key={idea.id} xs={12} md={8} lg={6} className="p-a-1 m-b-2">
+            <GalleryIdeaItem idea={idea} />
+          </Col>
+        ))}
+      </QueueAnim>
     </Row>
   </div>
 );

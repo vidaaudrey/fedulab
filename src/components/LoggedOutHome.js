@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Box } from '@coursera/coursera-ui';
-import { Redirect, Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 import { graphql, gql, compose } from 'react-apollo';
 
@@ -22,11 +22,6 @@ type Props = {
 };
 
 function LoggedOutHome({ loading, location, history, isLoggedIn, error, ...rest }: Props) {
-  // Redirect if user is logged in, or not loggedin but the path is not the route path
-  if (isLoggedIn && location.pathname !== '/home') {
-    return <Redirect to={{ pathname: '/home' }} />;
-  }
-
   return (
     <Box
       rootClassName="LoggedOutHome bg-white"

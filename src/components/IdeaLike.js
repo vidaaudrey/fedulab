@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Card, Icon, Button } from 'antd';
+import { Icon, Button } from 'antd';
 
 import { compose, withProps, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';

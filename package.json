@@ -84,7 +84,9 @@
       "BUTTON",
       "DATE_PICKER",
       "MENU",
-      "AVATAR"
+      "AVATAR",
+      "INPUT",
+      "SWITCH"
     ],
     "customProperties": {
       "animation-duration": "0.3s",

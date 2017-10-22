@@ -10,6 +10,7 @@ import { DeleteIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';
 
 type Props = {
   canDelete: boolean,
+  canEdit: boolean,
   id: string,
   isSuperuser: boolean,
   onDeleteIdea: () => void,
@@ -17,7 +18,16 @@ type Props = {
   slug: string,
 };
 
-function IdeaActions({ id, slug, onDeleteIdea, onEdit, isSuperuser, canDelete, ...rest }: Props) {
+function IdeaActions({
+  id,
+  slug,
+  onDeleteIdea,
+  onEdit,
+  isSuperuser,
+  canDelete,
+  canEdit,
+  ...rest
+}: Props) {
   return (
     <div>
       {canDelete && (
@@ -25,7 +35,7 @@ function IdeaActions({ id, slug, onDeleteIdea, onEdit, isSuperuser, canDelete, .
           Delete Idea
         </Button>
       )}
-      {isSuperuser && <Button onClick={onEdit}>Edit</Button>}
+      {canEdit && <Button onClick={onEdit}>Edit</Button>}
     </div>
   );
 }

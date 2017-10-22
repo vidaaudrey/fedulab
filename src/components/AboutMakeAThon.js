@@ -1,11 +1,8 @@
 // @flow
 import React from 'react';
-import { Box, CenterBox } from '@coursera/coursera-ui';
-import { Link } from 'react-router-dom';
+import { Box } from '@coursera/coursera-ui';
 import { Row, Col } from 'antd';
-import Button from 'react-toolbox/lib/button/Button';
 
-import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 import { SLACK_URL } from 'src/constants/appConstants';
 import ABOUT from 'src/assets/imgs/about.jpg';
 

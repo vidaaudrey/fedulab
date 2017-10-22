@@ -76,6 +76,7 @@ function IdeaDetail({
         <IdeaActions
           shouldRedirectToListAfterDelete
           canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
+          canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
           id={id}
           slug={slug}
         />

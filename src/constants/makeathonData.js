@@ -586,36 +586,6 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
-          id: 'SWRlYTo2Ng==',
-          title: 'Item Search',
-          tagline: 'Search on item level',
-          description:
-            'Currently, our search is on course level and doesn’t index on video subtitles and reading materials.\nWith item search, we can explore the hidden gems within those materials, and provide a better experience for our customers.\nFurthermore, we can index skills that are relevant to the courses to as well, to lead users to the information they need.',
-          startTime: '2017-04-11T21:09:41.000Z',
-          displayOrder: 27,
-          estimatedFinishTime: '2017-04-23T11:13:02.000Z',
-          contributorsDescription: 'Myo Thein, Yuan Liu',
-          needs: null,
-          featureImageUrl:
-            'https://assets.materialup.com/uploads/9fb8cd93-5fb8-4ca3-b6cb-5dbc570bf722/searchfull.gif',
-          slideUrl: null,
-          slackUrl: 'https://coursera.slack.com',
-          slackChannelName: '#',
-          youtubeVideoId: null,
-          courseraVideoId: 'https://drive.google.com/file/d/0B-73kzqgZT6vWmV4Z3REcUM3Y2M/view',
-          creator: {
-            id: 'VXNlcjox',
-            displayName: 'jon',
-            picture: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/4/000/141/164/3de0632.jpg',
-          },
-          contributors: {
-            edges: [],
-          },
-        },
-      },
-      {
-        node: {
           id: 'SWRlYTo2Mw==',
           title: 'Spaced Repetition',
           tagline: 'Lifelong learning',
@@ -704,6 +674,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
+          showInGallerySection: true,
           id: 'SWRlYTo2MA==',
           title: 'Piano Widget',
           tagline: 'Progress through your music course by playing piano',

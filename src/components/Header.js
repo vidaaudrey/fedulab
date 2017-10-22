@@ -22,7 +22,7 @@ export default function HeaderAlt({ username, picture, isLoggedIn, loading, onLo
       }}
     >
       <Box rootClassName="w-100 h-100" justifyContent="between" alignItems="center">
-        <Box tag={Link} rootClassName="logo" alignItems="center" to="/home" flex={1}>
+        <Box tag={Link} rootClassName="logo" alignItems="center" to="/" flex={1}>
           <img src={Logo} alt="fedulab" width="144px" />
         </Box>
         <Box>
@@ -32,6 +32,9 @@ export default function HeaderAlt({ username, picture, isLoggedIn, loading, onLo
             defaultSelectedKeys={['1']}
             style={{ lineHeight: '68px', borderBottom: 'none' }}
           >
+            <Menu.Item key="1">
+              <Link to="/add-idea">+Idea</Link>
+            </Menu.Item>
             <Menu.Item key="2">
               <Link to="/ideas">Ideas</Link>
             </Menu.Item>

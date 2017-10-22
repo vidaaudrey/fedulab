@@ -1,39 +1,75 @@
 // @flow
 import React from 'react';
-import { Row, Col } from '@coursera/coursera-ui';
+import { Row, Col } from 'antd';
+import QueueAnim from 'rc-queue-anim';
+import { compose, withProps } from 'recompose';
+
 import { Link } from 'react-router-dom';
 import _ from 'underscore';
+import { graphql } from 'react-apollo';
+
+import { withGQLLoadingOrError } from 'src/components/withBranches';
+import IdeaListItem from 'src/components/IdeaListItem';
 
 import withResponsiveSection from 'src/components/hoc/withResponsiveSection';
-import { CourseCardPlaceholder } from 'src/components/PlaceholderCards';
 
-const allItems = _.range(16);
+import { IdeaListQuery } from 'src/constants/appQueries';
 
-function MyEnrolledCourses({ displayCount = 1, s12ns = allItems }) {
+type Props = {
+  isSuperuser: boolean,
+  userId: boolean,
+  allIdeas: [Object],
+};
+
+type PopularIdeasListProps = {
+  displayCount: ?number,
+  ideas: [Object],
+  isSuperuser: boolean,
+  userId: boolean,
+};
+
+function PopularIdeasList({ displayCount, ideas, isSuperuser, userId }: PopularIdeasListProps) {
+  const ideaList = displayCount === undefined ? ideas : ideas.slice(0, displayCount);
   return (
-    <Row rootClassName="MyEnrolledCourses">
-      {s12ns.slice(0, displayCount).map(item => (
-        <Col xs={12} sm={6} md={4} lg={3} xxl={2} key={item} rootClassName="m-b-1">
-          <CourseCardPlaceholder />
-        </Col>
-      ))}
+    <Row className="PopularIdeasList">
+      <QueueAnim>
+        {ideaList.map(idea => (
+          <Col xs={24} sm={12} md={8} lg={6} key={idea.id} className="p-a-1 m-b-2">
+            <IdeaListItem idea={idea} key={idea.id} isSuperuser={isSuperuser} userId={userId} />
+          </Col>
+        ))}
+      </QueueAnim>
     </Row>
   );
 }
 
-const MyEnrolledCoursesResponsive = withResponsiveSection(MyEnrolledCourses);
+const PopularIdeasListResponsive = withResponsiveSection(PopularIdeasList);
 
-export default function PopularIdeas() {
+function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
   return (
-    <MyEnrolledCoursesResponsive
-      moreLink="http://coursera.org"
+    <PopularIdeasListResponsive
+      moreLink="/ideas"
+      moreTag={Link}
+      titleTag="h2"
       sectionTitle="Popular Ideas"
       total={24}
-      xsDisplayCount={1}
-      smDisplayCount={2}
-      mdDisplayCount={3}
-      lgDisplayCount={4}
-      xxlDisplayCount={6}
+      xsDisplayCount={2}
+      smDisplayCount={4}
+      mdDisplayCount={6}
+      lgDisplayCount={8}
+      xxlDisplayCount={12}
+      ideas={allIdeas}
+      isSuperuser={isSuperuser}
+      userId={userId}
     />
   );
 }
+
+export default compose(
+  graphql(IdeaListQuery, {
+    options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
+    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas }),
+  }),
+  withProps(() => ({ dataFieldName: 'allIdeas' })),
+  withGQLLoadingOrError(),
+)(PopularIdeas);

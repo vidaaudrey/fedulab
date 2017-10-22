@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Layout, Breadcrumb } from 'antd';
-import { Route } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
 
@@ -9,6 +9,7 @@ import 'assets/react-toolbox/theme.css';
 import theme from 'assets/react-toolbox/theme.js';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 
+import { withGQLLoadingOrError } from 'src/components/withBranches';
 import Header from 'src/components/Header';
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
@@ -39,9 +40,13 @@ function App({
   picture,
   isLoggedIn,
   onLogout,
+  location,
   ...rest
 }: Props) {
   if (!isLoggedIn) {
+    if (location.pathname !== '/') {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
     return <LoggedOutHome />;
   }
 
@@ -54,7 +59,7 @@ function App({
         loading={loading}
         onLogout={onLogout}
       />
-      <Content>
+      <Content style={{ minHeight: '92vh' }}>
         <Breadcrumb style={{ margin: '12px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -63,7 +68,7 @@ function App({
         <div>
           <Route
             exact
-            path="/home"
+            path="/"
             render={props => <Home {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route
@@ -135,4 +140,6 @@ export default compose(
       location.reload();
     },
   }),
+  withGQLLoadingOrError(),
+  withRouter,
 )(AppWithTheme);

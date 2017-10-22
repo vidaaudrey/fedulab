@@ -1,9 +1,11 @@
 // @flow
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { Box } from '@coursera/coursera-ui';
-import { Row, Col, Input, Checkbox } from 'antd';
+import { Box, Container } from '@coursera/coursera-ui';
+import { Row, Col } from 'antd';
+import Input from 'react-toolbox/lib/input/Input';
+import Switch from 'react-toolbox/lib/switch/Switch';
 import QueueAnim from 'rc-queue-anim';
+import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps, withHandlers, withState } from 'recompose';
 
 import { Search } from 'js-search';
@@ -13,8 +15,6 @@ import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaListItem from 'src/components/IdeaListItem';
 
 import { IdeaListQuery } from 'src/constants/appQueries';
-
-const AntSearch = Input.Search;
 
 type Props = {
   allIdeas: [Object],
@@ -39,39 +39,49 @@ export function IdeaList({
   ...rest
 }: Props) {
   return (
-    <div>
-      <h2>Ideas</h2>
-      <Box flexWrap="wrap" alignItems="center">
-        <AntSearch placeholder="input search text" style={{ width: 200 }} onChange={onChange} />
-        <span className="p-x-1">
-          <Checkbox onChange={toggleIsPresenting} checked={!!isPresenting}>
-            Presenting
-          </Checkbox>
-        </span>
-      </Box>
-      {allIdeas.length === 0 && (
-        <div className="text-xs-center p-a-3">
-          <h2>There are no ideas.</h2>
-          <Link to="/add-idea">Add My Idea</Link>
+    <div className="bg-light p-y-3 m-t-3">
+      <Container>
+        <div className="text-xs-center">
+          <h2 className="font-xl font-weight-200"> Ideas</h2>
+          <span className="font-weight-200">Browse ideas for Coursera 9th Make-A-Thon</span>
+          <Box rootClassName="m-b-1" flexWrap="wrap" alignItems="center" justifyContent="center">
+            <Input
+              icon="search"
+              type="text"
+              label="Search"
+              name="searchText"
+              value={searchText}
+              onChange={onChange}
+            />
+            <span className="p-x-1">
+              <Switch checked={!!isPresenting} label="Presenting" onChange={toggleIsPresenting} />
+            </span>
+          </Box>
+          {allIdeas.length === 0 && (
+            <div className="text-xs-center p-a-3">
+              <h2>There are no ideas.</h2>
+              <Link to="/add-idea">Add My Idea</Link>
+            </div>
+          )}
+          {allIdeas.length > 0 &&
+            filteredIdeas.length === 0 && (
+              <div className="text-xs-center p-a-3">
+                <h3>
+                  No results found: <span className="text-danger">{searchText}</span>
+                </h3>
+              </div>
+            )}
         </div>
-      )}
-      {allIdeas.length > 0 &&
-        filteredIdeas.length === 0 && (
-          <div className="text-xs-center p-a-3">
-            <h2>
-              No results found for <span className="text-danger">{searchText}</span>
-            </h2>
-          </div>
-        )}
-      <Row gutter={16}>
-        <QueueAnim>
-          {filteredIdeas.map(idea => (
-            <Col xs={24} sm={12} md={8} lg={6} key={idea.id} className="p-a-1 m-b-2">
-              <IdeaListItem idea={idea} key={idea.id} isSuperuser={isSuperuser} userId={userId} />
-            </Col>
-          ))}
-        </QueueAnim>
-      </Row>
+        <Row gutter={16}>
+          <QueueAnim>
+            {filteredIdeas.map(idea => (
+              <Col xs={24} sm={12} md={8} lg={6} key={idea.id} className="p-a-1 m-b-2">
+                <IdeaListItem idea={idea} key={idea.id} isSuperuser={isSuperuser} userId={userId} />
+              </Col>
+            ))}
+          </QueueAnim>
+        </Row>
+      </Container>
     </div>
   );
 }
@@ -89,8 +99,6 @@ export default compose(
     if (searchText.length === 0) {
       return { filteredIdeas: data.allIdeas, allIdeas: data.allIdeas };
     }
-    console.warn('search', searchText, data.allIdeas);
-
     const search = new Search(['id']);
     search.addIndex('title');
     search.addIndex('contributorsText');
@@ -107,7 +115,7 @@ export default compose(
   }),
   withHandlers({
     onChange: ({ searchTextSet }) => (ev) => {
-      searchTextSet(ev.currentTarget.value);
+      searchTextSet(ev);
     },
     toggleIsPresenting: ({ isPresenting, isPresentingSet }) => () => {
       // Only toggle between all ideas and presenting ideas

@@ -39,7 +39,6 @@ export default function Home({ isSuperuser, userId }: Props) {
       <div className="bg-light p-y-3">
         <Container>
           <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
-          <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
         </Container>
       </div>
       <GallerySection />
