@@ -35,10 +35,10 @@ export default function UserMenu({
       </Link>
       <IconMenu icon="more_vert" position="topRight" menuRipple>
         <Link to="/add-idea" className="hidden-sm-up">
-          <MenuItem value="add" icon="add" caption="+ Idea" />
+          <MenuItem value="add" icon="add" caption="Add Idea" />
         </Link>
         <Link to="/ideas" className="hidden-sm-up">
-          <MenuItem value="browse" icon="add" caption="Browse" />
+          <MenuItem value="browse" icon="explore" caption="Browse" />
         </Link>
         <Link to="/me">
           <MenuItem value="help" icon="favorite" caption="Liked Ideas" />
