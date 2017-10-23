@@ -8,14 +8,25 @@ import _ from 'underscore';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 
-export function MyDashboard({ name = 'Audrey', likedIdeas, ...rest }: MatchProps) {
+export function MyDashboard({ name = 'Audrey', myIdeas, likedIdeas, ...rest }: MatchProps) {
   console.warn('me', likedIdeas, rest);
   const nonNullIdeas = likedIdeas.filter(item => !!item);
   return (
     <div className="MyDashboard p-y-1 h-100">
       <div className="max-text-width bg-white p-a-2 m-x-auto min-vh">
-        <h3>Welcome {name}</h3>
-        <h2>My Liked Ideas</h2>
+        <div className="text-xs-center">
+          <h2 className="font-xl font-weight-200">Welcome {name}</h2>
+          <p className="font-weight-200 m-b-1">Profile, created ideas, likes and votes</p>
+        </div>
+        <h3>My Ideas</h3>
+        {myIdeas.map(idea => (
+          <div className="p-b-1s" key={idea.id}>
+            <Link to={`/ideas/${idea.slug}`}>
+              <span className="font-weight-bold">{idea.title}</span>
+            </Link>
+          </div>
+        ))}
+        <h3>My Liked Ideas</h3>
         {nonNullIdeas.map(idea => (
           <div className="p-b-1s" key={idea.id}>
             <Link to={`/ideas/${idea.slug}`}>
@@ -23,7 +34,7 @@ export function MyDashboard({ name = 'Audrey', likedIdeas, ...rest }: MatchProps
             </Link>
           </div>
         ))}
-        <h2>My Votes</h2>
+        <h3>My Votes</h3>
       </div>
     </div>
   );
@@ -36,6 +47,12 @@ const userQuery = gql`
       name
       picture
       isSuperuser
+      myIdeas {
+        id
+        title
+        slug
+        coverBackgroundUrl
+      }
       likes {
         id
         idea {
@@ -57,6 +74,7 @@ export default compose(
       userId: user && user.id,
       isSuperuser: user && user.isSuperuser,
       picture: user && user.picture,
+      myIdeas: (user && user.myIdeas) || [],
       likedIdeas: (user && user.likes && _(user.likes).pluck('idea')) || [],
       dataFieldName: 'user',
     }),

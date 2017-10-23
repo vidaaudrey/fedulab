@@ -14,7 +14,7 @@ export default function JoinDiscussion() {
     <div className="JoinDiscussion p-y-3 bg-white">
       <Row gutter={16}>
         <Col xs={24} sm={12} className="p-a-1 m-b-2">
-          <div className="p-a-2">
+          <div className="p-a-3">
             <h3 className="font-xl font-weight-200">#MakeAThon</h3>
             <p className="font-weight-200 m-b-1">Join the conversations</p>
             <a
