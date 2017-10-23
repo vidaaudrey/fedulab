@@ -46,3 +46,4 @@ Run tests and get coverage : `yarn test:cover`
 - [ ] Placeholder for preventing page jump
 - [ ] Presentation view 
 - [ ] Sort by likes 
+- [ ] Delete likes when deleting ideas 
