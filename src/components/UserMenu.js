@@ -1,26 +1,51 @@
 // @flow
 import React from 'react';
+import Avatar from 'react-toolbox/lib/avatar/Avatar';
 import IconMenu from 'react-toolbox/lib/menu/IconMenu';
 import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import MenuDivider from 'react-toolbox/lib/menu/MenuDivider';
 import { Link } from 'react-router-dom';
+import { COLOR_PRIMARY } from 'src/constants/theme';
 
 type Props = {
+  name: string,
+  picture: string,
   loading: boolean,
   isLoggedIn: boolean,
+  isActive: boolean,
   onLogout: () => void,
 };
 
-export default function UserMenu({ loading, isLoggedIn, onLogout }: Props) {
+export default function UserMenu({
+  name,
+  picture,
+  isActive,
+  loading,
+  isLoggedIn,
+  onLogout,
+}: Props) {
   return (
     <div>
       <Link to="/me" className="p-x-1 d-inline-block">
-        Me
+        <Avatar
+          style={{ border: isActive ? `2px solid ${COLOR_PRIMARY}` : 'none' }}
+          title={name}
+          image={picture}
+        />
       </Link>
       <IconMenu icon="more_vert" position="topRight" menuRipple>
-        <MenuItem value="download" icon="get_app" caption="Download" />
-        <MenuItem value="help" icon="favorite" caption="Favorite" />
-        <MenuItem value="settings" icon="open_in_browser" caption="Open in app" />
+        <Link to="/add-idea" className="hidden-sm-up">
+          <MenuItem value="add" icon="add" caption="+ Idea" />
+        </Link>
+        <Link to="/ideas" className="hidden-sm-up">
+          <MenuItem value="browse" icon="add" caption="Browse" />
+        </Link>
+        <Link to="/me">
+          <MenuItem value="help" icon="favorite" caption="Liked Ideas" />
+        </Link>
+        <Link to="/about">
+          <MenuItem value="about" icon="info" caption="About" />
+        </Link>
         <MenuDivider />
         <MenuItem value="signout" icon="exit_to_app" caption="Logout" onClick={onLogout} />
       </IconMenu>

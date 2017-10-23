@@ -8,7 +8,7 @@ import ABOUT from 'src/assets/imgs/about.jpg';
 
 export default function AboutMakeAThon() {
   return (
-    <div className="AboutMakeAThon">
+    <div className="AboutMakeAThon bg-light">
       <Row gutter={0}>
         <Col
           xs={24}

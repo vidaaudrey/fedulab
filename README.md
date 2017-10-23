@@ -33,4 +33,16 @@ Run tests and get coverage : `yarn test:cover`
 - [ ]
 - [ ]
 - [ ]
-- [ ]
+
+
+
+## Feature TODO 
+- [ ] Idea Detail page 
+- [ ] Consolidate Loading 
+- [ ] Dashboard 
+- [ ] Liked Ideas
+- [ ] About
+- [ ] Slider ?? 
+- [ ] Placeholder for preventing page jump
+- [ ] Presentation view 
+- [ ] Sort by likes 

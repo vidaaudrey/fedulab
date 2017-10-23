@@ -12,17 +12,19 @@ export function MyDashboard({ name = 'Audrey', likedIdeas, ...rest }: MatchProps
   console.warn('me', likedIdeas, rest);
 
   return (
-    <div className="MyDashboard">
-      <h3>Welcome {name}</h3>
-      <h2>My Liked Ideas</h2>
-      {likedIdeas.map(idea => (
-        <div className="p-b-1s" key={idea.id}>
-          <Link to={`/ideas/${idea.slug}`}>
-            <span className="font-weight-bold">{idea.title}</span>
-          </Link>
-        </div>
-      ))}
-      <h2>My Votes</h2>
+    <div className="MyDashboard p-y-1 h-100">
+      <div className="max-text-width bg-white p-a-2 m-x-auto min-vh">
+        <h3>Welcome {name}</h3>
+        <h2>My Liked Ideas</h2>
+        {likedIdeas.map(idea => (
+          <div className="p-b-1s" key={idea.id}>
+            <Link to={`/ideas/${idea.slug}`}>
+              <span className="font-weight-bold">{idea.title}</span>
+            </Link>
+          </div>
+        ))}
+        <h2>My Votes</h2>
+      </div>
     </div>
   );
 }

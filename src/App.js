@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
@@ -51,7 +51,7 @@ function App({
   }
 
   return (
-    <Layout style={{ color: '#424242', background: '#f5f5f5' }}>
+    <Layout className="min-support-width">
       <Header
         name={username}
         picture={picture}
@@ -59,12 +59,7 @@ function App({
         loading={loading}
         onLogout={onLogout}
       />
-      <Content style={{ minHeight: '92vh' }}>
-        <Breadcrumb style={{ margin: '12px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
+      <Content style={{ minHeight: '92vh', paddingTop: 72 }}>
         <div>
           <Route
             exact

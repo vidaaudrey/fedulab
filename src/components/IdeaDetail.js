@@ -49,7 +49,7 @@ function IdeaDetail({
   const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
-    <div {...css('IdeaDetail m-t-2 p-t-1', animationUtils.fadeInSlow)}>
+    <div {...css('IdeaDetail', animationUtils.fadeInSlow)}>
       <div className="custom-image">
         <img
           alt="example"

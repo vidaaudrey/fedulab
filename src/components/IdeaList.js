@@ -39,7 +39,7 @@ export function IdeaList({
   ...rest
 }: Props) {
   return (
-    <div className="bg-light p-y-3 m-t-3">
+    <div className="bg-light p-y-3">
       <Container>
         <div className="text-xs-center">
           <h2 className="font-xl font-weight-200"> Ideas</h2>

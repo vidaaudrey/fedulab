@@ -4,10 +4,16 @@ body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  color: #424242;
+  background: #f5f5f5;
 }
 
 .App {
   text-align: center;
+}
+
+.min-support-width {
+  min-width: 360px;
 }
 
 .App-logo {
@@ -38,6 +44,10 @@ body {
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+}
+
+.min-vh {
+  min-height: 80vh;
 }
 
 .inverse {

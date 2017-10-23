@@ -5,7 +5,7 @@ import GalleryIdeaList from 'src/components/GalleryIdeaList';
 
 export default function Gallery() {
   return (
-    <div className="bg-light p-y-3 m-t-3">
+    <div className="bg-light p-y-3">
       <Container>
         <GalleryIdeaList />
       </Container>

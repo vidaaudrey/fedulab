@@ -35,7 +35,7 @@ function IdeaEdit({
   const isIdeaOwner = idea.createdBy && idea.createdBy.id;
   if (isSuperuser || isIdeaOwner) {
     return (
-      <div className="EditIdea m-t-3 p-y-1">
+      <div className="EditIdea p-y-1">
         <div className="max-text-width bg-white p-a-2 m-x-auto">
           {idea && (
             <IdeaAddEditForm

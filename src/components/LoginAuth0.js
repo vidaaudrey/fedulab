@@ -18,8 +18,9 @@ type Props = {
 
 function LoginAuth0({ onShowLogin, error }: Props) {
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" justifyContent="center" alignItems="center">
       <Button
+        className="m-b-1"
         style={{ height: BUTTON_LG_HEIGHT, width: 160 }}
         icon="navigate_next"
         label="Start"
