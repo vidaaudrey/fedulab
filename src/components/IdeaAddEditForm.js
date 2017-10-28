@@ -24,7 +24,10 @@ const { TextArea } = Input;
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
+
 const DATE_FORMAT = 'YYYY-MM-DD';
+const SLACK_URL_PREFIX = 'https://coursera.slack.com/messages/';
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -156,14 +159,9 @@ function IdeaAddEditFormForm({
         )}
       </FormItem>
       <FormItem {...formItemLayout} label="Slack URL" hasFeedback>
-        {getFieldDecorator('slackUrl', {
-          initialValue: idea.slackUrl,
-        })(
-          <Input
-            addonBefore="https://coursera.slack.com/messages/"
-            placeholder="Slack url for your project"
-          />,
-        )}
+        {getFieldDecorator('slackChannel', {
+          initialValue: idea.slackChannel,
+        })(<Input addonBefore={SLACK_URL_PREFIX} placeholder="Slack channel for your project" />)}
       </FormItem>
       <FormItem {...formItemLayout} label="Project Time">
         {getFieldDecorator('projectDuration', {
@@ -256,7 +254,7 @@ const getDefaultIdea = () => ({
   makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
   needMyLaptop: false,
   presentLive: false,
-  slackUrl: 'https://coursera.slack.com/messages/makeathon',
+  slackUrl: `${SLACK_URL_PREFIX}makeathon`,
   slug: `my-awesome-new-idea-${randomString({ length: 4 })}`,
   tagline: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, dicta!',
   title: 'My Awesome New Idea',
@@ -283,9 +281,10 @@ const IdeaAddEditFormFormHOC = compose(
     if (typeof ideaLocal.contributorsText === 'string' && ideaLocal.contributorsText !== '') {
       contributorsText = ideaLocal.contributorsText.split(',');
     }
-
+    if (ideaLocal.slackUrl) {
+      ideaLocal.slackChannel = ideaLocal.slackUrl.split('/').pop();
+    }
     ideaLocal.contributorsText = contributorsText;
-
     return {
       canDelete: isSuperuser || isIdeaOwner,
       isEditingMode,
@@ -318,7 +317,7 @@ const IdeaAddEditFormFormHOC = compose(
       e.preventDefault();
       form.validateFields((err, values) => {
         if (!err) {
-          const { projectDuration, contributorsText, ...otherValues } = values;
+          const { projectDuration, contributorsText, slackChannel, ...otherValues } = values;
           const startTime = projectDuration[0].toISOString();
           const estimatedFinishTime = projectDuration[1].toISOString();
           const baseVariables = {
@@ -329,6 +328,7 @@ const IdeaAddEditFormFormHOC = compose(
             contributorsText: contributorsText.join(','),
             startTime,
             estimatedFinishTime,
+            slackUrl: `${SLACK_URL_PREFIX}${slackChannel}`,
           };
 
           if (isEditingMode) {
