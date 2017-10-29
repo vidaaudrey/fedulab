@@ -12,6 +12,7 @@ export const IdeaDetailQuery = gql`
       category
       courseraVideoUrl
       coverBackgroundUrl
+      isBackgroundImageDark
       howToContribute
       slackUrl
       youtubeVideoUrl
@@ -42,9 +43,9 @@ export const IdeaListQuery = gql`
       title
       tagline
       displayOrder
+      coverBackgroundUrl
       slug
       description
-      coverBackgroundUrl
       isPresenting
       createdAt
       contributors {
@@ -96,6 +97,7 @@ export const IdeaEditQuery = gql`
       displayOrder
       estimatedFinishTime
       howToContribute
+      isBackgroundImageDark
       needMyLaptop
       presentLive
       isPresenting
@@ -126,6 +128,7 @@ export const CreateIdeaMutation = gql`
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
     $coverBackgroundUrl: String!
+    $isBackgroundImageDark: Boolean!
     $description: String!
     $displayOrder: Int!
     $estimatedFinishTime: DateTime!
@@ -148,6 +151,7 @@ export const CreateIdeaMutation = gql`
       category: $category
       courseraVideoUrl: $courseraVideoUrl
       coverBackgroundUrl: $coverBackgroundUrl
+      isBackgroundImageDark: $isBackgroundImageDark
       description: $description
       displayOrder: $displayOrder
       estimatedFinishTime: $estimatedFinishTime
@@ -182,6 +186,7 @@ export const UpdateIdeaMutation = gql`
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
     $coverBackgroundUrl: String!
+    $isBackgroundImageDark: Boolean!
     $description: String!
     $displayOrder: Int!
     $estimatedFinishTime: DateTime!
@@ -205,6 +210,7 @@ export const UpdateIdeaMutation = gql`
       category: $category
       courseraVideoUrl: $courseraVideoUrl
       coverBackgroundUrl: $coverBackgroundUrl
+      isBackgroundImageDark: $isBackgroundImageDark
       description: $description
       displayOrder: $displayOrder
       estimatedFinishTime: $estimatedFinishTime
@@ -225,6 +231,7 @@ export const UpdateIdeaMutation = gql`
       description
       tagline
       slug
+      isBackgroundImageDark
       contributorsText
     }
   }

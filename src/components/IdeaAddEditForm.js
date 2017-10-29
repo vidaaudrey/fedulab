@@ -72,9 +72,11 @@ type Props = {
   isSuperuser: boolean,
   onDeleteIdea: () => void,
   onImgUploaded: url => void,
+  coverBackgroundUrlSet: string => void,
   toggleIsPresenting: boolean => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
+  toggleIsBackgroundImageDark: boolean => void,
 };
 
 function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }) {
@@ -104,6 +106,7 @@ function IdeaAddEditFormForm({
   toggleIsPresenting,
   toggleNeedMyLaptop,
   togglePresentLive,
+  toggleIsBackgroundImageDark,
 }: Props) {
   const { getFieldDecorator } = form;
 
@@ -203,6 +206,13 @@ function IdeaAddEditFormForm({
 
       <FormItem {...formItemLayout} label="Background Image URL">
         <ImgurUploader imgUrl={idea.coverBackgroundUrl} onImgUploaded={coverBackgroundUrlSet} />
+        <div>
+          <Switch
+            defaultChecked={idea.isBackgroundImageDark}
+            onChange={toggleIsBackgroundImageDark}
+          />
+          <span className="p-l-1">{'Is the background in image dark color?'}</span>
+        </div>
       </FormItem>
 
       <SectionTitle title="Presentation" />
@@ -258,6 +268,7 @@ function IdeaAddEditFormForm({
 const getDefaultIdea = () => ({
   category: DEFAULT_CATEGORIES,
   coverBackgroundUrl: DEFAULT_COVER_BG,
+  isBackgroundImageDark: true,
   description: 'Lorem ipsum dolor, sit amet consectetur adipisicing el',
   displayOrder: 1,
   howToContribute: "Join us and let's talk more!",
@@ -309,6 +320,11 @@ const IdeaAddEditFormFormHOC = compose(
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
   withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
+  withState(
+    'isBackgroundImageDark',
+    'toggleIsBackgroundImageDark',
+    ({ idea }) => idea.isBackgroundImageDark,
+  ),
   withState('isCreateSuccess', 'isCreateSuccessSet', false),
   withState('coverBackgroundUrl', 'coverBackgroundUrlSet', ({ idea }) => idea.coverBackgroundUrl),
   withHandlers({
@@ -324,6 +340,7 @@ const IdeaAddEditFormFormHOC = compose(
       userId,
       isEditingMode,
       isCreateSuccessSet,
+      isBackgroundImageDark,
       coverBackgroundUrl,
     }) => (e) => {
       e.preventDefault();
@@ -342,6 +359,7 @@ const IdeaAddEditFormFormHOC = compose(
             estimatedFinishTime,
             slackUrl: `${SLACK_URL_PREFIX}${slackChannel}`,
             coverBackgroundUrl,
+            isBackgroundImageDark,
           };
 
           if (isEditingMode) {
@@ -349,6 +367,7 @@ const IdeaAddEditFormFormHOC = compose(
               ...idea,
               ...baseVariables,
             };
+            console.warn('editing', variables);
 
             updateIdea({ variables })
               .then((res) => {

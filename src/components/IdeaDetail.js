@@ -4,6 +4,7 @@ import { StyleSheet, Box, css } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
+import cx from 'classnames';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
@@ -50,6 +51,7 @@ function IdeaDetail({
     courseraVideoUrl,
     coverBackgroundUrl,
     howToContribute,
+    isBackgroundImageDark,
     slackUrl,
     youtubeVideoUrl,
     contributors,
@@ -67,11 +69,11 @@ function IdeaDetail({
         alignItems="center"
         style={{ backgroundImage: `url(${coverBackgroundUrl || DEFAULT_COVER_BG})` }}
       >
-        <div className="p-a-3">
-          <h1 className="color-white font-weight-900" style={{ fontSize: '4.8rem' }}>
+        <div className={cx('p-a-3', { inverse: isBackgroundImageDark })}>
+          <h1 className="font-weight-900" style={{ fontSize: '4.8rem' }}>
             {title}
           </h1>
-          <h2 className="m-b-1 color-white">{tagline}</h2>
+          <h2 className="m-b-1">{tagline}</h2>
         </div>
       </Box>
       <Box
