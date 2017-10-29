@@ -10,12 +10,7 @@ import {
   API_IN_PROGRESS,
 } from 'src/constants/apiNotificationConstants';
 
-const IMGUR = {
-  apiUrl: 'https://api.imgur.com/3/',
-  uploadUrl: 'https://api.imgur.com/3/image',
-  clientId: '402413b6b3dbf72',
-  secret: 'aaec0d1ce5479c823a78fb087d09754a69f5d206',
-};
+import { IMGUR } from 'src/constants/config.js';
 
 const styles = StyleSheet.create({
   ImgurUploader: {
