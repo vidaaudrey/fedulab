@@ -786,7 +786,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-attr-accept@^1.1.0:
+attr-accept@^1.0.3, attr-accept@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.0.tgz#b5cd35227f163935a8f1de10ed3eba16941f6be6"
 
@@ -5780,11 +5780,7 @@ ignore@^3.2.7, ignore@^3.3.3:
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.5.tgz#c4e715455f6073a8d7e5dae72d2fc9d71663dba6"
 
-immutable@^3.7.3, immutable@^3.7.4, immutable@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
-
-immutable@^3.8.2:
+immutable@^3.7.3, immutable@^3.7.4, immutable@^3.8.1, immutable@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
@@ -9762,6 +9758,13 @@ react-dom-factories@^1.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
+
+react-dropzone@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.2.1.tgz#695e80bd0b065f1181e69f2d0f6d1d5cc72664c9"
+  dependencies:
+    attr-accept "^1.0.3"
+    prop-types "^15.5.7"
 
 react-error-overlay@^2.0.1:
   version "2.0.1"

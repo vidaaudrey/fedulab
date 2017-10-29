@@ -30,7 +30,7 @@ type Props = {
 export default function Home({ isSuperuser, userId }: Props) {
   return (
     <div>
-      <div className="Home bg-primary text-xs-center">
+      <div className="Home bg-primary text-xs-center header-margin-offset">
         <BannerStatic />
       </div>
       <LearnMakeTeach />

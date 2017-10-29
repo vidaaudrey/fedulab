@@ -32,11 +32,11 @@ function HeaderAlt({
 }: Props) {
   return (
     <Header
-      className="shadow min-support-width"
+      className="shadow min-support-width p-x-2"
       style={{
         position: 'fixed',
         width: '100%',
-        background: '#FFF',
+        background: 'rgba(255, 255, 255, .88)',
         zIndex: 1000,
         height: 72,
       }}

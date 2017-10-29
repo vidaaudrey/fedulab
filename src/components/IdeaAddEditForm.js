@@ -10,6 +10,8 @@ import randomString from 'random-string';
 import { graphql } from 'react-apollo';
 
 import IdeaTypeSelect from 'src/components/IdeaTypeSelect';
+import ImgurUploader from 'src/components/ImgurUploader';
+
 import { urlRegex } from 'src/utils/validators';
 
 import { DEFAULT_COVER_BG, DEFAULT_CATEGORIES, COURSERA_NAMES } from 'src/constants/appConstants';
@@ -69,6 +71,7 @@ type Props = {
   isPresenting: boolean,
   isSuperuser: boolean,
   onDeleteIdea: () => void,
+  onImgUploaded: url => void,
   toggleIsPresenting: boolean => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
@@ -95,7 +98,9 @@ function IdeaAddEditFormForm({
   isEditingMode,
   isPresenting,
   isSuperuser,
+  coverBackgroundUrlSet,
   onDeleteIdea,
+  onImgUploaded,
   toggleIsPresenting,
   toggleNeedMyLaptop,
   togglePresentLive,
@@ -190,11 +195,16 @@ function IdeaAddEditFormForm({
           <TextArea placeholder="Details about your idea" autosize={{ minRows: 2, maxRows: 6 }} />,
         )}
       </FormItem>
-      <FormItem {...formItemLayout} label="Background Image URL (TODO: File Upload)" hasFeedback>
+      {/* <FormItem {...formItemLayout} label="Background Image URL (TODO: File Upload)" hasFeedback>
         {getFieldDecorator('coverBackgroundUrl', {
           initialValue: idea.coverBackgroundUrl,
         })(<Input placeholder="coverBackgroundUrl" />)}
+      </FormItem> */}
+
+      <FormItem {...formItemLayout} label="Background Image URL">
+        <ImgurUploader imgUrl={idea.coverBackgroundUrl} onImgUploaded={coverBackgroundUrlSet} />
       </FormItem>
+
       <SectionTitle title="Presentation" />
       <FormItem {...formItemLayout} label="Display Order" hasFeedback>
         {getFieldDecorator('displayOrder', {
@@ -300,6 +310,7 @@ const IdeaAddEditFormFormHOC = compose(
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
   withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
   withState('isCreateSuccess', 'isCreateSuccessSet', false),
+  withState('coverBackgroundUrl', 'coverBackgroundUrlSet', ({ idea }) => idea.coverBackgroundUrl),
   withHandlers({
     handleSubmit: ({
       idea,
@@ -313,6 +324,7 @@ const IdeaAddEditFormFormHOC = compose(
       userId,
       isEditingMode,
       isCreateSuccessSet,
+      coverBackgroundUrl,
     }) => (e) => {
       e.preventDefault();
       form.validateFields((err, values) => {
@@ -329,6 +341,7 @@ const IdeaAddEditFormFormHOC = compose(
             startTime,
             estimatedFinishTime,
             slackUrl: `${SLACK_URL_PREFIX}${slackChannel}`,
+            coverBackgroundUrl,
           };
 
           if (isEditingMode) {

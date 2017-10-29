@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Box, css } from '@coursera/coursera-ui';
+import { StyleSheet, Box, css } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -16,6 +16,16 @@ import IdeaLike from 'src/components/IdeaLike';
 import animationUtils from 'src/utils/animationUtils';
 
 import { IdeaDetailQuery } from 'src/constants/appQueries';
+import { DEFAULT_COVER_BG } from 'src/constants/appConstants';
+
+const styles = StyleSheet.create({
+  banner: {
+    textAlign: 'center',
+    minHeight: 600,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+});
 
 type Props = {
   data: Object,
@@ -49,16 +59,21 @@ function IdeaDetail({
   const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
-    <div {...css('IdeaDetail', animationUtils.fadeInSlow)}>
-      <div className="custom-image">
-        <img
-          alt="example"
-          width="100%"
-          height="200"
-          className="overflow-hidden"
-          src={coverBackgroundUrl}
-        />
-      </div>
+    <div {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}>
+      <Box
+        rootClassName={styles.banner}
+        flexDirection="column"
+        justifyContent="end"
+        alignItems="center"
+        style={{ backgroundImage: `url(${coverBackgroundUrl || DEFAULT_COVER_BG})` }}
+      >
+        <div className="p-a-3">
+          <h1 className="color-white font-weight-900" style={{ fontSize: '4.8rem' }}>
+            {title}
+          </h1>
+          <h2 className="m-b-1 color-white">{tagline}</h2>
+        </div>
+      </Box>
       <Box
         key={id}
         justifyContent="center"
@@ -66,10 +81,10 @@ function IdeaDetail({
         rootClassName="max-text-width m-x-auto"
       >
         <div className="p-a-2 bg-white m-b-1">
-          <h3>{title}</h3>
-          <small className="text-secondary">
-            By {createdBy.name}, Contributors:{allContributorNames}
-          </small>
+          <span className="text-secondary">By {createdBy.name}</span>
+          {allContributorNames && (
+            <span className="text-secondary">Contributors:{allContributorNames}</span>
+          )}
           <IdeaActions
             shouldRedirectToListAfterDelete
             canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
@@ -79,7 +94,6 @@ function IdeaDetail({
           />
           <HumanTime time={createdAt} />
           <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
-          <h4>{tagline}</h4>
           <span>{category}</span>
           <p style={{ color: 'gray' }}>{description}</p>
           <p>{howToContribute}</p>

@@ -10,6 +10,7 @@ import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 const styles = StyleSheet.create({
   banner: {
     minHeight: 600,
+    backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundImage: `url(${BANNER_BG})`,
   },
@@ -23,7 +24,7 @@ export default function BannerStatic({ match }: MatchProps) {
       justifyContent="center"
       alignItems="center"
     >
-      <div className="p-a-3">
+      <div className="p-a-1 m-t-3">
         <h1 className="color-white font-weight-900" style={{ fontSize: '4.8rem' }}>
           Welcome to the 9th Make-A-Thon
         </h1>
