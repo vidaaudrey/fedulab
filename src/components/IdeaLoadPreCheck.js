@@ -9,13 +9,15 @@ type Props = {
   slug: string,
 };
 
-export default function IdeaLoadPreCheck({ loading, error, idea, slug }: Props) {
+export default function IdeaLoadPreCheck({ loading, error, idea, slug, data }: Props) {
+  const isLoading = loading || data.loading;
+  const hasError = error || data.error;
   return (
     <div>
-      {loading && <h2>Loading</h2>}
-      {error && <h2>Error loading the data</h2>}
-      {!loading &&
-        !error &&
+      {isLoading && <h2>Loading</h2>}
+      {hasError && <h2>Error loading the data</h2>}
+      {isLoading &&
+        hasError &&
         !idea && (
           <div className="p-a-1">
             <h2>

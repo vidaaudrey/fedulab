@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
+import Button from 'react-toolbox/lib/button/Button';
 import { StyleSheet, Box, css } from '@coursera/coursera-ui';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
 import cx from 'classnames';
@@ -76,6 +77,11 @@ function IdeaDetail({
             {title}
           </h1>
           <h2 className="m-b-1">{tagline}</h2>
+          <h3>
+            <Link to={`/ideas/${slug}/show`}>
+              <Button className="m-r-1s" type="submit" label="Present" raised primary />
+            </Link>
+          </h3>
         </div>
       </Box>
       <Box
