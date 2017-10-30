@@ -42,7 +42,7 @@ export function IdeaList({
     <div className="bg-light p-y-3">
       <Container>
         <div className="text-xs-center">
-          <h2 className="font-xl font-weight-200"> Ideas</h2>
+          <h2 className="font-xl font-weight-200"> {allIdeas.length} Ideas</h2>
           <span className="font-weight-200">Browse ideas for Coursera 9th Make-A-Thon</span>
           <Box rootClassName="m-b-1" flexWrap="wrap" alignItems="center" justifyContent="center">
             <Input

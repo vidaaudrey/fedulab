@@ -18,10 +18,12 @@ export const IdeaDetailQuery = gql`
       youtubeVideoUrl
       createdAt
       updatedAt
+      pitchedBy
       createdBy {
         name
         id
       }
+      contributorsText
       contributors {
         name
         id
@@ -107,6 +109,7 @@ export const IdeaEditQuery = gql`
       tagline
       title
       youtubeVideoUrl
+      pitchedBy
       createdBy {
         name
         id
@@ -142,6 +145,7 @@ export const CreateIdeaMutation = gql`
     $tagline: String!
     $title: String!
     $youtubeVideoUrl: String
+    $pitchedBy: String
   ) {
     createIdea(
       contributorsIds: $contributorsIds
@@ -165,6 +169,7 @@ export const CreateIdeaMutation = gql`
       tagline: $tagline
       title: $title
       youtubeVideoUrl: $youtubeVideoUrl
+      pitchedBy: $pitchedBy
     ) {
       id
       category
@@ -200,6 +205,7 @@ export const UpdateIdeaMutation = gql`
     $tagline: String!
     $title: String!
     $youtubeVideoUrl: String
+    $pitchedBy: String
   ) {
     updateIdea(
       id: $id
@@ -224,6 +230,7 @@ export const UpdateIdeaMutation = gql`
       tagline: $tagline
       title: $title
       youtubeVideoUrl: $youtubeVideoUrl
+      pitchedBy: $pitchedBy
     ) {
       id
       category

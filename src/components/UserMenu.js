@@ -40,6 +40,9 @@ export default function UserMenu({
         <Link to="/ideas" className="hidden-sm-up">
           <MenuItem value="browse" icon="explore" caption="Browse" />
         </Link>
+        <Link to="/su">
+          <MenuItem value="help" icon="whatshot" caption="Superuser" />
+        </Link>
         <Link to="/me">
           <MenuItem value="help" icon="favorite" caption="Liked Ideas" />
         </Link>

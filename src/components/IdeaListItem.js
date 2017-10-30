@@ -24,7 +24,13 @@ export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) 
   return (
     <Card
       onClick={onCardClick}
-      style={{ width: '100%', maxWidth: MAX_WIDTH, height: 420, cursor: 'pointer' }}
+      style={{
+        width: '100%',
+        maxWidth: MAX_WIDTH,
+        height: 420,
+        cursor: 'pointer',
+        overflow: 'hidden',
+      }}
       bodyStyle={{ padding: 0 }}
     >
       <div className="custom-image">

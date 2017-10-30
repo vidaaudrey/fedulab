@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form, Row, Input, DatePicker, Col, Select, InputNumber, Switch } from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
-import { compose, withState, withProps, withHandlers } from 'recompose';
+import { compose, withState, withProps, withHandlers, pure } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import randomString from 'random-string';
@@ -265,11 +265,14 @@ function IdeaAddEditFormForm({
   );
 }
 
-const getDefaultIdea = () => ({
+// 'time', 'username', 'title', 'howToContribute', 'courseraVideoUrl', 'description';
+
+export const getDefaultIdea = () => ({
+  pitchedBy: null,
   category: DEFAULT_CATEGORIES,
   coverBackgroundUrl: DEFAULT_COVER_BG,
   isBackgroundImageDark: true,
-  description: 'Lorem ipsum dolor, sit amet consectetur adipisicing el',
+  description: 'Idea description goes here...',
   displayOrder: 1,
   howToContribute: "Join us and let's talk more!",
   makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
@@ -277,9 +280,9 @@ const getDefaultIdea = () => ({
   presentLive: false,
   slackUrl: `${SLACK_URL_PREFIX}makeathon`,
   slug: `my-awesome-new-idea-${randomString({ length: 4 })}`,
-  tagline: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, dicta!',
+  tagline: '',
   title: 'My Awesome New Idea',
-  youtubeVideoUrl: 'https://www.youtube.com/watch?v=I-ovzUNno7g&t=50s',
+  youtubeVideoUrl: null,
   startTime: '2017-11-01T07:00:00.000Z',
   estimatedFinishTime: '2017-11-03T07:00:00.000Z',
 });

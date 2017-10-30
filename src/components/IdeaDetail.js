@@ -54,9 +54,11 @@ function IdeaDetail({
     isBackgroundImageDark,
     slackUrl,
     youtubeVideoUrl,
+    contributorsText,
     contributors,
     createdBy,
     createdAt,
+    pitchedBy,
   } = idea;
   const allContributorNames = contributors.map(item => item.name).join(',  ');
 
@@ -84,8 +86,11 @@ function IdeaDetail({
       >
         <div className="p-a-2 bg-white m-b-1">
           <span className="text-secondary">By {createdBy.name}</span>
+          {contributorsText && (
+            <div className="text-secondary">Contributors:{contributorsText}</div>
+          )}
           {allContributorNames && (
-            <span className="text-secondary">Contributors:{allContributorNames}</span>
+            <div className="text-secondary">Contributors:{allContributorNames}</div>
           )}
           <IdeaActions
             shouldRedirectToListAfterDelete
@@ -99,6 +104,7 @@ function IdeaDetail({
           <span>{category}</span>
           <p style={{ color: 'gray' }}>{description}</p>
           <p>{howToContribute}</p>
+          <p>Pitched by {pitchedBy}</p>
           <p>{youtubeVideoUrl}</p>
           <p>{slackUrl}</p>
           <p>{courseraVideoUrl}</p>

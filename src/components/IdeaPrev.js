@@ -18,7 +18,7 @@ type Props = {
 
 function IdeaPrev({ idea: { title, slug } }: Props) {
   return (
-    <div>
+    <div className="p-r-1">
       <Link to={`/ideas/${slug}`}> {`< ${title}`}</Link>
     </div>
   );

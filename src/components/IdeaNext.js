@@ -18,7 +18,7 @@ type Props = {
 
 function IdeaNext({ idea: { title, slug } }: Props) {
   return (
-    <div>
+    <div className="p-l-1">
       <Link to={`/ideas/${slug}`}> {`${title} >`} </Link>
     </div>
   );

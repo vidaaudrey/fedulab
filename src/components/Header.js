@@ -11,6 +11,7 @@ import Logo from 'src/assets/logo_light.svg';
 const { Header } = Layout;
 
 type Props = {
+  isSuperuser: boolean,
   username: string,
   picture: string,
   isLoggedIn: boolean,
@@ -22,6 +23,7 @@ type Props = {
 };
 
 function HeaderAlt({
+  isSuperuser,
   username,
   picture,
   isLoggedIn,
@@ -69,6 +71,7 @@ function HeaderAlt({
             render={({ match, history }) => (
               <div className="userMenuWrapper">
                 <UserMenu
+                  isSuperuser={isSuperuser}
                   name={username}
                   picture={picture}
                   isLoggedIn={isLoggedIn}

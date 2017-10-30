@@ -8,8 +8,14 @@ import _ from 'underscore';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 
-export function MyDashboard({ name = 'Audrey', myIdeas, likedIdeas, ...rest }: MatchProps) {
-  console.warn('me', likedIdeas, rest);
+export function MyDashboard({
+  name,
+  isSuperuser,
+  userId,
+  myIdeas,
+  likedIdeas,
+  ...rest
+}: MatchProps) {
   const nonNullIdeas = likedIdeas.filter(item => !!item);
   return (
     <div className="MyDashboard p-y-1 h-100">

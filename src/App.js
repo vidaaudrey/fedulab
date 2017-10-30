@@ -17,6 +17,7 @@ import UserCreate from 'src/components/UserCreate';
 import IdeaAdd from 'src/components/IdeaAdd';
 import IdeaEdit from 'src/components/IdeaEdit';
 import About from 'src/components/About';
+import Superuser from 'src/components/Superuser';
 import Gallery from 'src/components/Gallery';
 import MyDashboard from 'src/components/MyDashboard';
 import Home from 'src/components/Home';
@@ -58,6 +59,7 @@ function App({
         isLoggedIn={isLoggedIn}
         loading={loading}
         onLogout={onLogout}
+        isSuperuser={isSuperuser}
       />
       <Content style={{ minHeight: '92vh', paddingTop: 72 }}>
         <div>
@@ -85,6 +87,11 @@ function App({
             exact
             path="/ideas"
             render={props => <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />}
+          />
+          <Route
+            exact
+            path="/su"
+            render={props => <Superuser {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
