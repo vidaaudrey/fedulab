@@ -16,6 +16,7 @@ import IdeaDetail from 'src/components/IdeaDetail';
 import UserCreate from 'src/components/UserCreate';
 import IdeaAdd from 'src/components/IdeaAdd';
 import IdeaEdit from 'src/components/IdeaEdit';
+import IdeaPresent from 'src/components/IdeaPresent';
 import About from 'src/components/About';
 import Superuser from 'src/components/Superuser';
 import Gallery from 'src/components/Gallery';
@@ -50,17 +51,21 @@ function App({
     }
     return <LoggedOutHome />;
   }
+  const lastPathName = location.pathname.split('/').pop();
+  const isPresentationMode = lastPathName === 'show';
 
   return (
     <Layout className="min-support-width">
-      <Header
-        name={username}
-        picture={picture}
-        isLoggedIn={isLoggedIn}
-        loading={loading}
-        onLogout={onLogout}
-        isSuperuser={isSuperuser}
-      />
+      {!isPresentationMode && (
+        <Header
+          name={username}
+          picture={picture}
+          isLoggedIn={isLoggedIn}
+          loading={loading}
+          onLogout={onLogout}
+          isSuperuser={isSuperuser}
+        />
+      )}
       <Content style={{ minHeight: '92vh', paddingTop: 72 }}>
         <div>
           <Route
@@ -77,6 +82,11 @@ function App({
             exact
             path="/ideas/:ideaSlug/edit"
             render={props => <IdeaEdit {...props} userId={userId} isSuperuser={isSuperuser} />}
+          />
+          <Route
+            exact
+            path="/ideas/:ideaSlug/show"
+            render={props => <IdeaPresent {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
           <Route
             exact

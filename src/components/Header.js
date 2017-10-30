@@ -29,6 +29,7 @@ function HeaderAlt({
   isLoggedIn,
   loading,
   onLogout,
+  location,
   location: { pathname },
   ...rest
 }: Props) {

@@ -10,17 +10,21 @@ import { withGQLLoadingOrError } from 'src/components/withBranches';
 import { IdeaNextQuery } from 'src/constants/appQueries';
 
 type Props = {
+  isPresentationMode: boolean,
   idea: {
     title: string,
     slug: string,
   },
 };
 
-function IdeaNext({ idea: { title, slug } }: Props) {
+function IdeaNext({ idea: { title, slug }, isPresentationMode }: Props) {
   return (
-    <div className="p-l-1">
-      <Link to={`/ideas/${slug}`}> {`${title} >`} </Link>
-    </div>
+    <span className="p-l-1">
+      <Link to={`/ideas/${slug}${isPresentationMode ? '/show' : ''}`}>
+        {' '}
+        {`${title} ${isPresentationMode ? '' : '>'}`}{' '}
+      </Link>
+    </span>
   );
 }
 

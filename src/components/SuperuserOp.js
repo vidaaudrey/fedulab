@@ -115,8 +115,12 @@ const SuperuserOpHOC = compose(
     checkJson: () => () => {},
     onConvertPitchToIdeas: ({ createIdea, client, userId, history, apiStatusSet }) => () => {
       const allIdeas = PITCH_IDEAS.map(
-        ({ username, title, howToContribute, courseraVideoUrl, description }) => ({
+        (
+          { username, title, howToContribute, courseraVideoUrl, description, displayOrder },
+          index,
+        ) => ({
           ...getDefaultIdea(),
+          displayOrder: displayOrder || index,
           title,
           description,
           pitchedBy: username,
@@ -126,7 +130,7 @@ const SuperuserOpHOC = compose(
           needMyLaptop: false,
           presentLive: false,
           isPresenting: false,
-          isBackgroundImageDark: false,
+          isBackgroundImageDark: true,
         }),
       );
 
