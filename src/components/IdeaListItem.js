@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Card } from 'antd';
+import { Box } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
 
@@ -10,6 +11,8 @@ import IdeaLike from 'src/components/IdeaLike';
 import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
+const CARD_HEIGHT = 420;
+const CARD_IMAGE_HEIGHT = 160;
 
 type Props = {
   idea: Object,
@@ -18,11 +21,31 @@ type Props = {
   onCardClick: () => void,
 };
 
-export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) {
+export function IdeaListItem({
+  idea,
+  idea: {
+    pitchedBy,
+    tagline,
+    createdBy,
+    coverBackgroundUrl,
+    createdAt,
+    id,
+    likes,
+    title,
+    description,
+    slug,
+  },
+  onCardClick,
+  isSuperuser,
+  userId,
+}: Props) {
   const allContributorNames = idea.contributors.map(item => item.name).join(',  ');
 
   return (
-    <Card
+    <Box
+      tag={Card}
+      rootClassName="custom-card"
+      flexDirection="column"
       onClick={onCardClick}
       style={{
         width: '100%',
@@ -33,29 +56,45 @@ export function IdeaListItem({ idea, onCardClick, isSuperuser, userId }: Props) 
       }}
       bodyStyle={{ padding: 0 }}
     >
-      <div className="custom-image">
-        <img alt="example" width="100%" src={idea.coverBackgroundUrl} />
+      <div
+        style={{
+          minHeight: CARD_IMAGE_HEIGHT,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundImage: `url(${coverBackgroundUrl})`,
+        }}
+      >
+        <span />
       </div>
-      <div className="custom-card p-a-1">
-        <h3>{idea.title}</h3>
+      <Box
+        rootClassName="p-a-1"
+        flexDirection="column"
+        flex={1}
+        style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64 }}
+      >
+        <h3>{title}</h3>
         <span className="font-sm text-secondary">
-          By {idea.createdBy.name} <HumanTime time={idea.createdAt} />
+          {pitchedBy || createdBy.name}
+          <span className="p-l-1">
+            <HumanTime time={createdAt} />
+          </span>
         </span>
         <h4>{allContributorNames}</h4>
-        <p style={{ color: 'gray' }}>{idea.description}</p>
+        <p style={{ color: 'gray' }}>{tagline}</p>
         {ENABLE_QUICK_ADMIN_OP && (
           <IdeaActions
-            canDelete={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
-            canEdit={isSuperuser || userId === (idea.createdBy && idea.createdBy.id)}
-            id={idea.id}
-            slug={idea.slug}
+            canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
+            canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
+            id={id}
+            slug={slug}
             isSuperuser={isSuperuser}
           />
         )}
-
-        <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
-      </div>
-    </Card>
+      </Box>
+      <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
+        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
+      </Box>
+    </Box>
   );
 }
 

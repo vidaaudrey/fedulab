@@ -72,8 +72,7 @@
     "light": "lighthouse: http://localhost:5000",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "deploy": "firebase deploy",
-    "bdeploy": "npm run build && firebase deploy",
+    "deploy": "npm run build && firebase deploy",
     "toolbox": "react-toolbox-themr"
   },
   "lint-staged": {

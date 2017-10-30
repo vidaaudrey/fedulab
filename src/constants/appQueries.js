@@ -47,12 +47,12 @@ export const IdeaListQuery = gql`
       displayOrder
       coverBackgroundUrl
       slug
-      description
       isPresenting
       createdAt
       contributors {
         name
       }
+      pitchedBy
       createdBy {
         name
         id
