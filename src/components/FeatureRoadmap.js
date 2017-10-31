@@ -14,6 +14,11 @@ const FEATURE_ROADMAP = [
     by: 'Kalan',
   },
   {
+    name: 'Use Makeathon arts',
+    isDone: false,
+    by: 'Hannah',
+  },
+  {
     name: 'General UI Cleanup',
     isDone: false,
     by: 'Hannah',

@@ -37,8 +37,13 @@ Run tests and get coverage : `yarn test:cover`
 
 
 ## Feature TODO 
-- [ ] Idea Detail page 
-- [ ] Consolidate Loading 
+- [x] Idea Detail page 
+- [x] Consolidate Loading 
+- [ ] Use the makeathon arts  
+- [ ] Handle long string 
+- [ ] Screen jump  
+- [ ] Improving loading patter (use placeholder components)
+- [ ] Add animation 
 - [ ] Dashboard 
 - [ ] Liked Ideas
 - [ ] About

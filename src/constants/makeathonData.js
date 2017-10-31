@@ -115,7 +115,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Megan, Lauren S., Sande, Shantelle, Eva, Jade, Arjun, Genica, Alexandra, McKay',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/XoXFTf8.jpg',
+          featureImageUrl: 'https://i.imgur.com/XoXFTf8.jpg',
           slideUrl:
             'https://docs.google.com/presentation/d/1moG5WeS_2MfMumtZ7-f21RENLW7dwL62FHTK86UuVNA/edit#slide=id.g1cc0bada92_0_86',
           slackUrl: 'https://coursera.slack.com',
@@ -283,7 +283,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Lauren Swersky, Mario Chamorro, Giovanni Dubois',
           needs: 'graphic designer, marketer, help from facilities, and a small budget ',
-          featureImageUrl: 'http://i.imgur.com/U7Vv5no.png',
+          featureImageUrl: 'https://i.imgur.com/U7Vv5no.png',
           slideUrl: 'http://nophonezone.strikingly.com/',
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#no-phone-day',
@@ -396,7 +396,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Marc Rasi',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/35hF1Uo.png',
+          featureImageUrl: 'https://i.imgur.com/35hF1Uo.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#',
@@ -425,7 +425,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Jen Mazzon & Catherine Aurelio',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/dLsqyys.png',
+          featureImageUrl: 'https://i.imgur.com/dLsqyys.png',
           slideUrl:
             'https://docs.google.com/a/coursera.org/presentation/d/1905yi57ika7_lGiu9I6UCAW3cK8Pi2XFaB9go4SzPA4/edit?usp=sharing',
           slackUrl: 'https://coursera.slack.com',
@@ -455,7 +455,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Will Bowers, Kristine Le, Mustafa Furniturewala, Jake Samuelson, Alexandra Urban, and gang',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/oinyN03.png',
+          featureImageUrl: 'https://i.imgur.com/oinyN03.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#',
@@ -483,7 +483,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Moaaz',
           needs: 'Designers, User researchers, Product, Frontend, Backend, Data, Marketing',
-          featureImageUrl: 'http://i.imgur.com/yNa9UAS.png',
+          featureImageUrl: 'https://i.imgur.com/yNa9UAS.png',
           slideUrl: null,
           slackUrl: '',
           slackChannelName: '#coursera-community',
@@ -568,7 +568,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Kelly, Puru, Anna, Deep',
           needs: 'FE',
-          featureImageUrl: 'http://i.imgur.com/REHDpfk.png',
+          featureImageUrl: 'https://i.imgur.com/REHDpfk.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#',
@@ -596,7 +596,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'eeasley@, others with questions and troubleshooting',
           needs: 'FE, BE, PM, Design',
-          featureImageUrl: 'http://i.imgur.com/0aQ3cOC.png',
+          featureImageUrl: 'https://i.imgur.com/0aQ3cOC.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#spaced_repetition',
@@ -625,7 +625,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Ronald Arnanjaya, Quang Tran, Anna Kong, Chelsea Kim, Audrey Li, Zhemin Li',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/GzNZbuQ.png',
+          featureImageUrl: 'https://i.imgur.com/GzNZbuQ.png',
           slideUrl:
             'https://drive.google.com/a/coursera.org/file/d/0B0HqCeppbcmdT0lRbDQyYUlzSlU/view?usp=sharing',
           slackUrl: 'https://coursera.slack.com',
@@ -686,7 +686,7 @@ export const MAKEATHON_8 = {
           contributorsDescription: 'Lewis, Amory, David Winegar',
           needs:
             'Talk to Berklee, Yale, any partner with a music course who might be interested in using this in their courses',
-          featureImageUrl: 'http://i.imgur.com/XPc22iA.png',
+          featureImageUrl: 'https://i.imgur.com/XPc22iA.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#jswidgets',
@@ -714,7 +714,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Megan Kollar Dwyer, Nikhil Garg, Claire Smith, Justin Cheung, Lynn Christopher, David Guo, Wendy Anna Herby, Drew Lepp, Herman Tran, Jon McKinsey, Julianna Slocum, Chelsea Kim   ',
           needs: 'FE, BE, QA process (LOPs), Design',
-          featureImageUrl: 'http://i.imgur.com/Q14ogAa.png',
+          featureImageUrl: 'https://i.imgur.com/Q14ogAa.png',
           slideUrl:
             'https://docs.google.com/presentation/d/1W3Vs5LDjkCkcG4864Vd_uAxqIoaY9dL7R2tuwJQ-iEk/edit?ts=58f7df4e#slide=id.p',
           slackUrl: 'https://coursera.slack.com/messages/C506DUE74',
@@ -743,7 +743,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Wasiur Rahman',
           needs: 'FE, BE, PM',
-          featureImageUrl: 'http://i.imgur.com/0z6amK9.png',
+          featureImageUrl: 'https://i.imgur.com/0z6amK9.png',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#makeathon-messenger',
@@ -858,7 +858,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Priya, Mustafa, Ngiam, Talia, Julia, Andreina, Caroline, Corbin, Jenny, Roshan and many others.. ',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/SWQuPAp.jpg',
+          featureImageUrl: 'https://i.imgur.com/SWQuPAp.jpg',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#',
@@ -917,7 +917,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Jon M., George, Pooja, Matt, David, Lin Lin, Keith, all of #boardgames slack channel, basically everyone at Coursera',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/BCPmje0.jpg',
+          featureImageUrl: 'https://i.imgur.com/BCPmje0.jpg',
           slideUrl:
             'https://docs.google.com/a/coursera.org/presentation/d/1HjxYaSV5H-HH6RPMucpNwlV7vJpqOUDM0yAHZXNNy00/edit?usp=sharing',
           slackUrl: 'https://coursera.slack.com',
@@ -946,7 +946,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Zhaojun Zhang, David Su',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/rLaKrI8.png',
+          featureImageUrl: 'https://i.imgur.com/rLaKrI8.png',
           slideUrl:
             'https://docs.google.com/presentation/d/1xBQT_XECJUV1h4hV-RzftfEUVHGl0P9uaMjsbxM2cag/edit#slide=id.g2093ae38bb_3_0',
           slackUrl: 'https://coursera.slack.com',
@@ -1205,7 +1205,7 @@ export const MAKEATHON_8 = {
           estimatedFinishTime: '2017-04-23T11:13:02.000Z',
           contributorsDescription: 'Heyning Cheng, Pravin Thiagalingam, Amory Schlender',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/hsiDH3A.png',
+          featureImageUrl: 'https://i.imgur.com/hsiDH3A.png',
           slideUrl:
             'https://docs.google.com/presentation/d/1CYFzMzjrsQlCUpg1NDbzG7uTWXQNxfXjgb_roas28hc/',
           slackUrl: 'https://coursera.slack.com',
@@ -1408,7 +1408,7 @@ export const MAKEATHON_8 = {
           contributorsDescription:
             'Chris, Audrey, Shu, Drew, Julianna, Kristine, Anna, Elizabeth, Micky',
           needs: null,
-          featureImageUrl: 'http://i.imgur.com/VnRBEAd.jpg',
+          featureImageUrl: 'https://i.imgur.com/VnRBEAd.jpg',
           slideUrl: null,
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#component-a-thon',
@@ -1437,7 +1437,7 @@ export const MAKEATHON_8 = {
           contributorsDescription: '',
           needs: 'Idea Officer, Idea Crafters, Advisors ',
           featureImageUrl:
-            'http://images.huffingtonpost.com/2015-01-20-IdeasMakeorBreakYourBusiness.jpg',
+            'https://images.huffingtonpost.com/2015-01-20-IdeasMakeorBreakYourBusiness.jpg',
           slideUrl: '',
           slackUrl: 'https://coursera.slack.com',
           slackChannelName: '#fedulab',
