@@ -15,12 +15,13 @@ import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaListItem from 'src/components/IdeaListItem';
 import FullpageLoading from 'src/components/FullpageLoading';
 
-import { IdeaListQuery } from 'src/constants/appQueries';
+import { IdeaListQuery, UserDetailsQuery } from 'src/constants/appQueries';
 
 type Props = {
   allIdeas: [Object],
   filteredIdeas: [Object],
   userId: string,
+  userDetailsQuery: Object,
   isSuperuser: boolean,
   isPresenting: boolean,
   onChange: (SyntheticInputEvent<>) => void,
@@ -32,6 +33,7 @@ export function IdeaList({
   allIdeas = [],
   filteredIdeas = [],
   userId,
+  userDetailsQuery: { user },
   isSuperuser,
   onChange,
   isPresenting,
@@ -77,7 +79,13 @@ export function IdeaList({
           <QueueAnim>
             {filteredIdeas.map(idea => (
               <Col xs={24} sm={12} md={8} lg={6} key={idea.id} className="p-a-1 m-b-2">
-                <IdeaListItem idea={idea} key={idea.id} isSuperuser={isSuperuser} userId={userId} />
+                <IdeaListItem
+                  idea={idea}
+                  key={idea.id}
+                  isSuperuser={isSuperuser}
+                  userId={userId}
+                  userEmail={user.emailAddress}
+                />
               </Col>
             ))}
           </QueueAnim>
@@ -92,6 +100,9 @@ export default compose(
   withState('isPresenting', 'isPresentingSet', undefined),
   graphql(IdeaListQuery, {
     options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
+  }),
+  graphql(UserDetailsQuery, {
+    name: 'userDetailsQuery',
   }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
   withGQLLoadingOrError(FullpageLoading),

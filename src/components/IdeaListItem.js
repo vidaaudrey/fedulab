@@ -17,7 +17,8 @@ const CARD_IMAGE_HEIGHT = 160;
 type Props = {
   idea: Object,
   isSuperuser: boolean,
-  userId: boolean,
+  userId: string,
+  userEmail: string,
   onCardClick: () => void,
 };
 
@@ -38,8 +39,10 @@ export function IdeaListItem({
   onCardClick,
   isSuperuser,
   userId,
+  userEmail,
 }: Props) {
   const allContributorNames = idea.contributors.map(item => item.name).join(',  ');
+  const isUserCreated = userId === (createdBy && createdBy.id);
 
   return (
     <Box
@@ -81,17 +84,17 @@ export function IdeaListItem({
         </span>
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{tagline}</p>
-        {ENABLE_QUICK_ADMIN_OP && (
-          <IdeaActions
-            canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
-            canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
-            id={id}
-            slug={slug}
-            isSuperuser={isSuperuser}
-          />
-        )}
       </Box>
-      <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
+      <Box rootClassName="p-a-1" justifyContent="between" alignSelf="end">
+        <IdeaActions
+          canDelete={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
+          canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
+          canClaim={!isUserCreated && userEmail === pitchedBy}
+          id={id}
+          slug={slug}
+          userId={userId}
+          isSuperuser={isSuperuser}
+        />
         <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
       </Box>
     </Box>
