@@ -53,8 +53,8 @@ export default compose(
           localStorage.setItem('profile', JSON.stringify(profile));
           window.localStorage.setItem('auth0IdToken', authResult.idToken);
           // TODO(Audrey): user history?
-          window.location.pathname = '/';
-          // history.replace('/signup');
+          // window.location.pathname = '/';
+          history.replace('/signup');
         } else {
           errorSet(true);
         }

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { compose, withHandlers } from 'recompose';
 
 import 'assets/react-toolbox/theme.css';
@@ -48,7 +48,7 @@ function App({
   ...rest
 }: Props) {
   if (!isLoggedIn) {
-    if (location.pathname !== '/') {
+    if (location.pathname !== '/' && location.pathname !== '/signup') {
       return <Redirect to={{ pathname: '/' }} />;
     }
     return <LoggedOutHome />;

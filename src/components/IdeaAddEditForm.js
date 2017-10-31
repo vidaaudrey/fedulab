@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form, Row, Input, DatePicker, Col, Select, InputNumber, Switch } from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
-import { compose, withState, withProps, withHandlers, pure } from 'recompose';
+import { compose, withState, withProps, withHandlers } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import randomString from 'random-string';
@@ -235,7 +235,7 @@ function IdeaAddEditFormForm({
         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
           <div>
             <Switch defaultChecked={idea.isMyIdea} onChange={toggleIsMyIdea} />
-            <span className="p-l-1">{" This is my idea"}</span>
+            <span className="p-l-1">This is my idea</span>
           </div>
         </FormItem>
       )}
@@ -316,7 +316,7 @@ const IdeaAddEditFormFormHOC = compose(
     }
     ideaLocal.contributorsText = contributorsText;
 
-    const allowToClaimIdea = idea.pitchedBy === userEmail;
+    const allowToClaimIdea = ideaLocal.pitchedBy === userEmail;
     ideaLocal.isMyIdea = allowToClaimIdea;
 
     return {
@@ -383,7 +383,6 @@ const IdeaAddEditFormFormHOC = compose(
               ...idea,
               ...baseVariables,
             };
-            console.warn('editing', variables);
 
             if (isMyIdea) {
               variables.createdById = userId;

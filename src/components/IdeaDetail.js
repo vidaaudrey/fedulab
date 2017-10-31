@@ -79,7 +79,7 @@ function IdeaDetail({
           <h2 className="m-b-1">{tagline}</h2>
           <h3>
             <Link to={`/ideas/${slug}/show`}>
-              <Button className="m-r-1s" type="submit" label="Present" raised primary />
+              <Button icon="airplay" className="m-r-1s" label="Present" raised />
             </Link>
           </h3>
         </div>

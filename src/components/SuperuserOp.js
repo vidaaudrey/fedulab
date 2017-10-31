@@ -53,8 +53,6 @@ export function SuperuserOp({
   ...rest
 }: Props) {
   const { getFieldDecorator, getFieldValue, getFieldError } = form;
-  const jsonInputError = getFieldError('jsonInput');
-  const jsonInputValue = getFieldValue('jsonInput');
 
   return (
     <Form onSubmit={onConvertPitchToIdeas} className="login-form">

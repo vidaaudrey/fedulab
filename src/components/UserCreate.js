@@ -96,8 +96,8 @@ export default compose(
         .then((response) => {
           console.warn('user created', response);
           // TODO(Audrey): figure out why history doesn't trigger GQL requery
-          // history.replace('/home');
-          window.location.pathname = '/home';
+          // history.replace('/');
+          window.location.pathname = '/';
         })
         .catch((e) => {
           console.error(e);

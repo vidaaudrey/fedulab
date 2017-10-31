@@ -61,7 +61,7 @@ export function IdeaList({
           {allIdeas.length === 0 && (
             <div className="text-xs-center p-a-3">
               <h2>There are no ideas.</h2>
-              <Link to="/add-idea">Add My Idea</Link>
+              {!isPresenting && <Link to="/add-idea">Add My Idea</Link>}
             </div>
           )}
           {allIdeas.length > 0 &&

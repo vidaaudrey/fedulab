@@ -38,7 +38,6 @@ function IdeaPresent({
   ...rest
 }: Props) {
   const {
-    id,
     title,
     coverBackgroundUrl,
     isBackgroundImageDark,
