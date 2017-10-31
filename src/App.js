@@ -24,6 +24,7 @@ import Home from 'src/components/Home';
 import Footer from 'src/components/Footer';
 import LoggedOutHome from 'src/components/LoggedOutHome';
 
+import { UserDetailsQuery } from 'src/constants/appQueries';
 import { AUTH_KEY } from 'src/constants/config';
 
 import 'antd/dist/antd.css';
@@ -104,17 +105,6 @@ function App({
   );
 }
 
-const userQuery = gql`
-  query userQuery {
-    user {
-      id
-      name
-      picture
-      isSuperuser
-    }
-  }
-`;
-
 const AppWithTheme = props => (
   <ThemeProvider theme={theme}>
     <App {...props} />
@@ -122,7 +112,7 @@ const AppWithTheme = props => (
 );
 
 export default compose(
-  graphql(userQuery, {
+  graphql(UserDetailsQuery, {
     options: { fetchPolicy: 'network-only' },
     props: ({ data, data: { loading, user } }) => ({
       loading,

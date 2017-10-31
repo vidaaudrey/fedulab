@@ -7,7 +7,7 @@ import { graphql } from 'react-apollo';
 import IdeaAddEditForm from 'src/components/IdeaAddEditForm';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 
-import { IdeaEditQuery } from 'src/constants/appQueries';
+import { IdeaEditQuery, UserDetailsQuery } from 'src/constants/appQueries';
 import type { RouterMatch } from 'src/types/common';
 
 type MatchProps = { match: RouterMatch };
@@ -22,7 +22,8 @@ type Props = {
 
 function IdeaEdit({
   match,
-  data: { loading, error, Idea: idea },
+  ideaEditQuery: { loading, error, Idea: idea },
+  userDetailsQuery: { user },
   userId,
   isSuperuser,
   slug,
@@ -41,6 +42,7 @@ function IdeaEdit({
             <IdeaAddEditForm
               idea={idea}
               userId={userId}
+              userEmail={user.emailAddress}
               isSuperuser={isSuperuser}
               isIdeaOwner={isIdeaOwner}
             />
@@ -57,5 +59,6 @@ export default compose(
   withProps(({ match }) => ({
     slug: match.params.ideaSlug,
   })),
-  graphql(IdeaEditQuery),
+  graphql(IdeaEditQuery, { name: 'ideaEditQuery' }),
+  graphql(UserDetailsQuery, { name: 'userDetailsQuery' }),
 )(IdeaEdit);

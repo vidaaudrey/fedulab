@@ -1,5 +1,17 @@
 import gql from 'graphql-tag';
 
+export const UserDetailsQuery = gql`
+  query UserDetailsQuery {
+    user {
+      id
+      name
+      picture
+      isSuperuser
+      emailAddress
+    }
+  }
+`;
+
 export const IdeaDetailQuery = gql`
   query IdeaDetailQuery($slug: String!) {
     Idea(slug: $slug) {

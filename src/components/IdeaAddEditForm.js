@@ -59,6 +59,7 @@ type Idea = {
 };
 
 type Props = {
+  allowToClaimIdea: boolean,
   canDelete: boolean,
   category: Array<string>,
   checkCategory: () => void,
@@ -76,6 +77,7 @@ type Props = {
   toggleIsPresenting: boolean => void,
   toggleNeedMyLaptop: boolean => void,
   togglePresentLive: boolean => void,
+  toggleIsMyIdea: boolean => void,
   toggleIsBackgroundImageDark: boolean => void,
 };
 
@@ -90,6 +92,7 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
 }
 
 function IdeaAddEditFormForm({
+  allowToClaimIdea,
   canDelete,
   checkCategory,
   checkUrl,
@@ -106,6 +109,7 @@ function IdeaAddEditFormForm({
   toggleIsPresenting,
   toggleNeedMyLaptop,
   togglePresentLive,
+  toggleIsMyIdea,
   toggleIsBackgroundImageDark,
 }: Props) {
   const { getFieldDecorator } = form;
@@ -233,6 +237,14 @@ function IdeaAddEditFormForm({
           <span className="p-l-1">{" I'm presenting Live"}</span>
         </div>
       </FormItem>
+      {allowToClaimIdea && (
+        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+          <div>
+            <Switch defaultChecked={idea.isMyIdea} onChange={toggleIsMyIdea} />
+            <span className="p-l-1">{" This is my idea"}</span>
+          </div>
+        </FormItem>
+      )}
       {isSuperuser && (
         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
           <div>
@@ -289,7 +301,7 @@ export const getDefaultIdea = () => ({
 
 const IdeaAddEditFormFormHOC = compose(
   withRouter,
-  withProps(({ idea, userId, isSuperuser, isIdeaOwner, ...rest }) => {
+  withProps(({ idea, userId, userEmail, isSuperuser, isIdeaOwner, ...rest }) => {
     const isEditingMode = !!idea;
     // Must use function for getting unique slug
     const DEFAULT_IDEA = getDefaultIdea();
@@ -309,7 +321,12 @@ const IdeaAddEditFormFormHOC = compose(
       ideaLocal.slackChannel = ideaLocal.slackUrl.split('/').pop();
     }
     ideaLocal.contributorsText = contributorsText;
+
+    const allowToClaimIdea = idea.pitchedBy === userEmail;
+    ideaLocal.isMyIdea = allowToClaimIdea;
+
     return {
+      allowToClaimIdea,
       canDelete: isSuperuser || isIdeaOwner,
       isEditingMode,
       idea: ideaLocal,
@@ -322,6 +339,7 @@ const IdeaAddEditFormFormHOC = compose(
   graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
   withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
+  withState('isMyIdea', 'toggleIsMyIdea', ({ idea }) => idea.isMyIdea),
   withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
   withState(
     'isBackgroundImageDark',
@@ -336,6 +354,7 @@ const IdeaAddEditFormFormHOC = compose(
       form,
       needMyLaptop,
       presentLive,
+      isMyIdea,
       isPresenting,
       createIdea,
       updateIdea,
@@ -371,6 +390,10 @@ const IdeaAddEditFormFormHOC = compose(
               ...baseVariables,
             };
             console.warn('editing', variables);
+
+            if (isMyIdea) {
+              variables.createdById = userId;
+            }
 
             updateIdea({ variables })
               .then((res) => {
