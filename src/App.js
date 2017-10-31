@@ -31,6 +31,8 @@ import { AUTH_KEY } from 'src/constants/config';
 
 import 'antd/dist/antd.css';
 import '@coursera/coursera-ui/css/utilities.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import 'src/styles/App.css';
 
 const { Content } = Layout;
