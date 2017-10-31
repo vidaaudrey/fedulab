@@ -41,11 +41,9 @@ function IdeaActions({
         </Button>
       )}
       {canDelete && (
-        <Button type="danger" onClick={onDeleteIdea} className="m-r-1s">
-          Delete Idea
-        </Button>
+        <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} className="m-r-1s" />
       )}
-      {canEdit && <Button onClick={onEdit}>Edit</Button>}
+      {canEdit && <Button icon="edit" size="large" onClick={onEdit} />}
     </div>
   );
 }

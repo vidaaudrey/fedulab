@@ -73,15 +73,15 @@ export function IdeaListItem({
         rootClassName="p-a-1"
         flexDirection="column"
         flex={1}
-        style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64 }}
+        style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64, overflow: 'scroll' }}
       >
         <h3>{title}</h3>
-        <span className="font-sm text-secondary">
-          {pitchedBy || createdBy.name}
+        <Box rootClassName="font-sm text-secondary m-t-1s" justifyContent="between">
+          <span>{pitchedBy || createdBy.name}</span>
           <span className="p-l-1">
             <HumanTime time={createdAt} />
           </span>
-        </span>
+        </Box>
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{tagline}</p>
       </Box>

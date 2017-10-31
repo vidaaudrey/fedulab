@@ -26,9 +26,7 @@ function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike }: Props) {
         </Button>
       )}
       {!hasLiked && (
-        <Button onClick={onLike}>
-          <Icon type="heart-o" />
-        </Button>
+        <Button icon="heart-o" size="large" onClick={onLike} />
       )}
     </div>
   );
