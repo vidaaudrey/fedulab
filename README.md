@@ -8,16 +8,16 @@ Run tests with jest: `yarn test`
 Run tests and get coverage : `yarn test:cover`
 
 ## Deploying the Site
-If you are a project collaborator, you can deploy your local version of the site.
+If you are a project collaborator, you can deploy your local version of the site.   
 
 ### Set up Firebase
-Install the Firebase CLI: `npm install -g firebase-tools`
-Run `firebase login` and login to your Coursera account
-Run `firebase init` and select `Hosting: Configure and deploy Firebase Hosting sites`
-Run `firebase use --add`, select `fedulab9`, and give it an alias, i.e. `default`
+Install the Firebase CLI: `npm install -g firebase-tools`   
+Run `firebase login` and login to your Coursera account   
+Run `firebase init` and select `Hosting: Configure and deploy Firebase Hosting sites`   
+Run `firebase use --add`, select `fedulab9`, and give it an alias, i.e. `default`   
 
 ### Deploy
-After completing the above steps, run `yarn run` to build and deploy the site.
+After completing the above steps, run `yarn deploy` to build and deploy the site.
 Note that this will deploy all of your local changes.
 
 ## TODOS
