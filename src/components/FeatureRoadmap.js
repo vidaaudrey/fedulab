@@ -19,7 +19,7 @@ const FEATURE_ROADMAP = [
     by: 'Hannah',
   },
   {
-    name: 'General UI Cleanup',
+    name: 'General UI cleanup',
     isDone: false,
     by: 'Hannah',
   },

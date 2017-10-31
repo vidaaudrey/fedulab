@@ -26,7 +26,7 @@ function UserCreate({ data, onCreateUser, isCreatingUser }: Props) {
     return (
       <Redirect
         to={{
-          pathname: '/home',
+          pathname: '/',
         }}
       />
     );

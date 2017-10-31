@@ -40,6 +40,7 @@ Run tests and get coverage : `yarn test:cover`
 - [x] Idea Detail page 
 - [x] Consolidate Loading 
 - [ ] Use the makeathon arts  
+- [ ] Improve loading (use a new loading pattern?)
 - [ ] Handle long string 
 - [ ] Screen jump  
 - [ ] Improving loading patter (use placeholder components)
