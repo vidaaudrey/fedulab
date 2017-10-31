@@ -1,5 +1,7 @@
 // @flow
 import React from 'react';
+import { CenterBox } from '@coursera/coursera-ui';
+
 import { Link } from 'react-router-dom';
 
 type Props = {
@@ -7,13 +9,14 @@ type Props = {
   error: any,
   idea: Object,
   slug: string,
+  data: Object,
 };
 
 export default function IdeaLoadPreCheck({ loading, error, idea, slug, data }: Props) {
-  const isLoading = loading || data.loading;
-  const hasError = error || data.error;
+  const isLoading = loading || (data && data.loading);
+  const hasError = error || (data && data.error);
   return (
-    <div>
+    <CenterBox rootClassName="FullpageLoading p-y-1 w-100 h-100" style={{ minHeight: '90vh' }}>
       {isLoading && <h2>Loading</h2>}
       {hasError && <h2>Error loading the data</h2>}
       {isLoading &&
@@ -28,6 +31,6 @@ export default function IdeaLoadPreCheck({ loading, error, idea, slug, data }: P
             View <Link to="/ideas"> All Ideas </Link>
           </div>
         )}
-    </div>
+    </CenterBox>
   );
 }

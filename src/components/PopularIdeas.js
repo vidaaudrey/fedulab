@@ -9,10 +9,13 @@ import { graphql } from 'react-apollo';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaListItem from 'src/components/IdeaListItem';
+import FullpageLoading from 'src/components/FullpageLoading';
 
 import withResponsiveSection from 'src/components/hoc/withResponsiveSection';
 
 import { IdeaListQuery } from 'src/constants/appQueries';
+
+const LOADING_MIN_HEIGHT = 560;
 
 type Props = {
   isSuperuser: boolean,
@@ -67,8 +70,8 @@ function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
 export default compose(
   graphql(IdeaListQuery, {
     options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
-    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas }),
+    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas, minHeight: LOADING_MIN_HEIGHT }),
   }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
-  withGQLLoadingOrError(),
+  withGQLLoadingOrError(FullpageLoading),
 )(PopularIdeas);

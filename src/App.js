@@ -24,6 +24,7 @@ import MyDashboard from 'src/components/MyDashboard';
 import Home from 'src/components/Home';
 import Footer from 'src/components/Footer';
 import LoggedOutHome from 'src/components/LoggedOutHome';
+import FullpageLoading from 'src/components/FullpageLoading';
 
 import { AUTH_KEY } from 'src/constants/config';
 
@@ -103,6 +104,7 @@ function App({
             path="/su"
             render={props => <Superuser {...props} userId={userId} isSuperuser={isSuperuser} />}
           />
+          <Route path="/loading" component={FullpageLoading} />
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
           <Route path="/me" component={MyDashboard} />
@@ -150,6 +152,6 @@ export default compose(
       location.reload();
     },
   }),
-  withGQLLoadingOrError(),
+  withGQLLoadingOrError(FullpageLoading),
   withRouter,
 )(AppWithTheme);

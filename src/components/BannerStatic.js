@@ -29,11 +29,11 @@ export default function BannerStatic({ match }: MatchProps) {
           Welcome to the 9th Make-A-Thon
         </h1>
         <h2 className="m-b-1 color-white">Learn-Make-Teach</h2>
-        <Link to="/add-idea">
+        <Link to="/ideas">
           <Button
             style={{ height: BUTTON_LG_HEIGHT, width: 184 }}
             icon="arrow_forward"
-            label="Add My Idea"
+            label="Browse All Ideas"
             raised
             primary
           />

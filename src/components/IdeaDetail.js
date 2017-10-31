@@ -23,7 +23,7 @@ import { DEFAULT_COVER_BG } from 'src/constants/appConstants';
 const styles = StyleSheet.create({
   banner: {
     textAlign: 'center',
-    minHeight: 600,
+    minHeight: 800,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },

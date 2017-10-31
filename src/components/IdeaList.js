@@ -13,6 +13,7 @@ import { graphql } from 'react-apollo';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaListItem from 'src/components/IdeaListItem';
+import FullpageLoading from 'src/components/FullpageLoading';
 
 import { IdeaListQuery } from 'src/constants/appQueries';
 
@@ -93,7 +94,7 @@ export default compose(
     options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
   }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
-  withGQLLoadingOrError(),
+  withGQLLoadingOrError(FullpageLoading),
   withState('searchText', 'searchTextSet', ''),
   withProps(({ data, searchText }) => {
     if (searchText.length === 0) {

@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { StyleSheet, Box, css } from '@coursera/coursera-ui';
-import Button from 'react-toolbox/lib/button/Button';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -72,7 +71,7 @@ function IdeaPresent({
           </h3>
           <h3 className="text-secondary font-lg">{pitchedBy || createdBy.name}</h3>
           <div className="p-a-2 font-lg">
-            Next: <IdeaNext first={1} after={idea.id} isPresentationMode />
+            <IdeaNext first={1} after={idea.id} isPresentationMode />
           </div>
         </div>
       </Box>

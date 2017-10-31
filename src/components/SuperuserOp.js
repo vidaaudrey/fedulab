@@ -35,6 +35,14 @@ type Props = {
   checkJson: () => void,
 };
 
+function isJSON(str) {
+  try {
+    return JSON.parse(str) && !!str;
+  } catch (e) {
+    return false;
+  }
+}
+
 export function SuperuserOp({
   form,
   onConvertPitchToIdeas,
@@ -44,12 +52,15 @@ export function SuperuserOp({
   apiStatus,
   ...rest
 }: Props) {
-  const { getFieldDecorator } = form;
+  const { getFieldDecorator, getFieldValue, getFieldError } = form;
+  const jsonInputError = getFieldError('jsonInput');
+  const jsonInputValue = getFieldValue('jsonInput');
 
   return (
-    <div>
+    <Form onSubmit={onConvertPitchToIdeas} className="login-form">
       <h2 className="font-weight-200"> Import Ideas</h2>
       <FormItem
+        hasFeedback
         label={
           'Paste the pitch ideas in json format here, using the following fields: "time","username","title","howToContribute","courseraVideoUrl","description" '
         }
@@ -60,9 +71,9 @@ export function SuperuserOp({
           </p>
         }
       >
-        {getFieldDecorator('youtubeVideoUrl', {
+        {getFieldDecorator('jsonInput', {
           rules: [{ validator: checkJson }],
-          initialValue: jsonInput,
+          initialValue: JSON.stringify(PITCH_IDEAS),
         })(
           <TextArea placeholder="Details about your idea" autosize={{ minRows: 6, maxRows: 12 }} />,
         )}
@@ -98,8 +109,9 @@ export function SuperuserOp({
         </div>
       </Box>
       <h2 className="font-weight-200"> Preview Imports</h2>
-      <JsonViewer json={PITCH_IDEAS} />
-    </div>
+      {getFieldValue('jsonInput') &&
+        !getFieldError('jsonInput') && <JsonViewer json={JSON.parse(getFieldValue('jsonInput'))} />}
+    </Form>
   );
 }
 
@@ -107,50 +119,63 @@ const SuperuserOpHOC = compose(
   withRouter,
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
   withState('apiStatus', 'apiStatusSet', API_BEFORE_SEND),
-  withState('jsonInput', 'jsonInputSet', JSON.stringify(PITCH_IDEAS)),
   withHandlers({
-    onJsonInputChange: () => (data) => {
-      console.warn('change', data);
+    onJsonInputChange: ({ jsonInputSet }) => (data) => {
+      jsonInputSet(data);
     },
-    checkJson: () => () => {},
-    onConvertPitchToIdeas: ({ createIdea, client, userId, history, apiStatusSet }) => () => {
-      const allIdeas = PITCH_IDEAS.map(
-        (
-          { username, title, howToContribute, courseraVideoUrl, description, displayOrder },
-          index,
-        ) => ({
-          ...getDefaultIdea(),
-          displayOrder: displayOrder || index,
-          title,
-          description,
-          pitchedBy: username,
-          howToContribute,
-          createdById: userId,
-          contributorsIds: [],
-          needMyLaptop: false,
-          presentLive: false,
-          isPresenting: false,
-          isBackgroundImageDark: true,
-        }),
-      );
+    checkJson: ({ form }) => (rule, value, callback) => {
+      const json = isJSON(value);
+      if (!json) {
+        callback('Must input valid json');
+      } else {
+        callback();
+      }
+    },
+    onConvertPitchToIdeas: ({ createIdea, client, userId, history, apiStatusSet, form }) => (e) => {
+      e.preventDefault();
+      form.validateFields((err, values) => {
+        if (!err) {
+          const { jsonInput } = values;
+          const ideaInputs = JSON.parse(jsonInput);
+          const allIdeas = ideaInputs.map(
+            (
+              { username, title, howToContribute, courseraVideoUrl, description, displayOrder },
+              index,
+            ) => ({
+              ...getDefaultIdea(),
+              displayOrder: displayOrder || index,
+              title,
+              description,
+              pitchedBy: username,
+              howToContribute,
+              createdById: userId,
+              contributorsIds: [],
+              needMyLaptop: false,
+              presentLive: false,
+              isPresenting: false,
+              isBackgroundImageDark: true,
+            }),
+          );
 
-      allIdeas.forEach((idea, index) => {
-        apiStatusSet(API_IN_PROGRESS);
-        createIdea({
-          variables: idea,
-          refetchQueries:
-            index === allIdeas.length - 1 ? [{ query: IdeaListQuery, options: {} }] : [],
-        })
-          .then((res) => {
-            if (index === allIdeas.length - 1) {
-              apiStatusSet(API_SUCCESS);
-            }
-            console.warn('res', res);
-          })
-          .catch((error) => {
-            console.warn('error', error);
-            apiStatusSet(API_ERROR);
+          allIdeas.forEach((idea, index) => {
+            apiStatusSet(API_IN_PROGRESS);
+            createIdea({
+              variables: idea,
+              refetchQueries:
+                index === allIdeas.length - 1 ? [{ query: IdeaListQuery, options: {} }] : [],
+            })
+              .then((res) => {
+                if (index === allIdeas.length - 1) {
+                  apiStatusSet(API_SUCCESS);
+                }
+                console.warn('res', res);
+              })
+              .catch((error) => {
+                console.warn('error', error);
+                apiStatusSet(API_ERROR);
+              });
           });
+        }
       });
     },
   }),

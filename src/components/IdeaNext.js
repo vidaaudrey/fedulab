@@ -20,8 +20,8 @@ type Props = {
 function IdeaNext({ idea: { title, slug }, isPresentationMode }: Props) {
   return (
     <span className="p-l-1">
+      {isPresentationMode && <span>Next: </span>}
       <Link to={`/ideas/${slug}${isPresentationMode ? '/show' : ''}`}>
-        {' '}
         {`${title} ${isPresentationMode ? '' : '>'}`}{' '}
       </Link>
     </span>

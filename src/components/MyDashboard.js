@@ -7,6 +7,7 @@ import { compose, withHandlers } from 'recompose';
 import _ from 'underscore';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
+import FullpageLoading from 'src/components/FullpageLoading';
 
 export function MyDashboard({
   name,
@@ -85,7 +86,7 @@ export default compose(
       dataFieldName: 'user',
     }),
   }),
-  withGQLLoadingOrError(),
+  withGQLLoadingOrError(FullpageLoading),
   withHandlers({
     dosomething: () => () => {},
   }),

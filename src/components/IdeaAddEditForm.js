@@ -198,12 +198,6 @@ function IdeaAddEditFormForm({
           <TextArea placeholder="Details about your idea" autosize={{ minRows: 2, maxRows: 6 }} />,
         )}
       </FormItem>
-      {/* <FormItem {...formItemLayout} label="Background Image URL (TODO: File Upload)" hasFeedback>
-        {getFieldDecorator('coverBackgroundUrl', {
-          initialValue: idea.coverBackgroundUrl,
-        })(<Input placeholder="coverBackgroundUrl" />)}
-      </FormItem> */}
-
       <FormItem {...formItemLayout} label="Background Image URL">
         <ImgurUploader imgUrl={idea.coverBackgroundUrl} onImgUploaded={coverBackgroundUrlSet} />
         <div>
