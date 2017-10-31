@@ -209,7 +209,7 @@ function IdeaAddEditFormForm({
             defaultChecked={idea.isBackgroundImageDark}
             onChange={toggleIsBackgroundImageDark}
           />
-          <span className="p-l-1">{'Is the background in image dark color?'}</span>
+          <span className="p-l-1">{'Is the background image in dark color?'}</span>
         </div>
       </FormItem>
 
