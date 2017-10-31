@@ -256,6 +256,20 @@ export const UpdateIdeaMutation = gql`
   }
 `;
 
+export const ClaimIdeaMutation = gql`
+  mutation claimIdeaMutation($id: ID!, $createdById: ID) {
+    updateIdea(id: $id, createdById: $createdById) {
+      id
+      title
+      slug
+      createdBy {
+        name
+        id
+      }
+    }
+  }
+`;
+
 export const DeleteIdeaMutation = gql`
   mutation deleteIdeaMutation($id: ID!) {
     deleteIdea(id: $id) {

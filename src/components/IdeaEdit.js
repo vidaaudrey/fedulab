@@ -14,7 +14,8 @@ type MatchProps = { match: RouterMatch };
 
 type Props = {
   match: MatchProps,
-  data: Object,
+  ideaEditQuery: Object,
+  userDetailsQuery: Object,
   userId: String,
   slug: String,
   isSuperuser: boolean,
