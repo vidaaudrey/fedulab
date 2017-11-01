@@ -1,4 +1,7 @@
 // @flow
+export const LOGIN_BUTTON_TEXT = 'Register for Demo';
+export const USE_WINDOW_LOCATION = true;
+export const ADD_IDEA_TEXT = 'Register for Demo';
 export const ENABLE_QUICK_ADMIN_OP = false;
 export const SLACK_URL = 'https://coursera.slack.com/messages/makeathon';
 export const ENABLE_NON_COURSERA_SIGN_IN = false;
