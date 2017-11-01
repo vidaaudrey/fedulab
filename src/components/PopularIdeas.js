@@ -16,6 +16,7 @@ import { IdeaListQuery } from 'src/constants/appQueries';
 
 const CONFIG = {
   loadingMinHeight: 560,
+  popularIdeasToShow: 7,
   responsive: [
     {
       breakpoint: breakPoint.xl,
@@ -79,7 +80,7 @@ type NavButtonProps = {
 }
 
 function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
-  const ideaList = allIdeas.slice(0, 8);
+  const ideaList = allIdeas.slice(0, CONFIG.popularIdeasToShow);
   return (
     <div>
       <div className="text-xs-center m-b-2">

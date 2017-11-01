@@ -9,14 +9,17 @@ import TEACH from 'src/assets/makeathon_logos/teach-sm.png';
 const CONFIG = [
   {
     icon: LEARN,
+    title: 'Learn',
     description: "It's what we do best!",
   },
   {
     icon: MAKE,
+    title: 'Make',
     description: 'Create, share, and have impact.',
   },
   {
     icon: TEACH,
+    title: 'Teach',
     description: 'Together, we can go far.',
   },
 ];
