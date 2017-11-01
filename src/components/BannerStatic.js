@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import LoginAuth0 from 'src/components/LoginAuth0';
 
 import BANNER_BG from 'src/assets/imgs/banner.jpg';
+import MAKEATHON_LOGO from 'src/assets/makeathon_logos/makeathon.png';
 import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 
 const styles = StyleSheet.create({
   banner: {
-    minHeight: 600,
+    minHeight: 800,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundImage: `url(${BANNER_BG})`,
@@ -30,21 +31,17 @@ export default function BannerStatic({ isLoggedout }: Props) {
       justifyContent="center"
       alignItems="center"
     >
-      <div className="p-a-1 m-t-3">
-        <h1 className="color-white font-weight-900" style={{ fontSize: '4.8rem' }}>
-          Welcome to the 9th Make-A-Thon
-        </h1>
-        <h2 className="m-b-1 color-white">Learn-Make-Teach</h2>
+      <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
+        <img className="m-b-2" src={MAKEATHON_LOGO} />
         {isLoggedout && (
           <div className="inverse">
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
           </div>
         )}
-
         {!isLoggedout && (
           <Link to="/ideas">
             <Button
-              style={{ height: BUTTON_LG_HEIGHT, width: 184 }}
+              style={{ height: BUTTON_LG_HEIGHT }}
               icon="arrow_forward"
               label="Browse All Ideas"
               raised
@@ -52,7 +49,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
             />
           </Link>
         )}
-      </div>
+      </Box>
     </Box>
   );
 }

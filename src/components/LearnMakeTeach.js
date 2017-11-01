@@ -2,9 +2,9 @@
 import React from 'react';
 import { Container } from '@coursera/coursera-ui';
 import { Row, Col } from 'antd';
-import LEARN from 'src/assets/svg/learn.svg';
-import MAKE from 'src/assets/svg/make.svg';
-import TEACH from 'src/assets/svg/teach.svg';
+import LEARN from 'src/assets/makeathon_logos/learn-sm.png';
+import MAKE from 'src/assets/makeathon_logos/make-sm.png';
+import TEACH from 'src/assets/makeathon_logos/teach-sm.png';
 
 const CONFIG = [
   {
@@ -23,15 +23,17 @@ const CONFIG = [
     description: 'Together, we can go far.',
   },
 ];
+
+const LOGO_SIZE = 220;
+
 export default function LearnMakeTeach() {
   return (
     <div className="LearnMakeTeach text-xs-center bg-white p-y-3">
       <Container>
         <Row gutter={16}>
           {CONFIG.map(({ title, icon, description }) => (
-            <Col key={title} xs={24} sm={8} className="p-a-1 m-b-2">
-              <img src={icon} alt={title} />
-              <h3>{title}</h3>
+            <Col key={title} xs={24} sm={8} className="m-b-2">
+              <img className="m-b-1" height={LOGO_SIZE} src={icon} alt={title} />
               <p className="font-weight-200">{description}</p>
             </Col>
           ))}
