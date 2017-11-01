@@ -118,7 +118,8 @@ export const IdeaEditQuery = gql`
       howToContribute
       isBackgroundImageDark
       needMyLaptop
-      presentLive
+      needPower
+      needMonitor
       isPresenting
       slackUrl
       slug
@@ -154,7 +155,8 @@ export const CreateIdeaMutation = gql`
     $estimatedFinishTime: DateTime!
     $howToContribute: String!
     $needMyLaptop: Boolean
-    $presentLive: Boolean
+    $needPower: Boolean
+    $needMonitor: Boolean
     $isPresenting: Boolean
     $slackUrl: String
     $slug: String!
@@ -178,7 +180,8 @@ export const CreateIdeaMutation = gql`
       estimatedFinishTime: $estimatedFinishTime
       howToContribute: $howToContribute
       needMyLaptop: $needMyLaptop
-      presentLive: $presentLive
+      needPower: $needPower
+      needMonitor: $needMonitor
       isPresenting: $isPresenting
       slackUrl: $slackUrl
       slug: $slug
@@ -214,7 +217,8 @@ export const UpdateIdeaMutation = gql`
     $estimatedFinishTime: DateTime!
     $howToContribute: String!
     $needMyLaptop: Boolean
-    $presentLive: Boolean
+    $needPower: Boolean
+    $needMonitor: Boolean
     $isPresenting: Boolean
     $slackUrl: String
     $slug: String!
@@ -239,7 +243,8 @@ export const UpdateIdeaMutation = gql`
       estimatedFinishTime: $estimatedFinishTime
       howToContribute: $howToContribute
       needMyLaptop: $needMyLaptop
-      presentLive: $presentLive
+      needPower: $needPower
+      needMonitor: $needMonitor
       isPresenting: $isPresenting
       slackUrl: $slackUrl
       slug: $slug

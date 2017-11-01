@@ -87,7 +87,8 @@ type Props = {
   coverBackgroundUrlSet: string => void,
   toggleIsPresenting: boolean => void,
   toggleNeedMyLaptop: boolean => void,
-  togglePresentLive: boolean => void,
+  toggleNeedPower: boolean => void,
+  toggleNeedMonitor: boolean => void,
   toggleIsMyIdea: boolean => void,
   toggleIsBackgroundImageDark: boolean => void,
 };
@@ -119,7 +120,8 @@ function IdeaAddEditFormForm({
   onImgUploaded,
   toggleIsPresenting,
   toggleNeedMyLaptop,
-  togglePresentLive,
+  toggleNeedPower,
+  toggleNeedMonitor,
   toggleIsMyIdea,
   toggleIsBackgroundImageDark,
 }: Props) {
@@ -164,6 +166,14 @@ function IdeaAddEditFormForm({
           initialValue: idea.category,
         })(<IdeaTypeSelect />)}
       </FormItem>
+      {allowToClaimIdea && (
+        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+          <div>
+            <Switch defaultChecked={idea.isMyIdea} onChange={toggleIsMyIdea} />
+            <span className="p-l-1">This is my idea</span>
+          </div>
+        </FormItem>
+      )}
 
       <SectionTitle title="Collaboration" />
       <FormItem {...formItemLayout} label="How to contribute" hasFeedback>
@@ -232,24 +242,22 @@ function IdeaAddEditFormForm({
       </FormItem>
       <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
         <div>
-          <Switch defaultChecked={idea.needMyLaptop} onChange={toggleNeedMyLaptop} />
-          <span className="p-l-1">I need my laptop to present</span>
+          <Switch defaultChecked={idea.needPower} onChange={toggleNeedPower} />
+          <span className="p-l-1">I need a power outlet</span>
         </div>
       </FormItem>
       <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
         <div>
-          <Switch defaultChecked={idea.presentLive} onChange={togglePresentLive} />
-          <span className="p-l-1">{" I'm presenting Live"}</span>
+          <Switch defaultChecked={idea.needMonitor} onChange={toggleNeedMonitor} />
+          <span className="p-l-1">I need a monitor</span>
         </div>
       </FormItem>
-      {allowToClaimIdea && (
-        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-          <div>
-            <Switch defaultChecked={idea.isMyIdea} onChange={toggleIsMyIdea} />
-            <span className="p-l-1">This is my idea</span>
-          </div>
-        </FormItem>
-      )}
+      <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+        <div>
+          <Switch defaultChecked={idea.needMyLaptop} onChange={toggleNeedMyLaptop} />
+          <span className="p-l-1">I'm presenting on my laptop</span>
+        </div>
+      </FormItem>
       {isSuperuser && (
         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
           <div>
@@ -304,7 +312,8 @@ export const getDefaultIdea = () => ({
   howToContribute: "Join us and let's talk more!",
   makeathonId: 'cj8apmwh6gvzh0172zd86j8hq',
   needMyLaptop: false,
-  presentLive: false,
+  needPower: false,
+  needMonitor: false,
   slackUrl: `${SLACK_URL_PREFIX}makeathon`,
   slug: `my-awesome-new-idea-${randomString({ length: 4 })}`,
   tagline: '',
@@ -353,7 +362,8 @@ const IdeaAddEditFormFormHOC = compose(
   graphql(UpdateIdeaMutation, { name: 'updateIdea' }),
   graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
   withState('needMyLaptop', 'toggleNeedMyLaptop', ({ idea }) => idea.needMyLaptop),
-  withState('presentLive', 'togglePresentLive', ({ idea }) => idea.presentLive),
+  withState('needPower', 'toggleNeedPower', ({ idea }) => idea.needPower),
+  withState('needMonitor', 'toggleNeedMonitor', ({ idea }) => idea.needMonitor),
   withState('isMyIdea', 'toggleIsMyIdea', ({ idea }) => idea.isMyIdea),
   withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
   withState(
@@ -368,7 +378,8 @@ const IdeaAddEditFormFormHOC = compose(
       idea,
       form,
       needMyLaptop,
-      presentLive,
+      needPower,
+      needMonitor,
       isMyIdea,
       isPresenting,
       createIdea,
@@ -389,7 +400,8 @@ const IdeaAddEditFormFormHOC = compose(
           const baseVariables = {
             ...otherValues,
             needMyLaptop,
-            presentLive,
+            needPower,
+            needMonitor,
             isPresenting,
             contributorsText: contributorsText.join(','),
             startTime,
