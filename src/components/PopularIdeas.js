@@ -3,6 +3,7 @@ import React from 'react';
 import { Icon } from 'antd';
 import { compose, withProps } from 'recompose';
 import { css, color, breakPoint, StyleSheet } from '@coursera/coursera-ui';
+import { Link } from 'react-router-dom';
 
 import { graphql } from 'react-apollo';
 import Slider from 'react-slick';
@@ -34,8 +35,8 @@ const CONFIG = {
         dots: true,
       },
     },
-  ]
-}
+  ],
+};
 
 const styles = StyleSheet.create({
   navButton: {
@@ -64,20 +65,20 @@ const styles = StyleSheet.create({
   ideaContainer: {
     padding: '1rem 0.5rem',
     width: '300px',
-  }
+  },
 });
 
 type Props = {
   isSuperuser: boolean,
   userId: boolean,
   allIdeas: [Object],
-}
+};
 
 type NavButtonProps = {
   direction: 'left' | 'right',
   onClick: Function,
   style: Object,
-}
+};
 
 function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
   const ideaList = allIdeas.slice(0, CONFIG.popularIdeasToShow);
@@ -85,7 +86,9 @@ function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
     <div>
       <div className="text-xs-center m-b-2">
         <h2 className="font-xl font-weight-200"> Popular Ideas</h2>
-        <Button icon="arrow_forward" label="Browse All" href="/ideas" />
+        <Link to="/ideas">
+          <Button icon="arrow_forward" label="Browse All" />
+        </Link>
       </div>
       <Slider
         autoplay
@@ -118,7 +121,11 @@ function NavButton({ direction, onClick, style }: NavButtonProps) {
 export default compose(
   graphql(IdeaListQuery, {
     options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
-    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas, minHeight: CONFIG.loadingMinHeight }),
+    props: ({ data: { allIdeas }, data }) => ({
+      data,
+      allIdeas,
+      minHeight: CONFIG.loadingMinHeight,
+    }),
   }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
   withGQLLoadingOrError(FullpageLoading),
