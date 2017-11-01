@@ -409,6 +409,10 @@ const IdeaAddEditFormFormHOC = compose(
               variables.createdById = userId;
             }
 
+            if (isMyIdea) {
+              variables.createdById = userId;
+            }
+
             updateIdea({ variables })
               .then((res) => {
                 console.warn('res', res);
