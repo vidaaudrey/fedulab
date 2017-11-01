@@ -13,7 +13,7 @@ import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 
 const styles = StyleSheet.create({
   banner: {
-    minHeight: 800,
+    minHeight: 700,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundImage: `url(${BANNER_BG})`,
@@ -32,7 +32,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
       alignItems="center"
     >
       <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
-        <img className="m-b-2" src={MAKEATHON_LOGO} />
+        <img src={MAKEATHON_LOGO} style={{ marginBottom: '-5rem' }} />
         {isLoggedout && (
           <div className="inverse">
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
