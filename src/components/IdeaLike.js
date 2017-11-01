@@ -17,17 +17,12 @@ type Props = {
 };
 
 function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike }: Props) {
+  const iconImage = hasLiked ? 'heart' : 'heart-o';
+  const onLikeHandler = hasLiked ? onUnlike : onLike;
   return (
     <div>
       <span className="d-inline-block p-r-1s">{totalLikes}</span>
-      {hasLiked && (
-        <Button onClick={onUnlike}>
-          <Icon type="heart" />
-        </Button>
-      )}
-      {!hasLiked && (
-        <Button icon="heart-o" size="large" onClick={onLike} />
-      )}
+      <Button icon={iconImage} size="large" onClick={onLikeHandler} />
     </div>
   );
 }

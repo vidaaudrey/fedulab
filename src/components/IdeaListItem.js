@@ -23,11 +23,11 @@ type Props = {
 };
 
 export function IdeaListItem({
-  idea,
   idea: {
     pitchedBy,
     tagline,
     createdBy,
+    contributors,
     coverBackgroundUrl,
     createdAt,
     id,
@@ -41,7 +41,7 @@ export function IdeaListItem({
   userId,
   userEmail,
 }: Props) {
-  const allContributorNames = idea.contributors.map(item => item.name).join(',  ');
+  const allContributorNames = contributors.map(item => item.name).join(',  ');
   const isUserCreated = userId === (createdBy && createdBy.id);
 
   return (
