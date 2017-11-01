@@ -32,7 +32,7 @@ export default function LearnMakeTeach() {
       <Container>
         <Row gutter={16}>
           {CONFIG.map(({ title, icon, description }) => (
-            <Col key={title} xs={24} sm={8} className="m-b-2">
+            <Col key={title} xs={24} sm={8} className="m-t-1s">
               <img className="m-b-1" height={LOGO_SIZE} src={icon} alt={title} />
               <p className="font-weight-200">{description}</p>
             </Col>
