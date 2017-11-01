@@ -91,7 +91,7 @@ function IdeaDetail({
         rootClassName="max-text-width m-x-auto"
       >
         <div className="p-a-2 bg-white m-b-1">
-          <span className="text-secondary">By {createdBy.name}</span>
+          <span className="text-secondary">By {createdBy && createdBy.name}</span>
           {contributorsText && (
             <div className="text-secondary">Contributors:{contributorsText}</div>
           )}

@@ -19,9 +19,13 @@ type Props = {
 };
 
 function IdeaPrev({ idea: { title, slug } }: Props) {
+  const charLimit = 40;
   return (
     <div className="p-r-1">
-      <Link to={`/ideas/${slug}`}> {`< ${title}`}</Link>
+      <Link to={`/ideas/${slug}`}>
+        {' '}
+        {`< ${title.substring(0, charLimit)}${title.length >= charLimit ? '...' : ''}`}
+      </Link>
     </div>
   );
 }

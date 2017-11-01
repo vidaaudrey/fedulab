@@ -85,6 +85,11 @@ export const IdeaNextQuery = gql`
       id
       slug
       title
+      createdBy {
+        name
+        id
+      }
+      contributorsText
     }
   }
 `;
