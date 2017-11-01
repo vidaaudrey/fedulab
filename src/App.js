@@ -29,8 +29,8 @@ import { AUTH_KEY } from 'src/constants/config';
 
 import 'antd/dist/antd.css';
 import '@coursera/coursera-ui/css/utilities.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'src/styles/App.css';
 
 const { Content } = Layout;
@@ -130,7 +130,7 @@ function App({
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
           {isLoggedIn && <Route path="/me" component={MyDashboard} />}
-          {isLoggedIn && <Route exact path="/signup" component={UserCreate} />}
+          {!isLoggedIn && <Route exact path="/signup" component={UserCreate} />}
         </div>
       </Content>
       <Footer />
@@ -164,6 +164,5 @@ export default compose(
       location.reload();
     },
   }),
-  // withGQLLoadingOrError(HomeShell),
   withRouter,
 )(AppWithTheme);

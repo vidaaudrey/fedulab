@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
+import { CenterBox } from '@coursera/coursera-ui';
 import { withRouter, Redirect } from 'react-router-dom';
 import { compose, setDisplayName, withHandlers, lifecycle, withProps, withState } from 'recompose';
 
 import { graphql, gql } from 'react-apollo';
 import { withGQLLoadingOrError } from 'src/components/withBranches';
+import Loading from 'src/components/Loading';
 
 type Props = {
   data: {
@@ -17,7 +19,12 @@ type Props = {
 
 function UserCreate({ data, onCreateUser, isCreatingUser }: Props) {
   if (isCreatingUser) {
-    return <span>Creating users...</span>;
+    return (
+      <CenterBox rootClassName="FullpageLoading p-y-1 w-100 h-100" style={{ minHeight: '90vh' }}>
+        <Loading />
+        <p className="m-a-2">Creating user...</p>
+      </CenterBox>
+    );
   }
 
   // Redirect if user is logged in or did not finish Auth0 Lock dialog
