@@ -29,7 +29,7 @@ const CONFIG = {
       breakpoint: breakPoint.sm,
       settings: {
         slidesToShow: 1,
-        arrow: false,
+        arrows: false,
         dots: true,
       },
     },
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     },
   },
   sliderButton: {
-    width: '20px',
-    height: '20px',
+    width: '30px',
+    height: '30px',
     position: 'absolute',
     top: '50%',
     cursor: 'pointer',
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     left: '-45px',
   },
   buttonRight: {
-    right: '-35px',
+    right: '-45px',
   },
   ideaContainer: {
     padding: '1rem 0.5rem',
@@ -84,7 +84,7 @@ function PopularIdeas({ allIdeas, isSuperuser, userId, ...rest }: Props) {
     <div>
       <div className="text-xs-center m-b-2">
         <h2 className="font-xl font-weight-200"> Popular Ideas</h2>
-        <Button icon="chevron_right" label="Browse All" href="/ideas" />
+        <Button icon="arrow_forward" label="Browse All" href="/ideas" />
       </div>
       <Slider
         autoplay
