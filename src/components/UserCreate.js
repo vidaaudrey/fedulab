@@ -32,13 +32,18 @@ function UserCreate({ data, onCreateUser, isCreatingUser }: Props) {
   // Redirect if user is logged in or did not finish Auth0 Lock dialog
   if (data.user || window.localStorage.getItem('auth0IdToken') === null) {
     console.warn('not a new user or already logged in');
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-        }}
-      />
-    );
+
+    if (USE_WINDOW_LOCATION) {
+      window.location.pathname = '/';
+    } else {
+      return (
+        <Redirect
+          to={{
+            pathname: '/',
+          }}
+        />
+      );
+    }
   }
 
   return (
@@ -114,7 +119,11 @@ export default compose(
         .catch((e) => {
           console.error(e);
           isCreatingUserSet(false);
-          history.replace('/');
+          if (USE_WINDOW_LOCATION) {
+            window.location.pathname = '/';
+          } else {
+            history.replace('/');
+          }
         });
     },
   }),
