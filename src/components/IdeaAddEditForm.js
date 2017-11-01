@@ -1,6 +1,17 @@
 // @flow
 import React from 'react';
-import { Form, Row, Input, DatePicker, Col, Select, InputNumber, Switch } from 'antd';
+import {
+  Form,
+  Row,
+  Input,
+  DatePicker,
+  Col,
+  Select,
+  InputNumber,
+  Switch,
+  message,
+  Popconfirm,
+} from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
 import { compose, withState, withProps, withHandlers } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
@@ -259,7 +270,17 @@ function IdeaAddEditFormForm({
           />
         )}
         {isEditingMode &&
-          canDelete && <Button className="m-r-1s" label={'Delete Idea'} onClick={onDeleteIdea} />}
+          canDelete && (
+            <Popconfirm
+              placement="top"
+              title={'Are you sure?'}
+              onConfirm={onDeleteIdea}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button className="m-r-1s" label={'Delete Idea'} />
+            </Popconfirm>
+          )}
         {(isEditingMode || isCreateSuccess) && (
           <Link className="m-r-1" to={`/ideas/${idea.slug}`}>
               Preview
@@ -391,6 +412,7 @@ const IdeaAddEditFormFormHOC = compose(
             updateIdea({ variables })
               .then((res) => {
                 console.warn('res', res);
+                message.success('Idea updated!');
               })
               .catch(error => console.warn('error', error));
           } else {
@@ -407,6 +429,7 @@ const IdeaAddEditFormFormHOC = compose(
               .then((res) => {
                 console.warn('res', res);
                 history.push(`/ideas/${res.data.createIdea.slug}`);
+                message.success('Idea created!');
                 // isCreateSuccessSet(true);
               })
               .catch(error => console.warn('error', error));
