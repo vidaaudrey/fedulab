@@ -13,6 +13,7 @@ type Props = {
   picture: string,
   loading: boolean,
   isLoggedIn: boolean,
+  isSuperuser: boolean,
   isActive: boolean,
   onLogout: () => void,
 };
@@ -23,6 +24,7 @@ export default function UserMenu({
   isActive,
   loading,
   isLoggedIn,
+  isSuperuser,
   onLogout,
 }: Props) {
   return (
@@ -41,9 +43,11 @@ export default function UserMenu({
         <Link to="/ideas" className="hidden-sm-up">
           <MenuItem value="browse" icon="explore" caption="Browse" />
         </Link>
-        <Link to="/su">
-          <MenuItem value="help" icon="whatshot" caption="Superuser" />
-        </Link>
+        {isSuperuser && (
+          <Link to="/su">
+            <MenuItem value="help" icon="whatshot" caption="Superuser" />
+          </Link>
+        )}
         <Link to="/me">
           <MenuItem value="help" icon="favorite" caption="Liked Ideas" />
         </Link>
