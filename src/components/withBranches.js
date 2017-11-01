@@ -1,9 +1,12 @@
 // @flow
 import React from 'react';
 import { branch, compose, renderComponent, setDisplayName } from 'recompose';
+import Loading from 'src/components/Loading';
 
 type Props = {
   loading: boolean,
+  loaderSize?: number,
+  isLoadingCircle?: boolean,
   error: any,
   data: ?{
     loading: boolean,
@@ -12,17 +15,24 @@ type Props = {
   dataFieldName: ?string,
   shouldRenderNothing?: boolean,
 };
-function Loading() {
-  return <h2>Loading</h2>;
-}
 
 function Error() {
   return <h2>Error loading the data</h2>;
 }
 
 function LoadingOrError(props: Props) {
-  const { loading, error, data = {}, dataFieldName, shouldRenderNothing } = props;
-  if (loading || data.loading) return <Loading />;
+  const {
+    loading,
+    loaderSize,
+    isLoadingCircle,
+    error,
+    data = {},
+    dataFieldName,
+    shouldRenderNothing,
+  } = props;
+  if (loading || data.loading) {
+    return <Loading size={loaderSize} isLoadingCircle={isLoadingCircle} />;
+  }
   if (error || data.error) return <Error />;
   if (dataFieldName && (!data[dataFieldName] || !props[dataFieldName])) {
     if (shouldRenderNothing) return null;

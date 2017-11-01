@@ -25,23 +25,24 @@ const Button = styled.button`
 type Props = {
   userId: string,
   isSuperuser: boolean,
+  isLoggedout: boolean,
 };
 
-export default function Home({ isSuperuser, userId }: Props) {
+export default function Home({ isSuperuser, userId, isLoggedout }: Props) {
   return (
     <div>
       <div className="Home bg-primary text-xs-center header-margin-offset">
-        <BannerStatic />
+        <BannerStatic isLoggedout={isLoggedout} />
       </div>
       <LearnMakeTeach />
       {/* <Button>Normal</Button>
       <Button primary>Primary</Button> */}
       <div className="bg-light p-y-3">
         <Container>
-          <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
+          {!isLoggedout && <PopularIdeas isSuperuser={isSuperuser} userId={userId} />}
         </Container>
       </div>
-      <GallerySection />
+      {!isLoggedout && <GallerySection />}
       <AboutMakeAThon />
       <JoinDiscussion />
     </div>

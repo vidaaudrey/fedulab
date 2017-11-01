@@ -9,7 +9,6 @@ import 'assets/react-toolbox/theme.css';
 import theme from 'assets/react-toolbox/theme.js';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 
-import { withGQLLoadingOrError } from 'src/components/withBranches';
 import Header from 'src/components/Header';
 import IdeaListPage from 'src/components/IdeaListPage';
 import IdeaDetail from 'src/components/IdeaDetail';
@@ -23,7 +22,6 @@ import Gallery from 'src/components/Gallery';
 import MyDashboard from 'src/components/MyDashboard';
 import Home from 'src/components/Home';
 import Footer from 'src/components/Footer';
-import LoggedOutHome from 'src/components/LoggedOutHome';
 import FullpageLoading from 'src/components/FullpageLoading';
 
 import { UserDetailsQuery } from 'src/constants/appQueries';
@@ -40,6 +38,7 @@ const { Content } = Layout;
 function App({
   data,
   loading,
+  error,
   userId,
   isSuperuser,
   username,
@@ -49,11 +48,10 @@ function App({
   location,
   ...rest
 }: Props) {
-  if (!isLoggedIn) {
+  if (!isLoggedIn && !loading && !error) {
     if (location.pathname !== '/' && location.pathname !== '/signup') {
       return <Redirect to={{ pathname: '/' }} />;
     }
-    return <LoggedOutHome />;
   }
   const lastPathName = location.pathname.split('/').pop();
   const isPresentationMode = lastPathName === 'show';
@@ -75,43 +73,64 @@ function App({
           <Route
             exact
             path="/"
-            render={props => <Home {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props => (
+              <Home
+                isLoggedout={!isLoggedIn}
+                {...props}
+                userId={userId}
+                isSuperuser={isSuperuser}
+              />
+            )}
           />
           <Route
             exact
             path="/ideas/:ideaSlug"
-            render={props => <IdeaDetail {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn ? (
+                <IdeaDetail {...props} userId={userId} isSuperuser={isSuperuser} />
+              ) : null)}
           />
           <Route
             exact
             path="/ideas/:ideaSlug/edit"
-            render={props => <IdeaEdit {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn ? <IdeaEdit {...props} userId={userId} isSuperuser={isSuperuser} /> : null)}
           />
           <Route
             exact
             path="/ideas/:ideaSlug/show"
-            render={props => <IdeaPresent {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn ? (
+                <IdeaPresent {...props} userId={userId} isSuperuser={isSuperuser} />
+              ) : null)}
           />
           <Route
             exact
             path="/add-idea"
-            render={props => <IdeaAdd {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn ? <IdeaAdd {...props} userId={userId} isSuperuser={isSuperuser} /> : null)}
           />
           <Route
             exact
             path="/ideas"
-            render={props => <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn ? (
+                <IdeaListPage {...props} userId={userId} isSuperuser={isSuperuser} />
+              ) : null)}
           />
           <Route
             exact
             path="/su"
-            render={props => <Superuser {...props} userId={userId} isSuperuser={isSuperuser} />}
+            render={props =>
+              (isLoggedIn && isSuperuser ? (
+                <Superuser {...props} userId={userId} isSuperuser={isSuperuser} />
+              ) : null)}
           />
           <Route path="/loading" component={FullpageLoading} />
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
-          <Route path="/me" component={MyDashboard} />
-          <Route exact path="/signup" component={UserCreate} />
+          {isLoggedIn && <Route path="/me" component={MyDashboard} />}
+          {isLoggedIn && <Route exact path="/signup" component={UserCreate} />}
         </div>
       </Content>
       <Footer />
@@ -128,8 +147,9 @@ const AppWithTheme = props => (
 export default compose(
   graphql(UserDetailsQuery, {
     options: { fetchPolicy: 'network-only' },
-    props: ({ data, data: { loading, user } }) => ({
+    props: ({ data, data: { loading, error, user } }) => ({
       loading,
+      error,
       isLoggedIn: !!user,
       userId: user && user.id,
       isSuperuser: user && user.isSuperuser,
@@ -144,6 +164,6 @@ export default compose(
       location.reload();
     },
   }),
-  withGQLLoadingOrError(FullpageLoading),
+  // withGQLLoadingOrError(HomeShell),
   withRouter,
 )(AppWithTheme);

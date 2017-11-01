@@ -9,6 +9,8 @@ import { withGQLLoadingOrError } from 'src/components/withBranches';
 
 import { IdeaPrevQuery } from 'src/constants/appQueries';
 
+export const LOADER_SIZE = 32;
+
 type Props = {
   idea: {
     title: string,
@@ -33,6 +35,8 @@ export default compose(
       loading,
       error,
       idea: _(allIdeas).first(),
+      isLoadingCircle: true,
+      loaderSize: LOADER_SIZE,
     }),
   }),
   withGQLLoadingOrError(),

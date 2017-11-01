@@ -8,6 +8,7 @@ import _ from 'underscore';
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 
 import { IdeaNextQuery } from 'src/constants/appQueries';
+import { LOADER_SIZE } from 'src/components/IdeaPrev';
 
 type Props = {
   isPresentationMode: boolean,
@@ -37,6 +38,8 @@ export default compose(
       loading,
       error,
       idea: _(allIdeas).first(),
+      isLoadingCircle: true,
+      loaderSize: LOADER_SIZE,
     }),
   }),
   withGQLLoadingOrError(),

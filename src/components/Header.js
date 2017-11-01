@@ -48,9 +48,13 @@ function HeaderAlt({
         <Box tag={Link} rootClassName="logo" alignItems="center" to="/" flex={1}>
           <img src={Logo} alt="fedulab" width="144px" />
         </Box>
-        <Box>
-          <Box rootClassName="hidden-sm-down" style={{ lineHeight: '68px', borderBottom: 'none' }}>
-            {/* <Menu.Item key="1">
+        {isLoggedIn && (
+          <Box>
+            <Box
+              rootClassName="hidden-sm-down"
+              style={{ lineHeight: '68px', borderBottom: 'none' }}
+            >
+              {/* <Menu.Item key="1">
               <Link to="/add-idea">+Idea</Link>
             </Menu.Item>
             <Menu.Item key="2">
@@ -59,31 +63,32 @@ function HeaderAlt({
             <Menu.Item key="3">
               <Link to="/about">About</Link>
             </Menu.Item> */}
-            <Link to="/add-idea">
-              <Button icon="add" label="Idea" primary={pathname === '/add-idea'} />
-            </Link>
-            <Link to="/ideas">
-              <Button label="Browse" primary={pathname === '/ideas'} />
-            </Link>
-          </Box>
+              <Link to="/add-idea">
+                <Button icon="add" label="Idea" primary={pathname === '/add-idea'} />
+              </Link>
+              <Link to="/ideas">
+                <Button label="Browse" primary={pathname === '/ideas'} />
+              </Link>
+            </Box>
 
-          <Route
-            path="/"
-            render={({ match, history }) => (
-              <div className="userMenuWrapper">
-                <UserMenu
-                  isSuperuser={isSuperuser}
-                  name={username}
-                  picture={picture}
-                  isLoggedIn={isLoggedIn}
-                  loading={loading}
-                  onLogout={onLogout}
-                  isActive={pathname === '/me'}
-                />
-              </div>
-            )}
-          />
-        </Box>
+            <Route
+              path="/"
+              render={({ match, history }) => (
+                <div className="userMenuWrapper">
+                  <UserMenu
+                    isSuperuser={isSuperuser}
+                    name={username}
+                    picture={picture}
+                    isLoggedIn={isLoggedIn}
+                    loading={loading}
+                    onLogout={onLogout}
+                    isActive={pathname === '/me'}
+                  />
+                </div>
+              )}
+            />
+          </Box>
+        )}
       </Box>
     </Header>
   );

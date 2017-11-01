@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
 import { CenterBox } from '@coursera/coursera-ui';
-
 import { Link } from 'react-router-dom';
+
+import Loading from 'src/components/Loading';
 
 type Props = {
   loading: boolean,
@@ -17,7 +18,7 @@ export default function IdeaLoadPreCheck({ loading, error, idea, slug, data }: P
   const hasError = error || (data && data.error);
   return (
     <CenterBox rootClassName="FullpageLoading p-y-1 w-100 h-100" style={{ minHeight: '90vh' }}>
-      {isLoading && <h2>Loading</h2>}
+      {isLoading && <Loading />}
       {hasError && <h2>Error loading the data</h2>}
       {isLoading &&
         hasError &&
