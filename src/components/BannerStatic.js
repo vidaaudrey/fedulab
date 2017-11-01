@@ -33,15 +33,22 @@ export default function BannerStatic({ isLoggedout }: Props) {
     >
       <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
         <img src={MAKEATHON_LOGO} />
-        <Link className="m-t-2" to="/ideas">
-          <Button
-            style={{ height: BUTTON_LG_HEIGHT }}
-            icon="arrow_forward"
-            label="Browse All Ideas"
-            raised
-            primary
-          />
-        </Link>
+       {isLoggedout && (
+         <div className="inverse">
+           <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
+         </div>
+       )}
+       {!isLoggedout && (
+         <Link className="m-t-2" to="/ideas">
+           <Button
+             style={{ height: BUTTON_LG_HEIGHT }}
+             icon="arrow_forward"
+             label="Browse All Ideas"
+             raised
+             primary
+           />
+         </Link>
+       )}
       </Box>
     </Box>
   );

@@ -10,7 +10,7 @@ import JoinDiscussion from 'src/components/JoinDiscussion';
 import AboutMakeAThon from 'src/components/AboutMakeAThon';
 import GallerySection from 'src/components/GallerySection';
 
-/* Use styled  for styling components 
+/* Use styled  for styling components
 const Button = styled.button`
   background: ${props => (props.primary ? 'palevioletred' : 'white')};
   color: ${props => (props.primary ? 'white' : 'palevioletred')};
@@ -35,13 +35,13 @@ export default function Home({ isSuperuser, userId, isLoggedout }: Props) {
         <BannerStatic isLoggedout={isLoggedout} />
       </div>
       <LearnMakeTeach />
-      {/* <Button>Normal</Button>
-      <Button primary>Primary</Button> */}
-      <div className="bg-light p-y-3">
-        <Container>
-          {!isLoggedout && <PopularIdeas isSuperuser={isSuperuser} userId={userId} />}
-        </Container>
-      </div>
+      {!isLoggedout &&
+        <div className="bg-light p-y-3">
+          <Container>
+            <PopularIdeas isSuperuser={isSuperuser} userId={userId} />
+          </Container>
+        </div>
+      }
       {!isLoggedout && <GallerySection />}
       <AboutMakeAThon />
       <JoinDiscussion />
