@@ -7,7 +7,11 @@ import { withRouter } from 'react-router-dom';
 import _ from 'underscore';
 
 import Auth0Lock from 'auth0-lock';
-import { ENABLE_NON_COURSERA_SIGN_IN } from 'src/constants/appConstants';
+import {
+  ENABLE_NON_COURSERA_SIGN_IN,
+  LOGIN_BUTTON_TEXT,
+  USE_WINDOW_LOCATION,
+} from 'src/constants/appConstants';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 
@@ -21,9 +25,9 @@ function LoginAuth0({ onShowLogin, error }: Props) {
     <Box flexDirection="column" justifyContent="center" alignItems="center">
       <Button
         className="m-b-1"
-        style={{ height: BUTTON_LG_HEIGHT, width: 160 }}
+        style={{ height: BUTTON_LG_HEIGHT, width: 240 }}
         icon="navigate_next"
-        label="Start"
+        label={LOGIN_BUTTON_TEXT}
         raised
         primary
         onClick={onShowLogin}
@@ -53,8 +57,11 @@ export default compose(
           localStorage.setItem('profile', JSON.stringify(profile));
           window.localStorage.setItem('auth0IdToken', authResult.idToken);
           // TODO(Audrey): user history?
-          window.location.pathname = '/signup';
-          // history.replace('/signup');
+          if (USE_WINDOW_LOCATION) {
+            window.location.pathname = '/signup';
+          } else {
+            history.replace('/signup');
+          }
         } else {
           errorSet(true);
         }

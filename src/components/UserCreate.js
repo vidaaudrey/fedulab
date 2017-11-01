@@ -8,6 +8,8 @@ import { graphql, gql } from 'react-apollo';
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import Loading from 'src/components/Loading';
 
+import { USE_WINDOW_LOCATION } from 'src/constants/appConstants';
+
 type Props = {
   data: {
     loading: boolean,
@@ -103,8 +105,11 @@ export default compose(
         .then((response) => {
           console.warn('user created', response);
           // TODO(Audrey): figure out why history doesn't trigger GQL requery
-          // history.replace('/');
-          window.location.pathname = '/';
+          if (USE_WINDOW_LOCATION) {
+            window.location.pathname = '/';
+          } else {
+            history.replace('/');
+          }
         })
         .catch((e) => {
           console.error(e);

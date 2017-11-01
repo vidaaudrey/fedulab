@@ -6,6 +6,7 @@ import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import MenuDivider from 'react-toolbox/lib/menu/MenuDivider';
 import { Link } from 'react-router-dom';
 import { COLOR_PRIMARY } from 'src/constants/theme';
+import { ADD_IDEA_TEXT } from 'src/constants/appConstants';
 
 type Props = {
   name: string,
@@ -35,7 +36,7 @@ export default function UserMenu({
       </Link>
       <IconMenu icon="more_vert" position="topRight" menuRipple>
         <Link to="/add-idea" className="hidden-sm-up">
-          <MenuItem value="add" icon="add" caption="Add Idea" />
+          <MenuItem value="add" icon="add" caption={ADD_IDEA_TEXT} />
         </Link>
         <Link to="/ideas" className="hidden-sm-up">
           <MenuItem value="browse" icon="explore" caption="Browse" />

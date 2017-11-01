@@ -8,6 +8,8 @@ import { Route, Link, withRouter } from 'react-router-dom';
 import UserMenu from 'src/components/UserMenu';
 import Logo from 'src/assets/logo_light.svg';
 
+import { ADD_IDEA_TEXT } from 'src/constants/appConstants';
+
 const { Header } = Layout;
 
 type Props = {
@@ -64,7 +66,7 @@ function HeaderAlt({
               <Link to="/about">About</Link>
             </Menu.Item> */}
               <Link to="/add-idea">
-                <Button icon="add" label="Idea" primary={pathname === '/add-idea'} />
+                <Button label={ADD_IDEA_TEXT} primary={pathname === '/add-idea'} />
               </Link>
               <Link to="/ideas">
                 <Button label="Browse" primary={pathname === '/ideas'} />
