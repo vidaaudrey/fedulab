@@ -15,6 +15,7 @@ import FullpageLoading from 'src/components/FullpageLoading';
 import { IdeaListQuery } from 'src/constants/appQueries';
 
 const CONFIG = {
+  loadingMinHeight: 560,
   responsive: [
     {
       breakpoint: breakPoint.xl,
@@ -116,7 +117,7 @@ function NavButton({ direction, onClick, style }: NavButtonProps) {
 export default compose(
   graphql(IdeaListQuery, {
     options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
-    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas }),
+    props: ({ data: { allIdeas }, data }) => ({ data, allIdeas, minHeight: CONFIG.loadingMinHeight }),
   }),
   withProps(() => ({ dataFieldName: 'allIdeas' })),
   withGQLLoadingOrError(FullpageLoading),
