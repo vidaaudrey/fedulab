@@ -41,7 +41,6 @@ export function MyDashboard({
             </Link>
           </div>
         ))}
-        <h3>My Votes</h3>
       </div>
     </div>
   );
