@@ -24,6 +24,7 @@ type Props = {
 };
 
 export function IdeaListItem({
+  idea,
   idea: {
     pitchedBy,
     tagline,
@@ -69,7 +70,7 @@ export function IdeaListItem({
           backgroundImage: `url(${coverBackgroundUrl})`,
         }}
       >
-        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} isOverIdeaCard />
+        <IdeaLike ideaId={id} ideaLikes={likes || []} userId={userId} isOverIdeaCard />
       </div>
       <Box
         rootClassName="p-a-1"
@@ -89,6 +90,7 @@ export function IdeaListItem({
       </Box>
       <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
         <IdeaActions
+          hideLikes
           canDelete={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
           canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
           canClaim={!isUserCreated && userEmail === pitchedBy}

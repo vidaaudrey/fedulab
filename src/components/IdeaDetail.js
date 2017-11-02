@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Button from 'react-toolbox/lib/button/Button';
-import { StyleSheet, Box, css, color, font } from '@coursera/coursera-ui';
+import { StyleSheet, Box, css, color, font, CenterBox } from '@coursera/coursera-ui';
 import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -84,7 +84,7 @@ function IdeaDetail({
           </h3>
         </div>
       </Box>
-      <Box style={{ backgroundColor: color.white, height: '75px' }}>
+      <CenterBox style={{ backgroundColor: color.white, height: '75px' }} rootClassName="m-b-1">
         <IdeaActions
           shouldRedirectToListAfterDelete
           canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
@@ -94,12 +94,12 @@ function IdeaDetail({
           likes={idea.likes}
           userId={userId}
         />
-      </Box>
+      </CenterBox>
       <Box
         key={id}
         justifyContent="center"
         flexDirection="column"
-        rootClassName="max-text-width m-x-auto"
+        rootClassName="max-text-width m-x-auto bg-white  p-a-1 m-b-1"
       >
         <Box alignSelf="center">
           <div className="text-secondary m-t-1" style={{ fontSize: font.sm }}>
@@ -141,14 +141,14 @@ function IdeaDetail({
           {slackUrl && <p>Slack URL: {slackUrl}</p>}
           {courseraVideoUrl && <p>Coursera Video URL: {courseraVideoUrl}</p>}
         </Box>
-        <Box rootClassName="m-b-1 p-a-2" justifyContent="between" flexWrap="wrap">
-          <div className="p-r-1">
-            <IdeaPrev last={1} before={idea.id} />
-          </div>
-          <div className="p-l-1">
-            <IdeaNext first={1} after={idea.id} />
-          </div>
-        </Box>
+      </Box>
+      <Box rootClassName="max-text-width m-x-auto m-b-1 p-a-2 bg-white" justifyContent="between">
+        <div className="p-r-1">
+          <IdeaPrev last={1} before={idea.id} />
+        </div>
+        <div className="p-l-1">
+          <IdeaNext first={1} after={idea.id} />
+        </div>
       </Box>
     </div>
   );

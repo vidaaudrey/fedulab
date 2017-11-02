@@ -21,18 +21,19 @@ function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCa
   const iconImage = hasLiked ? 'heart' : 'heart-o';
   const onLikeHandler = hasLiked ? onUnlike : onLike;
   return (
-    <div className="m-r-1">
-      <Button
-        label={totalLikes.toString()}
-        onClick={onLikeHandler}
-        icon={<Icon type={iconImage} style={{ color: '#f73b3b' }} />}
-      />
-    </div>
+    <Button
+      style={{ minWidth: 32, padding: 0 }}
+      label={totalLikes.toString()}
+      onClick={onLikeHandler}
+      icon={<Icon type={iconImage} style={{ color: '#f73b3b' }} />}
+    />
   );
 }
 
 export default compose(
-  withProps(({ ideaLikes, userId }) => {
+  withProps(({ ideaLikes = [], userId }) => {
+    console.warn('ideaLikes', ideaLikes);
+
     const totalLikes = ideaLikes.length;
     const myLike = _(ideaLikes).findWhere(item => item.user.id === userId);
     const myLikeId = myLike && myLike.id;

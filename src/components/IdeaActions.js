@@ -22,6 +22,7 @@ type Props = {
   slug: string,
   userId: string,
   likes: Array<Object>,
+  hideLikes: boolean,
 };
 
 function IdeaActions({
@@ -36,23 +37,24 @@ function IdeaActions({
   canClaim,
   likes,
   userId,
+  hideLikes,
   ...rest
 }: Props) {
   return (
-    <Box justifyContent="center" alignItems="center" style={{ width: '100%' }}>
-      <Box>
-        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
-      </Box>
-      <Box>
-        {canClaim && (
-          <Button type="primary" onClick={onClaimIdea} className="m-r-1">
-            Claim my idea
-          </Button>
-        )}
-        {canEdit && <Button icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
-        {canDelete && <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} />}
-      </Box>
-    </Box>
+    <div className="IdeaActions">
+      {!hideLikes && (
+        <span className="d-inline-block m-r-1">
+          <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
+        </span>
+      )}
+      {canClaim && (
+        <Button type="primary" onClick={onClaimIdea} className="m-r-1">
+          Claim my idea
+        </Button>
+      )}
+      {canEdit && <Button icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
+      {canDelete && <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} />}
+    </div>
   );
 }
 
