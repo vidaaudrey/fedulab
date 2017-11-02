@@ -88,9 +88,7 @@ export const IdeaListQuery = gql`
       slug
       isPresenting
       createdAt
-      contributors {
-        name
-      }
+      contributorsText
       pitchedBy
       createdBy {
         name

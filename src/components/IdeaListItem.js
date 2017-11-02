@@ -12,7 +12,7 @@ import IdeaLike from 'src/components/IdeaLike';
 import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
-const CARD_HEIGHT = 420;
+const CARD_HEIGHT = 400;
 const CARD_IMAGE_HEIGHT = 160;
 
 type Props = {
@@ -37,13 +37,13 @@ export function IdeaListItem({
     title,
     description,
     slug,
+    contributorsText,
   },
   onCardClick,
   isSuperuser,
   userId,
   userEmail,
 }: Props) {
-  const allContributorNames = contributors.map(item => item.name).join(',  ');
   const isUserCreated = userId === (createdBy && createdBy.id);
 
   return (
@@ -55,7 +55,7 @@ export function IdeaListItem({
       style={{
         width: '100%',
         maxWidth: MAX_WIDTH,
-        height: 420,
+        height: CARD_HEIGHT,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
@@ -79,7 +79,7 @@ export function IdeaListItem({
         style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64, overflow: 'scroll' }}
       >
         <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
-        <Box rootClassName="font-sm text-secondary" flexWrap="wrap">
+        <Box rootClassName="font-sm text-secondary m-b-1s" flexWrap="wrap">
           <span className="d-inline-block m-r-1">
             {(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}
           </span>
@@ -87,10 +87,15 @@ export function IdeaListItem({
             <HumanTime time={createdAt} />
           </span>
         </Box>
-        <h4>{allContributorNames}</h4>
-        <p style={{ color: 'gray' }}>{tagline}</p>
+        <TextTruncate
+          rootClassName="h5 m-b-0 font-italic"
+          line={3}
+          truncateText="…"
+          text={tagline}
+        />
       </Box>
-      <Box justifyContent="end" alignSelf="end">
+      <Box justifyContent="between" alignSelf="end">
+        <span className="font-sm p-x-1">{contributorsText}</span>
         <IdeaActions
           hideLikes
           canDelete={ENABLE_QUICK_ADMIN_OP}

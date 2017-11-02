@@ -38,7 +38,7 @@ export function MyDashboard({
     <div className="MyDashboard p-y-1 h-100">
       <div className="max-text-width bg-white p-a-3 m-x-auto min-vh">
         <div className="text-xs-center m-y-2">
-          <img src={picture} width={125} style={{ borderRadius: '50%' }} />
+          <img src={picture} width={125} style={{ borderRadius: '50%' }} alt="Avatar" />
           <h2 className="font-xl font-weight-200">Welcome{`, ${name}`}</h2>
           <p>{email}</p>
         </div>
