@@ -9,7 +9,6 @@ import {
   Select,
   InputNumber,
   Switch,
-  message,
   Popconfirm,
 } from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
