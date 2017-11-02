@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Box } from '@coursera/coursera-ui';
+import { css, StyleSheet, Box } from '@coursera/coursera-ui';
 import Button from 'react-toolbox/lib/button/Button';
 import { Link } from 'react-router-dom';
 
@@ -13,11 +13,15 @@ import { CLIENT_ID, DOMAIN } from 'src/constants/config';
 
 const styles = StyleSheet.create({
   banner: {
-    minHeight: 700,
+    minHeight: 800,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundImage: `url(${BANNER_BG})`,
   },
+  bannerImage: {
+    width: '100%',
+    marginBottom: '-5%',
+  }
 });
 
 type Props = {
@@ -32,7 +36,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
       alignItems="center"
     >
       <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
-        <img src={MAKEATHON_LOGO} style={{ margin: '-3rem 0 -5rem 0' }} />
+        <img src={MAKEATHON_LOGO} {...css(styles.bannerImage)} />
         {isLoggedout && (
           <div className="inverse">
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
