@@ -15,7 +15,6 @@ type Props = {
   idea: Object,
   isSuperuser: boolean,
   userId: string,
-  userEmail: string,
   onCardClick: () => void,
 };
 
@@ -34,6 +33,8 @@ export function IdeaDescription({
   isSuperuser,
   userId,
 }: Props) {
+  const isUserCreated = userId === (createdBy && createdBy.id);
+
   return (
     <Card
       className="custom-card"
