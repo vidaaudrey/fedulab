@@ -10,6 +10,12 @@ export const DEFAULT_CATEGORIES = ['GENERAL'];
 
 export const PRIMARY_COLOR = '#e64a19';
 
+export const MAKEATHON_TIMES = {
+  start: new Date('Oct 31 2017, 10:00'),
+  end: new Date('Nov 3 2017, 12:30'),
+}
+export const DEMO_COUNTDOWN = "Until demos begin!";
+
 // TODO(Audrey): replace with real names
 export const COURSERA_NAMES = [
   'Audrey Li',
