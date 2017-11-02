@@ -11,39 +11,18 @@ import { IdeaNextQuery } from 'src/constants/appQueries';
 import { LOADER_SIZE } from 'src/components/IdeaPrev';
 
 type Props = {
-  isPresentationMode: boolean,
   idea: {
     title: string,
     slug: string,
   },
 };
 
-function IdeaNext({
-  idea: { title, slug, createdBy, contributorsText },
-  isPresentationMode,
-}: Props) {
-  const charLimit = isPresentationMode ? 80 : 40;
+function IdeaNext({ idea: { title, slug, createdBy, contributorsText } }: Props) {
   return (
     <span className="p-l-1">
-      {isPresentationMode && <div>Next</div>}
-      <Link
-        to={`/ideas/${slug}${isPresentationMode ? '/show' : ''}`}
-        style={
-          isPresentationMode && {
-            textShadow:
-              '1px  1px 1px black, 1px -1px 1px black, -1px  1px 1px black, -1px -1px 1px black',
-          }
-        }
-      >
-        {`${title.substring(0, charLimit)}${title.length >= charLimit
-          ? '...'
-          : ''} ${isPresentationMode ? '' : '>'}`}
+      <Link to={`/ideas/${slug}`}>
+        {`${title.substring(0, 30)}${title.length >= 30 ? '...' : ''} >`}
       </Link>
-      {isPresentationMode && (
-        <h3 className="text-secondary font-lg">{`${createdBy && createdBy.name}${contributorsText
-          ? ` | ${contributorsText}`
-          : ''}`}</h3>
-      )}
     </span>
   );
 }
