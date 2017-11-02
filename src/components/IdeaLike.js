@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import { Button } from 'antd';
-
+import { Icon } from 'antd';
+import Button from 'react-toolbox/lib/button/Button';
 import { compose, withProps, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import _ from 'underscore';
@@ -21,19 +21,11 @@ function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCa
   const iconImage = hasLiked ? 'heart' : 'heart-o';
   const onLikeHandler = hasLiked ? onUnlike : onLike;
   return (
-    <div>
-      {totalLikes > 0 && <span className="d-inline-block p-r-1s bold font-md ">{totalLikes}</span>}
+    <div className="m-r-1">
       <Button
-        icon={iconImage}
-        size="large"
+        label={totalLikes.toString()}
         onClick={onLikeHandler}
-        style={{
-          border: 'none',
-          background: 'none',
-          fontSize: 20,
-          fontWeight: 'bold',
-          color: 'rgba(255, 255, 255, 0.76)',
-        }}
+        icon={<Icon type={iconImage} style={{ color: '#f73b3b' }} />}
       />
     </div>
   );

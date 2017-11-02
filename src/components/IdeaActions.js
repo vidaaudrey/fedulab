@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
+import { Box } from '@coursera/coursera-ui';
 import { Button } from 'antd';
-
+import IdeaLike from 'src/components/IdeaLike';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -19,6 +20,8 @@ type Props = {
   onClaimIdea: () => void,
   onEdit: () => void,
   slug: string,
+  userId: string,
+  likes: Array<Object>,
 };
 
 function IdeaActions({
@@ -31,20 +34,25 @@ function IdeaActions({
   canDelete,
   canEdit,
   canClaim,
+  likes,
+  userId,
   ...rest
 }: Props) {
   return (
-    <div>
-      {canClaim && (
-        <Button type="primary" onClick={onClaimIdea} className="m-r-1s">
-          Claim my idea
-        </Button>
-      )}
-      {canDelete && (
-        <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} className="m-r-1s" />
-      )}
-      {canEdit && <Button icon="edit" size="large" onClick={onEdit} />}
-    </div>
+    <Box justifyContent="center" alignItems="center" style={{ width: '100%' }}>
+      <Box>
+        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
+      </Box>
+      <Box>
+        {canClaim && (
+          <Button type="primary" onClick={onClaimIdea} className="m-r-1">
+            Claim my idea
+          </Button>
+        )}
+        {canEdit && <Button icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
+        {canDelete && <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} />}
+      </Box>
+    </Box>
   );
 }
 
@@ -60,7 +68,7 @@ export default compose(
         window.event.cancelBubble = true;
       }
 
-      claimIdea({ variables: { id: id, createdById: userId }})
+      claimIdea({ variables: { id, createdById: userId } })
         .then((res) => {
           console.warn('res', res);
         })

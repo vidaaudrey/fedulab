@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import Button from 'react-toolbox/lib/button/Button';
-import { StyleSheet, Box, css } from '@coursera/coursera-ui';
+import { StyleSheet, Box, css, color, font } from '@coursera/coursera-ui';
 import { withRouter, Link } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -84,39 +84,64 @@ function IdeaDetail({
           </h3>
         </div>
       </Box>
+      <Box style={{ backgroundColor: color.white, height: '75px' }}>
+        <IdeaActions
+          shouldRedirectToListAfterDelete
+          canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
+          canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
+          id={id}
+          slug={slug}
+          likes={idea.likes}
+          userId={userId}
+        />
+      </Box>
       <Box
         key={id}
         justifyContent="center"
         flexDirection="column"
         rootClassName="max-text-width m-x-auto"
       >
-        <div className="p-a-2 bg-white m-b-1">
-          <span className="text-secondary">By {createdBy && createdBy.name}</span>
-          {contributorsText && (
-            <div className="text-secondary">Contributors:{contributorsText}</div>
+        <Box alignSelf="center">
+          <div className="text-secondary m-t-1" style={{ fontSize: font.sm }}>
+            <span>Created by {createdBy.name} </span>
+            <span>
+              <HumanTime time={createdAt} />
+            </span>
+            {allContributorNames && (
+              <div className="text-secondary">Contributors:{allContributorNames}</div>
+            )}
+          </div>
+        </Box>
+        <Box flexDirection="column">
+          <div>
+            <div style={{ fontSize: font.sm, marginBottom: '0.3rem' }}>Category: {category} </div>
+          </div>
+          {pitchedBy && (
+            <div>
+              <div style={{ fontSize: font.sm, marginBottom: '1rem' }}>
+                Pitched by: {pitchedBy}{' '}
+              </div>
+            </div>
           )}
-          {allContributorNames && (
-            <div className="text-secondary">Contributors:{allContributorNames}</div>
+          <div className="m-b-1">
+            <div className="font-weight-500" style={{ fontSize: '1.5rem' }}>
+              Project Description:
+            </div>
+            <p style={{ color: 'gray' }}>{description}</p>
+          </div>
+          {howToContribute && (
+            <div className="m-b-1">
+              <div className="font-weight-500" style={{ fontSize: '1.2rem' }}>
+                How to conribute:
+              </div>
+              <p style={{ color: 'gray' }}>{howToContribute}</p>
+            </div>
           )}
-          <IdeaActions
-            shouldRedirectToListAfterDelete
-            canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
-            canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
-            id={id}
-            slug={slug}
-          />
-          <HumanTime time={createdAt} />
-          <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
-          <span>{category}</span>
-          <p style={{ color: 'gray' }}>{description}</p>
-          <p>{howToContribute}</p>
-          <p>Pitched by {pitchedBy}</p>
-          <p>{youtubeVideoUrl}</p>
-          <p>{slackUrl}</p>
-          <p>{courseraVideoUrl}</p>
-          <p>{courseraVideoUrl}</p>
-        </div>
-        <Box rootClassName="m-b-1 bg-white p-a-2" justifyContent="between" flexWrap="wrap">
+          {youtubeVideoUrl && <p>Youtube URL: {youtubeVideoUrl}</p>}
+          {slackUrl && <p>Slack URL: {slackUrl}</p>}
+          {courseraVideoUrl && <p>Coursera Video URL: {courseraVideoUrl}</p>}
+        </Box>
+        <Box rootClassName="m-b-1 p-a-2" justifyContent="between" flexWrap="wrap">
           <div className="p-r-1">
             <IdeaPrev last={1} before={idea.id} />
           </div>
