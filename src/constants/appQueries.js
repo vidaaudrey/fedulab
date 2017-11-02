@@ -8,6 +8,33 @@ export const UserDetailsQuery = gql`
       picture
       isSuperuser
       emailAddress
+      myIdeas {
+        id
+        slug
+        title
+        tagline
+        coverBackgroundUrl
+        pitchedBy
+        createdBy {
+          name
+          id
+        }
+      }
+      likes {
+        id
+        idea {
+          id
+          slug
+          title
+          tagline
+          coverBackgroundUrl
+          pitchedBy
+          createdBy {
+            name
+            id
+          }
+        }
+      }
     }
   }
 `;
