@@ -15,7 +15,7 @@ const FEATURE_ROADMAP = [
   },
   {
     name: 'Use Makeathon arts',
-    isDone: false,
+    isDone: true,
     by: 'Hannah',
   },
   {
