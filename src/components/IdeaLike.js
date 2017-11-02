@@ -25,6 +25,7 @@ function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCa
       icon={hasLiked ? 'favorite' : 'favorite_border'}
       onClick={onLikeHandler}
       label={`${totalLikes}`}
+      inverse
     />
   );
 }

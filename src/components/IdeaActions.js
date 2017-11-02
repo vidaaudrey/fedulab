@@ -24,6 +24,7 @@ type Props = {
   likes: Array<Object>,
   hideLikes: boolean,
   showPresent: boolean,
+  inverse: boolean,
 };
 
 function IdeaActions({
@@ -40,6 +41,7 @@ function IdeaActions({
   userId,
   hideLikes,
   showPresent,
+  inverse,
   ...rest
 }: Props) {
   return (
@@ -50,21 +52,30 @@ function IdeaActions({
         </span>
       )}
       {canClaim && (
-        <ActionIconButton onClick={onClaimIdea} className="m-r-1" minWidth={80}>
+        <ActionIconButton onClick={onClaimIdea} className="m-r-1" minWidth={80} inverse={inverse}>
           Claim my idea
         </ActionIconButton>
       )}
-      {canEdit && <ActionIconButton icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
+      {canEdit && (
+        <ActionIconButton
+          icon="edit"
+          size="large"
+          onClick={onEdit}
+          className="m-r-1"
+          inverse={inverse}
+        />
+      )}
       {canDelete && (
         <ActionIconButton
           icon="delete"
           onClick={onDeleteIdea}
           className={showPresent ? 'm-r-1' : ''}
+          inverse={inverse}
         />
       )}
       {showPresent && (
         <Link to={`/ideas/${slug}/show`}>
-          <ActionIconButton icon="airplay" />
+          <ActionIconButton icon="airplay" inverse={inverse} />
         </Link>
       )}
     </div>

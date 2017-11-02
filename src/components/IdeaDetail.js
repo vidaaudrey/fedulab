@@ -91,6 +91,8 @@ function IdeaDetail({
                 likes={idea.likes}
                 userId={userId}
                 showPresent
+                enhanceBg
+                inverse
               />
             </CenterBox>
           </Box>

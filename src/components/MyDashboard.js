@@ -14,6 +14,15 @@ import { UserDetailsQuery } from 'src/constants/appQueries';
 
 const TabPane = Tabs.TabPane;
 
+type Props = {
+  userId: string,
+  isSuperuser: boolean,
+  name: string,
+  email: string,
+  picture: string,
+  myIdeas: [Object],
+  likedIdeas: [Object],
+};
 export function MyDashboard({
   userId,
   isSuperuser,
@@ -23,7 +32,7 @@ export function MyDashboard({
   myIdeas,
   likedIdeas,
   ...rest
-}: MatchProps) {
+}: Props) {
   const nonNullIdeas = likedIdeas.filter(item => !!item);
   return (
     <div className="MyDashboard p-y-1 h-100">
@@ -38,7 +47,7 @@ export function MyDashboard({
             <QueueAnim>
               {myIdeas.map(idea => (
                 <div key={idea.id} className="p-y-1s">
-                   <IdeaDescription
+                  <IdeaDescription
                     idea={idea}
                     isSuperuser={isSuperuser}
                     userId={userId}
@@ -52,7 +61,7 @@ export function MyDashboard({
             <QueueAnim>
               {nonNullIdeas.map(idea => (
                 <div key={idea.id} className="p-y-1s">
-                   <IdeaDescription
+                  <IdeaDescription
                     idea={idea}
                     isSuperuser={isSuperuser}
                     userId={userId}
