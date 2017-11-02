@@ -12,7 +12,7 @@ const MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;
 const CONFIG = {
   minHeight: 400,
   timerBoxSize: 175,
-}
+};
 
 const styles = StyleSheet.create({
   timerContainer: {
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
   description: {
     fontSize: '2rem',
     fontWeight: '200',
-  }
+  },
 });
 
 type Props = {
   startTime: Date,
   endTime: Date,
   description: string,
-}
+};
 
 type State = {
   timeRemaining: {
@@ -58,14 +58,16 @@ type State = {
     minutes: number,
     seconds: number,
   },
+};
+
+function getPluralText(number: number, string: string) {
+  return `${string}${number === 1 ? '' : 's'}`;
 }
 
 export default class CountdownTimer extends React.Component<Props, State> {
   state = {
-    timeRemaining: this.getTimeRemaining()
-  }
-
-  updateIntervalHandle = undefined;
+    timeRemaining: this.getTimeRemaining(),
+  };
 
   componentDidMount() {
     this.updateIntervalHandle = setInterval(() => {
@@ -78,10 +80,9 @@ export default class CountdownTimer extends React.Component<Props, State> {
   }
 
   getTimeRemaining() {
-    const { startTime, endTime } = this.props;
+    const { endTime } = this.props;
     const now = new Date();
 
-    const totalTime = endTime - startTime;
     const timeLeft = endTime - now;
 
     return {
@@ -91,13 +92,10 @@ export default class CountdownTimer extends React.Component<Props, State> {
       seconds: Math.floor((timeLeft % MILLIS_PER_MINUTE) / MILLIS_PER_SECOND),
     };
   }
-
-  getPluralText(number: number, string: string) {
-    return `${string}${number === 1 ? "" : "s"}`
-  }
+  updateIntervalHandle = undefined;
 
   render() {
-    const { startTime, endTime, description } = this.props;
+    const { description } = this.props;
     const { days, hours, minutes, seconds } = this.state.timeRemaining;
 
     return (
@@ -108,39 +106,43 @@ export default class CountdownTimer extends React.Component<Props, State> {
         justifyContent="center"
       >
         <Box rootClassName="p-y-1" justifyContent="center">
-          {days > 0 &&
-            <Box rootClassName={styles.timerBox}
+          {days > 0 && (
+            <Box
+              rootClassName={styles.timerBox}
               flexDirection="column"
               alignItems="center"
               justifyContent="center"
             >
               <h1 {...css(styles.timerNumber)}>{days}</h1>
-              <p {...css(styles.timerText)}>{this.getPluralText(days, 'day')}</p>
+              <p {...css(styles.timerText)}>{getPluralText(days, 'day')}</p>
             </Box>
-          }
-          <Box rootClassName={styles.timerBox}
+          )}
+          <Box
+            rootClassName={styles.timerBox}
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
           >
             <h1 {...css(styles.timerNumber)}>{hours}</h1>
-            <p {...css(styles.timerText)}>{this.getPluralText(hours, 'hour')}</p>
+            <p {...css(styles.timerText)}>{getPluralText(hours, 'hour')}</p>
           </Box>
-          <Box rootClassName={styles.timerBox}
+          <Box
+            rootClassName={styles.timerBox}
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
           >
             <h1 {...css(styles.timerNumber)}>{minutes}</h1>
-            <p {...css(styles.timerText)}>{this.getPluralText(minutes, 'minute')}</p>
+            <p {...css(styles.timerText)}>{getPluralText(minutes, 'minute')}</p>
           </Box>
-          <Box rootClassName={styles.timerBox}
+          <Box
+            rootClassName={styles.timerBox}
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
           >
             <h1 {...css(styles.timerNumber)}>{seconds}</h1>
-            <p {...css(styles.timerText)}>{this.getPluralText(seconds, 'second')}</p>
+            <p {...css(styles.timerText)}>{getPluralText(seconds, 'second')}</p>
           </Box>
         </Box>
         {description && <p {...css(styles.description)}>{description}</p>}

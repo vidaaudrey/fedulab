@@ -74,11 +74,15 @@ function IdeaDetail({
             {title}
           </h1>
           <h2 className="m-b-1">{tagline}</h2>
-          <h3>
-            <Link to={`/ideas/${slug}/show`}>
-              <Button icon="airplay" className="m-r-1s" label="Present" raised />
-            </Link>
-          </h3>
+          <Box flexDirection="column" rootClassName="text-xs-center color-white">
+            <span>
+              <span>Created by {createdBy.name} </span>
+              <span>
+                <HumanTime time={createdAt} />
+              </span>
+            </span>
+            {contributorsText && <span>{contributorsText}</span>}
+          </Box>
         </div>
       </Box>
       <CenterBox style={{ backgroundColor: color.white, height: '75px' }} rootClassName="m-b-1">
@@ -90,6 +94,7 @@ function IdeaDetail({
           slug={slug}
           likes={idea.likes}
           userId={userId}
+          showPresent
         />
       </CenterBox>
       <Box
@@ -98,30 +103,19 @@ function IdeaDetail({
         flexDirection="column"
         rootClassName="max-text-width m-x-auto bg-white  p-a-1 m-b-1"
       >
-        <Box alignSelf="center">
-          <div className="text-secondary m-t-1" style={{ fontSize: font.sm }}>
-            <span>Created by {createdBy.name} </span>
-            <span>
-              <HumanTime time={createdAt} />
-            </span>
-            {contributorsText && <div className="text-secondary">{contributorsText}</div>}
-          </div>
-        </Box>
         <Box flexDirection="column">
-          <div>
-            <div style={{ fontSize: font.sm, marginBottom: '0.3rem' }}>Category: {category} </div>
-          </div>
-          {pitchedBy && (
-            <div>
-              <div style={{ fontSize: font.sm, marginBottom: '1rem' }}>
-                Pitched by: {pitchedBy}{' '}
-              </div>
-            </div>
-          )}
           <div className="m-b-1">
             <div className="font-weight-500" style={{ fontSize: '1.5rem' }}>
               Project Description:
             </div>
+            <div style={{ fontSize: font.sm, marginBottom: '0.3rem' }}>Category: {category} </div>
+            {pitchedBy && (
+              <div>
+                <div style={{ fontSize: font.sm, marginBottom: '1rem' }}>
+                  Pitched by: {pitchedBy}{' '}
+                </div>
+              </div>
+            )}
             <p style={{ color: 'gray' }}>{description}</p>
           </div>
           {howToContribute && (

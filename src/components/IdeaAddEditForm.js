@@ -430,7 +430,7 @@ const IdeaAddEditFormFormHOC = compose(
             needPower,
             needMonitor,
             isPresenting,
-            contributorsText: contributorsText.join(','),
+            contributorsText: contributorsText.join(', '),
             startTime,
             estimatedFinishTime,
             slackUrl: `${SLACK_URL_PREFIX}${slackChannel}`,

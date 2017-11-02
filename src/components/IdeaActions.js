@@ -2,8 +2,8 @@
 import React from 'react';
 import { Button } from 'antd';
 import IdeaLike from 'src/components/IdeaLike';
-import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
+import { withRouter, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 
 import { DeleteIdeaMutation, ClaimIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';
@@ -22,6 +22,7 @@ type Props = {
   userId: string,
   likes: Array<Object>,
   hideLikes: boolean,
+  showPresent: boolean,
 };
 
 function IdeaActions({
@@ -37,6 +38,7 @@ function IdeaActions({
   likes,
   userId,
   hideLikes,
+  showPresent,
   ...rest
 }: Props) {
   return (
@@ -52,7 +54,20 @@ function IdeaActions({
         </Button>
       )}
       {canEdit && <Button icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
-      {canDelete && <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} />}
+      {canDelete && (
+        <Button
+          type="danger"
+          size="large"
+          icon="delete"
+          onClick={onDeleteIdea}
+          className={showPresent ? 'm-r-1' : ''}
+        />
+      )}
+      {showPresent && (
+        <Link to={`/ideas/${slug}/show`}>
+          <Button icon="play-circle" size="large" className="m-r-1" />
+        </Link>
+      )}
     </div>
   );
 }
