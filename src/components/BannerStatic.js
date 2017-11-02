@@ -32,7 +32,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
       alignItems="center"
     >
       <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
-        <img src={MAKEATHON_LOGO} style={{ marginBottom: '-5rem' }} />
+        <img src={MAKEATHON_LOGO} style={{ margin: '-3rem 0 -5rem 0' }} />
         {isLoggedout && (
           <div className="inverse">
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />
