@@ -11,18 +11,30 @@ import { IdeaLikeMutation, IdeaUnlikeMutation, IdeaListQuery } from 'src/constan
 type Props = {
   totalLikes: number,
   hasLiked: boolean,
+  isOverIdeaCard: boolean,
   userId: string,
   onUnlike: () => void,
   onLike: () => void,
 };
 
-function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike }: Props) {
+function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCard }: Props) {
   const iconImage = hasLiked ? 'heart' : 'heart-o';
   const onLikeHandler = hasLiked ? onUnlike : onLike;
   return (
     <div>
-      <span className="d-inline-block p-r-1s">{totalLikes}</span>
-      <Button icon={iconImage} size="large" onClick={onLikeHandler} />
+      {totalLikes > 0 && <span className="d-inline-block p-r-1s bold font-md ">{totalLikes}</span>}
+      <Button
+        icon={iconImage}
+        size="large"
+        onClick={onLikeHandler}
+        style={{
+          border: 'none',
+          background: 'none',
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: 'rgba(255, 255, 255, 0.76)',
+        }}
+      />
     </div>
   );
 }

@@ -61,6 +61,7 @@ export function IdeaListItem({
       bodyStyle={{ padding: 0 }}
     >
       <div
+        className="text-xs-right color-white"
         style={{
           minHeight: CARD_IMAGE_HEIGHT,
           backgroundPosition: 'center',
@@ -68,7 +69,7 @@ export function IdeaListItem({
           backgroundImage: `url(${coverBackgroundUrl})`,
         }}
       >
-        <span />
+        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} isOverIdeaCard />
       </div>
       <Box
         rootClassName="p-a-1"
@@ -86,7 +87,7 @@ export function IdeaListItem({
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{tagline}</p>
       </Box>
-      <Box rootClassName="p-a-1" justifyContent="between" alignSelf="end">
+      <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
         <IdeaActions
           canDelete={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
           canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
@@ -96,7 +97,6 @@ export function IdeaListItem({
           userId={userId}
           isSuperuser={isSuperuser}
         />
-        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
       </Box>
     </Box>
   );
