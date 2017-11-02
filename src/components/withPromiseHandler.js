@@ -101,6 +101,7 @@ export default function withPromiseHandler({
         });
 
         if (apiInProgressCallback) apiInProgressCallback();
+        console.warn('handleApiPromise', apiPromise);
 
         apiPromise
           .then((response) => {
@@ -111,12 +112,13 @@ export default function withPromiseHandler({
                 apiTag,
               });
             }
+            action('--WithPromiseHandler-- response')(response);
             // Silently refresh data, useful when you want to refresh other resources
             if (refreshDataPromiseFn) refreshDataPromiseFn();
             if (apiSuccessCallback) apiSuccessCallback(response);
           })
           .catch((error) => {
-            action('--WithApiHandler--')(error);
+            action('--WithPromiseHandler error--')(error);
             if (this._isMounted) {
               this.setState({
                 error,

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: '100%',
     marginBottom: '-5%',
-  }
+  },
 });
 
 type Props = {
@@ -36,7 +36,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
       alignItems="center"
     >
       <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
-        <img src={MAKEATHON_LOGO} {...css(styles.bannerImage)} />
+        <img src={MAKEATHON_LOGO} {...css(styles.bannerImage)} alt="Makeathon Logo" />
         {isLoggedout && (
           <div className="inverse">
             <LoginAuth0 clientId={CLIENT_ID} domain={DOMAIN} />

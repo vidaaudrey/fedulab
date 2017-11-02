@@ -73,7 +73,7 @@ function IdeaDetail({
         style={{ backgroundImage: `url(${coverBackgroundUrl || DEFAULT_COVER_BG})` }}
       >
         <div className={cx('p-a-3', { inverse: isBackgroundImageDark })}>
-          <h1 className="font-weight-900" style={{ fontSize: '4.8rem' }}>
+          <h1 className="font-weight-900" style={{ fontSize: '3.2rem' }}>
             {title}
           </h1>
           <h2 className="m-b-1">{tagline}</h2>

@@ -13,13 +13,13 @@ import {
   Popconfirm,
 } from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
-import { compose, withState, withProps, withHandlers } from 'recompose';
+import { compose, withState, withProps, withHandlers, pure } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import randomString from 'random-string';
 
 import { graphql } from 'react-apollo';
-
+import withPromiseHandler from 'src/components/withPromiseHandler';
 import IdeaTypeSelect from 'src/components/IdeaTypeSelect';
 import ImgurUploader from 'src/components/ImgurUploader';
 
@@ -32,6 +32,12 @@ import {
   DeleteIdeaMutation,
   IdeaListQuery,
 } from 'src/constants/appQueries';
+import {
+  API_BEFORE_SEND,
+  API_SUCCESS,
+  API_ERROR,
+  API_IN_PROGRESS,
+} from 'src/constants/apiNotificationConstants';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -69,7 +75,10 @@ type Idea = {
   description: String,
 };
 
+type ApiStatusType = API_BEFORE_SEND | API_IN_PROGRESS | API_SUCCESS | API_ERROR;
+
 type Props = {
+  apiStatus: ApiStatusType,
   allowToClaimIdea: boolean,
   canDelete: boolean,
   category: Array<string>,
@@ -103,6 +112,21 @@ function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }
   );
 }
 
+const BUTTON_TEXT = {
+  edit: {
+    API_BEFORE_SEND: 'Save',
+    API_IN_PROGRESS: 'Saving...',
+    API_SUCCESS: 'Saved',
+    API_ERROR: 'Error',
+  },
+  add: {
+    API_BEFORE_SEND: 'Add Idea',
+    API_IN_PROGRESS: 'Adding...',
+    API_SUCCESS: 'Added',
+    API_ERROR: 'Error',
+  },
+};
+
 function IdeaAddEditFormForm({
   allowToClaimIdea,
   canDelete,
@@ -124,6 +148,8 @@ function IdeaAddEditFormForm({
   toggleNeedMonitor,
   toggleIsMyIdea,
   toggleIsBackgroundImageDark,
+  apiStatus,
+  ...rest
 }: Props) {
   const { getFieldDecorator } = form;
 
@@ -271,7 +297,7 @@ function IdeaAddEditFormForm({
           <Button
             className="m-r-1s"
             type="submit"
-            label={isEditingMode ? 'Update Idea' : 'Add Idea'}
+            label={isEditingMode ? BUTTON_TEXT.edit[apiStatus] : BUTTON_TEXT.add[apiStatus]}
             raised
             primary
             onClick={handleSubmit}
@@ -286,22 +312,31 @@ function IdeaAddEditFormForm({
               okText="Yes"
               cancelText="No"
             >
-              <Button className="m-r-1s" label={'Delete Idea'} />
+              <Button icon="delete" style={{ minWidth: 32 }} />
             </Popconfirm>
           )}
         {(isEditingMode || isCreateSuccess) && (
-          <Link className="m-r-1" to={`/ideas/${idea.slug}`}>
-              Preview
+          <Link to={`/ideas/${idea.slug}`}>
+            <Button icon="visibility" style={{ minWidth: 32 }} />
           </Link>
         )}
-        {isCreateSuccess && <Link to={`/ideas/${idea.slug}/edit`}>Edit</Link>}
+        {(isEditingMode || isCreateSuccess) && (
+          <Link to={`/ideas/${idea.slug}/show`}>
+            <Button icon="airplay" style={{ minWidth: 32 }} />
+          </Link>
+        )}
+        {isCreateSuccess && (
+          <Link to={`/ideas/${idea.slug}/edit`}>
+            <Button icon="mode_edit" style={{ minWidth: 32 }} />
+          </Link>
+        )}
       </FormItem>
     </Form>
   );
 }
 
 // 'time', 'username', 'title', 'howToContribute', 'courseraVideoUrl', 'description';
-
+const randomSlugSurfix = randomString({ length: 4 });
 export const getDefaultIdea = () => ({
   pitchedBy: null,
   category: DEFAULT_CATEGORIES,
@@ -315,7 +350,7 @@ export const getDefaultIdea = () => ({
   needPower: false,
   needMonitor: false,
   slackUrl: `${SLACK_URL_PREFIX}makeathon`,
-  slug: `my-awesome-new-idea-${randomString({ length: 4 })}`,
+  slug: `my-awesome-new-idea-${randomSlugSurfix}`,
   tagline: '',
   title: 'My Awesome New Idea',
   youtubeVideoUrl: null,
@@ -325,6 +360,7 @@ export const getDefaultIdea = () => ({
 
 const IdeaAddEditFormFormHOC = compose(
   withRouter,
+  pure,
   withProps(({ idea, userId, userEmail, isSuperuser, isIdeaOwner, ...rest }) => {
     const isEditingMode = !!idea;
     // Must use function for getting unique slug
@@ -358,6 +394,7 @@ const IdeaAddEditFormFormHOC = compose(
       ...rest,
     };
   }),
+  withPromiseHandler({}),
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
   graphql(UpdateIdeaMutation, { name: 'updateIdea' }),
   graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
@@ -390,6 +427,7 @@ const IdeaAddEditFormFormHOC = compose(
       isCreateSuccessSet,
       isBackgroundImageDark,
       coverBackgroundUrl,
+      handlePromise,
     }) => (e) => {
       e.preventDefault();
       form.validateFields((err, values) => {
@@ -411,6 +449,8 @@ const IdeaAddEditFormFormHOC = compose(
             isBackgroundImageDark,
           };
 
+          let apiPromiseFn;
+
           if (isEditingMode) {
             const variables = {
               ...idea,
@@ -424,13 +464,7 @@ const IdeaAddEditFormFormHOC = compose(
             if (isMyIdea) {
               variables.createdById = userId;
             }
-
-            updateIdea({ variables })
-              .then((res) => {
-                console.warn('res', res);
-                message.success('Idea updated!');
-              })
-              .catch(error => console.warn('error', error));
+            apiPromiseFn = () => updateIdea({ variables });
           } else {
             const variables = {
               ...baseVariables,
@@ -438,28 +472,30 @@ const IdeaAddEditFormFormHOC = compose(
               contributorsIds: [],
             };
 
-            createIdea({
-              variables,
-              refetchQueries: [{ query: IdeaListQuery }],
-            })
-              .then((res) => {
-                console.warn('res', res);
-                history.push(`/ideas/${res.data.createIdea.slug}`);
-                message.success('Idea created!');
-                // isCreateSuccessSet(true);
-              })
-              .catch(error => console.warn('error', error));
+            apiPromiseFn = () =>
+              createIdea({
+                variables,
+                refetchQueries: [{ query: IdeaListQuery }],
+              });
           }
+          handlePromise({
+            apiPromiseFn,
+            apiSuccessCallback: (res) => {
+              if (!isEditingMode) {
+                history.push(`/ideas/${res.data.createIdea.slug}`);
+              }
+            },
+          });
         }
       });
     },
-    onDeleteIdea: ({ deleteIdea, idea, history }) => () => {
-      deleteIdea({ variables: { id: idea.id } })
-        .then((res) => {
-          console.warn('res', res);
+    onDeleteIdea: ({ deleteIdea, idea, history, handlePromise }) => () => {
+      handlePromise({
+        apiPromiseFn: () => deleteIdea({ variables: { id: idea.id } }),
+        apiSuccessCallback: (res) => {
           history.push('/ideas');
-        })
-        .catch(error => console.warn('error', error));
+        },
+      });
     },
     checkUrl: ({ form }) => (rule, value, callback) => {
       if (value && !value.match(urlRegex)) {

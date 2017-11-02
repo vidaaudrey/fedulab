@@ -5,6 +5,7 @@ import { Box } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
 
+import TextTruncate from 'src/components/hoc/TextTruncate';
 import IdeaActions from 'src/components/IdeaActions';
 import HumanTime from 'src/components/HumanTime';
 import IdeaLike from 'src/components/IdeaLike';
@@ -75,10 +76,10 @@ export function IdeaListItem({
         flex={1}
         style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64, overflow: 'scroll' }}
       >
-        <h3>{title}</h3>
-        <Box rootClassName="font-sm text-secondary m-t-1s" justifyContent="between">
-          <span>{pitchedBy || createdBy.name}</span>
-          <span className="p-l-1">
+        <TextTruncate rootClassName="h4" line={3} truncateText="…" text={title} />
+        <Box rootClassName="font-sm text-secondary m-t-1s" flexWrap="wrap">
+          <span>{(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}</span>
+          <span className="p-l-1 font-italic">
             <HumanTime time={createdAt} />
           </span>
         </Box>
