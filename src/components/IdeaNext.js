@@ -13,18 +13,17 @@ import { IdeaNextQuery } from 'src/constants/appQueries';
 import { LOADER_SIZE } from 'src/components/IdeaPrev';
 
 type Props = {
-  isPresentationMode: boolean,
   idea: {
     title: string,
     slug: string,
   },
+  isPresentationMode: boolean,
 };
 
 function IdeaNext({
   idea: { title, slug, createdBy, contributorsText },
   isPresentationMode,
 }: Props) {
-  const charLimit = isPresentationMode ? 80 : 40;
   return (
     <Box
       rootClassName="text-xs-right"
@@ -39,7 +38,7 @@ function IdeaNext({
       }
     >
       {isPresentationMode && <div>Next</div>}
-      {`${title.substring(0, charLimit)}${title.length >= charLimit ? '...' : ''}`}
+      {`${title.substring(0, 40)}${title.length >= 40 ? '...' : ''}`}
       {isPresentationMode && (
         <h3 className="text-secondary font-lg">{`${createdBy && createdBy.name}${contributorsText
           ? ` | ${contributorsText}`
