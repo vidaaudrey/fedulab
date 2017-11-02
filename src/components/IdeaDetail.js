@@ -13,7 +13,6 @@ import HumanTime from 'src/components/HumanTime';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 import IdeaNext from 'src/components/IdeaNext';
 import IdeaPrev from 'src/components/IdeaPrev';
-import IdeaLike from 'src/components/IdeaLike';
 
 import animationUtils from 'src/utils/animationUtils';
 
@@ -56,12 +55,10 @@ function IdeaDetail({
     slackUrl,
     youtubeVideoUrl,
     contributorsText,
-    contributors,
     createdBy,
     createdAt,
     pitchedBy,
   } = idea;
-  const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
     <div {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}>
@@ -107,9 +104,7 @@ function IdeaDetail({
             <span>
               <HumanTime time={createdAt} />
             </span>
-            {allContributorNames && (
-              <div className="text-secondary">Contributors:{allContributorNames}</div>
-            )}
+            {contributorsText && <div className="text-secondary">{contributorsText}</div>}
           </div>
         </Box>
         <Box flexDirection="column">

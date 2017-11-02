@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { Box } from '@coursera/coursera-ui';
 import { Button } from 'antd';
 import IdeaLike from 'src/components/IdeaLike';
 import { withRouter } from 'react-router-dom';

@@ -32,8 +32,6 @@ function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCa
 
 export default compose(
   withProps(({ ideaLikes = [], userId }) => {
-    console.warn('ideaLikes', ideaLikes);
-
     const totalLikes = ideaLikes.length;
     const myLike = _(ideaLikes).findWhere(item => item.user.id === userId);
     const myLikeId = myLike && myLike.id;
