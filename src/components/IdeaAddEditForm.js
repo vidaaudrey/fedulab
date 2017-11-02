@@ -1,16 +1,6 @@
 // @flow
 import React from 'react';
-import {
-  Form,
-  Row,
-  Input,
-  DatePicker,
-  Col,
-  Select,
-  InputNumber,
-  Switch,
-  Popconfirm,
-} from 'antd';
+import { Form, Row, Input, DatePicker, Col, Select, InputNumber, Switch, Popconfirm } from 'antd';
 import Button from 'react-toolbox/lib/button/Button';
 import { compose, withState, withProps, withHandlers, pure } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
@@ -393,7 +383,7 @@ const IdeaAddEditFormFormHOC = compose(
       ...rest,
     };
   }),
-  withPromiseHandler({}),
+  withPromiseHandler({ shouldResetToDefaultStatus: true }),
   graphql(CreateIdeaMutation, { name: 'createIdea' }),
   graphql(UpdateIdeaMutation, { name: 'updateIdea' }),
   graphql(DeleteIdeaMutation, { name: 'deleteIdea' }),
