@@ -5,10 +5,13 @@ import { Container } from '@coursera/coursera-ui';
 
 import PopularIdeas from 'src/components/PopularIdeas';
 import BannerStatic from 'src/components/BannerStatic';
+import CountdownTimer from 'src/components/CountdownTimer';
 import LearnMakeTeach from 'src/components/LearnMakeTeach';
 import JoinDiscussion from 'src/components/JoinDiscussion';
 import AboutMakeAThon from 'src/components/AboutMakeAThon';
 import GallerySection from 'src/components/GallerySection';
+
+import { MAKEATHON_TIMES, DEMO_COUNTDOWN } from 'src/constants/appConstants';
 
 /* Use styled  for styling components
 const Button = styled.button`
@@ -31,10 +34,9 @@ type Props = {
 export default function Home({ isSuperuser, userId, isLoggedout }: Props) {
   return (
     <div>
-      <div className="Home bg-primary text-xs-center header-margin-offset">
+      <div className="Home text-xs-center header-margin-offset">
         <BannerStatic isLoggedout={isLoggedout} />
       </div>
-      <LearnMakeTeach />
       {!isLoggedout &&
         <div className="bg-light p-y-3">
           <Container>
@@ -42,6 +44,12 @@ export default function Home({ isSuperuser, userId, isLoggedout }: Props) {
           </Container>
         </div>
       }
+      <CountdownTimer
+        startTime={MAKEATHON_TIMES.start}
+        endTime={MAKEATHON_TIMES.end}
+        description={DEMO_COUNTDOWN}
+      />
+      <LearnMakeTeach />
       {!isLoggedout && <GallerySection />}
       <AboutMakeAThon />
       <JoinDiscussion />

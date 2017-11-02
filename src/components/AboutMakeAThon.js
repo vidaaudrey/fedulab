@@ -8,7 +8,7 @@ import ABOUT from 'src/assets/imgs/about.jpg';
 
 export default function AboutMakeAThon() {
   return (
-    <div className="AboutMakeAThon bg-light">
+    <div className="AboutMakeAThon bg-white">
       <Row gutter={0}>
         <Col
           xs={24}
@@ -22,9 +22,9 @@ export default function AboutMakeAThon() {
         />
         <Col xs={24} sm={12} className="p-y-3 p-x-2 m-b-2">
           <div className="p-a-2">
-            <h3 className="font-xl font-weight-200">Why Make-A-Thon Matters?</h3>
+            <h3 className="font-xl font-weight-200">Why Does Make-A-Thon Matter?</h3>
             <p className="font-weight-200 m-b-1">
-              When everyone at Coursera joins together to create there are so many possibilities.
+              When everyone at Coursera joins together to create, there are so many possibilities.
             </p>
             <Box flexDirection="column">
               <a
