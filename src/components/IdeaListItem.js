@@ -80,18 +80,20 @@ export function IdeaListItem({
       >
         <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
         <Box rootClassName="font-sm text-secondary" flexWrap="wrap">
-          <span>{(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}</span>
-          <span className="p-l-1 font-italic">
+          <span className="d-inline-block m-r-1">
+            {(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}
+          </span>
+          <span className="font-italic">
             <HumanTime time={createdAt} />
           </span>
         </Box>
         <h4>{allContributorNames}</h4>
         <p style={{ color: 'gray' }}>{tagline}</p>
       </Box>
-      <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
+      <Box justifyContent="end" alignSelf="end">
         <IdeaActions
           hideLikes
-          canDelete={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
+          canDelete={ENABLE_QUICK_ADMIN_OP}
           canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
           canClaim={!isUserCreated && userEmail === pitchedBy}
           id={id}

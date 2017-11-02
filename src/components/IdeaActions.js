@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
-import { Button } from 'antd';
 import IdeaLike from 'src/components/IdeaLike';
 import { compose, withHandlers } from 'recompose';
 import { withRouter, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
+
+import ActionIconButton from 'src/components/ActionIconButton';
 
 import { DeleteIdeaMutation, ClaimIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';
 
@@ -49,15 +50,13 @@ function IdeaActions({
         </span>
       )}
       {canClaim && (
-        <Button type="primary" onClick={onClaimIdea} className="m-r-1">
+        <ActionIconButton onClick={onClaimIdea} className="m-r-1" minWidth={80}>
           Claim my idea
-        </Button>
+        </ActionIconButton>
       )}
-      {canEdit && <Button icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
+      {canEdit && <ActionIconButton icon="edit" size="large" onClick={onEdit} className="m-r-1" />}
       {canDelete && (
-        <Button
-          type="danger"
-          size="large"
+        <ActionIconButton
           icon="delete"
           onClick={onDeleteIdea}
           className={showPresent ? 'm-r-1' : ''}
@@ -65,7 +64,7 @@ function IdeaActions({
       )}
       {showPresent && (
         <Link to={`/ideas/${slug}/show`}>
-          <Button icon="play-circle" size="large" className="m-r-1" />
+          <ActionIconButton icon="airplay" />
         </Link>
       )}
     </div>

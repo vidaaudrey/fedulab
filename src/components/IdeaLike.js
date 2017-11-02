@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
-import { Icon } from 'antd';
-import Button from 'react-toolbox/lib/button/Button';
 import { compose, withProps, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import _ from 'underscore';
+
+import ActionIconButton from 'src/components/ActionIconButton';
 
 import { IdeaLikeMutation, IdeaUnlikeMutation, IdeaListQuery } from 'src/constants/appQueries';
 
@@ -18,14 +18,13 @@ type Props = {
 };
 
 function IdeaLike({ totalLikes, hasLiked, userId, onUnlike, onLike, isOverIdeaCard }: Props) {
-  const iconImage = hasLiked ? 'heart' : 'heart-o';
   const onLikeHandler = hasLiked ? onUnlike : onLike;
   return (
-    <Button
-      style={{ minWidth: 32, padding: 0 }}
-      label={totalLikes.toString()}
+    <ActionIconButton
+      style={{ fontSize: 20, minWidth: 40, background: 'transparent' }}
+      icon={hasLiked ? 'favorite' : 'favorite_border'}
       onClick={onLikeHandler}
-      icon={<Icon type={iconImage} style={{ color: '#f73b3b' }} />}
+      label={`${totalLikes}`}
     />
   );
 }
