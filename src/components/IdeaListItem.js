@@ -77,8 +77,8 @@ export function IdeaListItem({
         flex={1}
         style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64, overflow: 'scroll' }}
       >
-        <TextTruncate rootClassName="h4" line={3} truncateText="…" text={title} />
-        <Box rootClassName="font-sm text-secondary m-t-1s" flexWrap="wrap">
+        <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
+        <Box rootClassName="font-sm text-secondary" flexWrap="wrap">
           <span>{(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}</span>
           <span className="p-l-1 font-italic">
             <HumanTime time={createdAt} />
