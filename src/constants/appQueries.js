@@ -329,3 +329,27 @@ export const IdeaUnlikeMutation = gql`
     }
   }
 `;
+
+export const CreateUserMutation = gql`
+  mutation(
+    $idToken: String!
+    $name: String!
+    $userName: String!
+    $emailAddress: String!
+    $picture: String!
+  ) {
+    createUser(
+      authProvider: { auth0: { idToken: $idToken } }
+      name: $name
+      userName: $userName
+      emailAddress: $emailAddress
+      picture: $picture
+    ) {
+      id
+      name
+      userName
+      emailAddress
+      picture
+    }
+  }
+`;

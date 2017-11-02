@@ -32,7 +32,6 @@ function UserCreate({ data, onCreateUser, isCreatingUser }: Props) {
   // Redirect if user is logged in or did not finish Auth0 Lock dialog
   if (data.user || window.localStorage.getItem('auth0IdToken') === null) {
     console.warn('not a new user or already logged in');
-
     if (USE_WINDOW_LOCATION) {
       window.location.pathname = '/';
     } else {
