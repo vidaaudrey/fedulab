@@ -12,7 +12,7 @@ import IdeaLike from 'src/components/IdeaLike';
 import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
-const CARD_HEIGHT = 400;
+const CARD_HEIGHT = 420;
 const CARD_IMAGE_HEIGHT = 160;
 
 type Props = {
@@ -80,9 +80,7 @@ export function IdeaListItem({
       >
         <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
         <Box rootClassName="font-sm text-secondary m-b-1s" flexWrap="wrap">
-          <span className="d-inline-block m-r-1">
-            {(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}
-          </span>
+          <span className="d-inline-block m-r-1">{createdBy.name}</span>
           <span className="font-italic">
             <HumanTime time={createdAt} />
           </span>

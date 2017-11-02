@@ -50,11 +50,13 @@ export const IdeaDetailQuery = gql`
       description
       category
       courseraVideoUrl
+      slidesUrl
+      docsUrl
+      youtubeVideoUrl
       coverBackgroundUrl
       isBackgroundImageDark
       howToContribute
       slackUrl
-      youtubeVideoUrl
       createdAt
       updatedAt
       pitchedBy

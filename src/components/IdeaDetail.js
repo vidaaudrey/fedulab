@@ -58,8 +58,8 @@ function IdeaDetail({
     createdBy,
     createdAt,
     pitchedBy,
-    slidesUrl = 'fewafew',
-    docsUrl = 'fewafew',
+    slidesUrl,
+    docsUrl,
   } = idea;
 
   return (
@@ -109,16 +109,18 @@ function IdeaDetail({
           <div className="m-b-2">
             <h2 className="font-xl font-weight-200"> Idea Details</h2>
             <div className="font-sm m-b-1">
-              <span className="m-r-1">
-                <span className="text-secondary text-uppercase"> Category: </span>
-                {category}
-              </span>
-              {pitchedBy && (
-                <span className="font-sm">
-                  <span className="text-secondary text-uppercase"> Pitched By: </span>
-                  {pitchedBy}
+              <div className="m-b-1s">
+                <span className="m-r-1">
+                  <span className="text-secondary text-uppercase"> Category: </span>
+                  {category}
                 </span>
-              )}
+                {pitchedBy && (
+                  <span className="font-sm">
+                    <span className="text-secondary text-uppercase"> Pitched By: </span>
+                    {pitchedBy}
+                  </span>
+                )}
+              </div>
               <IdeaDetailLinks
                 slackUrl={slackUrl}
                 youtubeVideoUrl={youtubeVideoUrl}
