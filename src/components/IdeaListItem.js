@@ -47,7 +47,6 @@ export function IdeaListItem({
   userEmail,
 }: Props) {
   const isUserCreated = userId === (createdBy && createdBy.id);
-  console.warn('isPresenting', idea, isPresenting);
 
   return (
     <Box
