@@ -83,10 +83,9 @@ export default class CountdownTimer extends React.Component<Props, State> {
   getTimeRemaining() {
     const { endTime } = this.props;
     const now = new Date();
-
     const timeLeft = endTime - now;
 
-    if (timeLeft < 0) {
+    if (timeLeft <= 0) {
       clearTimeout(this.updateIntervalHandle);
       return {
         days: 0,
