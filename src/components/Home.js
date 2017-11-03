@@ -9,7 +9,8 @@ import CountdownTimer from 'src/components/CountdownTimer';
 import LearnMakeTeach from 'src/components/LearnMakeTeach';
 import JoinDiscussion from 'src/components/JoinDiscussion';
 import AboutMakeAThon from 'src/components/AboutMakeAThon';
-import GallerySection from 'src/components/GallerySection';
+import PastIdeas from 'src/components/PastIdeas';
+import PhotoGallerySection from 'src/components/PhotoGallerySection';
 
 import { MAKEATHON_TIMES, DEMO_COUNTDOWN } from 'src/constants/appConstants';
 
@@ -49,8 +50,9 @@ export default function Home({ isSuperuser, userId, isLoggedout }: Props) {
         endTime={MAKEATHON_TIMES.end}
         description={DEMO_COUNTDOWN}
       />
+      <PhotoGallerySection />
       <LearnMakeTeach />
-      {!isLoggedout && <GallerySection />}
+      {!isLoggedout && <PastIdeas />}
       <AboutMakeAThon />
       <JoinDiscussion />
     </div>
