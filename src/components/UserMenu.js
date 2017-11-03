@@ -49,7 +49,7 @@ export default function UserMenu({
           </Link>
         )}
         <Link to="/me">
-          <MenuItem value="help" icon="favorite" caption="Liked Ideas" />
+          <MenuItem value="help" icon="favorite" caption="My Dashboard" />
         </Link>
         <Link to="/about">
           <MenuItem value="about" icon="info" caption="About" />

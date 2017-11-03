@@ -87,7 +87,7 @@ function IdeaDetail({
           )}
         >
           <h1 className="font-weight-900">{title}</h1>
-          <h2 className="m-b-1s h3 font-itatlic">{tagline}</h2>
+          <h2 className="m-b-1s h3 font-italic">{tagline}</h2>
           <Box flexDirection="column" rootClassName="text-xs-center color-white font-md">
             <span>
               <span className="d-inline-block m-r-1s">Created by {createdBy.name} </span>
