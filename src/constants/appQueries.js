@@ -80,8 +80,8 @@ export const IdeaDetailQuery = gql`
 `;
 
 export const IdeaListQuery = gql`
-  query IdeaListQuery($isPresenting: Boolean) {
-    allIdeas(filter: { isPresenting: $isPresenting }) {
+  query IdeaListQuery($isPresenting: Boolean, $orderBy: IdeaOrderBy) {
+    allIdeas(filter: { isPresenting: $isPresenting }, orderBy: $orderBy) {
       id
       title
       tagline

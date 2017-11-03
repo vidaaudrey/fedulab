@@ -25,8 +25,10 @@ type Props = {
   isSuperuser: boolean,
   isPresenting: boolean,
   onChange: (SyntheticInputEvent<>) => void,
-  toggleIsPresenting: boolean => void,
+  toggleIsPresenting: () => void,
   searchText: string,
+  isLatest: boolean,
+  toggleIsLatest: void => void,
 };
 
 export function IdeaList({
@@ -39,6 +41,8 @@ export function IdeaList({
   isPresenting,
   toggleIsPresenting,
   searchText,
+  isLatest,
+  toggleIsLatest,
   ...rest
 }: Props) {
   return (
@@ -58,6 +62,9 @@ export function IdeaList({
             />
             <span className="p-x-1">
               <Switch checked={!!isPresenting} label="Presenting" onChange={toggleIsPresenting} />
+            </span>
+            <span className="p-x-1">
+              <Switch checked={!!isLatest} label="Latest" onChange={toggleIsLatest} />
             </span>
           </Box>
           {allIdeas.length === 0 && (
@@ -98,8 +105,17 @@ export function IdeaList({
 export default compose(
   withRouter,
   withState('isPresenting', 'isPresentingSet', undefined),
+  withState('isLatest', 'isLatestSet', false),
   graphql(IdeaListQuery, {
-    options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
+    options: ({ isPresenting, isLatest }) => {
+      console.warn('isPre');
+      const variables = { orderBy: isLatest ? 'createdAt_DESC' : 'createdAt_ASC' };
+      if (isPresenting) {
+        variables.isPresenting = true;
+      }
+
+      return { variables };
+    },
   }),
   graphql(UserDetailsQuery, {
     name: 'userDetailsQuery',
@@ -135,6 +151,16 @@ export default compose(
         isPresentingSet(undefined);
       } else {
         isPresentingSet(true);
+      }
+    },
+    toggleIsLatest: ({ isLatest, isLatestSet }) => (data) => {
+      console.warn('data', data);
+
+      // Only toggle between all ideas and presenting ideas
+      if (isLatest) {
+        isLatestSet(false);
+      } else {
+        isLatestSet(true);
       }
     },
   }),

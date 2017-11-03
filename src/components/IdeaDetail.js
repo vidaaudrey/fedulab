@@ -63,7 +63,10 @@ function IdeaDetail({
   } = idea;
 
   return (
-    <div {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}>
+    <div
+      {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}
+      style={{ minHeight: '96vh' }}
+    >
       <Box
         rootClassName={styles.banner}
         flexDirection="column"
