@@ -128,6 +128,7 @@ export default compose(
     }
     const search = new Search(['id']);
     search.addIndex('title');
+    search.addIndex('tagline');
     search.addIndex('contributorsText');
     search.addIndex('description');
     search.addIndex('category');

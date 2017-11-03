@@ -4,7 +4,6 @@ import { StyleSheet, Box, css, CenterBox } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import cx from 'classnames';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
@@ -25,6 +24,12 @@ const styles = StyleSheet.create({
     minHeight: 720,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+  },
+  metaInfoContainer: {
+    background: 'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .7))',
+  },
+  inverse: {
+    color: '#fff',
   },
 });
 
@@ -74,13 +79,19 @@ function IdeaDetail({
         alignItems="center"
         style={{ backgroundImage: `url(${coverBackgroundUrl || DEFAULT_COVER_BG})` }}
       >
-        <div className={cx('p-a-3', { inverse: isBackgroundImageDark })}>
+        <div
+          {...css(
+            'p-a-2 inverse w-100',
+            styles.metaInfoContainer,
+            isBackgroundImageDark && styles.inverse,
+          )}
+        >
           <h1 className="font-weight-900">{title}</h1>
-          <h2 className="m-b-1">{tagline}</h2>
-          <Box flexDirection="column" rootClassName="text-xs-center color-white">
+          <h2 className="m-b-1s h3 font-itatlic">{tagline}</h2>
+          <Box flexDirection="column" rootClassName="text-xs-center color-white font-md">
             <span>
-              <span>Created by {createdBy.name} </span>
-              <span>
+              <span className="d-inline-block m-r-1s">Created by {createdBy.name} </span>
+              <span className="font-italic">
                 <HumanTime time={createdAt} />
               </span>
             </span>
@@ -147,7 +158,7 @@ function IdeaDetail({
           </div>
         </Box>
       </Box>
-      <Box rootClassName="max-text-width m-x-auto m-b-1 p-a-2 bg-white" justifyContent="between">
+      <Box rootClassName="max-text-width m-x-auto m-b-1 p-a-1 bg-white" justifyContent="between">
         <div className="p-r-1">
           <IdeaPrev last={1} before={idea.id} />
         </div>

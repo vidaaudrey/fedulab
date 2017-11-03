@@ -218,18 +218,6 @@ function IdeaAddEditFormForm({
         })(<RangePicker />)}
       </FormItem>
       <SectionTitle title="Idea Details" />
-      <FormItem {...formItemLayout} label="Youtube Video URL" hasFeedback>
-        {getFieldDecorator('youtubeVideoUrl', {
-          rules: [{ validator: checkUrl }],
-          initialValue: idea.youtubeVideoUrl,
-        })(<Input type="url" placeholder="Youtube video url for your project" />)}
-      </FormItem>
-      <FormItem {...formItemLayout} label="Coursera Video URL" hasFeedback>
-        {getFieldDecorator('courseraVideoUrl', {
-          rules: [{ validator: checkUrl }],
-          initialValue: idea.courseraVideoUrl,
-        })(<Input type="url" placeholder="Coursera video url for your project" />)}
-      </FormItem>
       <FormItem {...formItemLayout} label="Description" hasFeedback>
         {getFieldDecorator('description', {
           rules: [{ required: true, message: 'Add description to your idea' }],
@@ -247,6 +235,31 @@ function IdeaAddEditFormForm({
           />
           <span className="p-l-1">{'Is the background image in dark color?'}</span>
         </div>
+      </FormItem>
+      <FormItem {...formItemLayout} label="Youtube Video URL" hasFeedback>
+        {getFieldDecorator('youtubeVideoUrl', {
+          rules: [{ validator: checkUrl }],
+          initialValue: idea.youtubeVideoUrl,
+        })(<Input type="url" placeholder="Youtube video url for your project" />)}
+      </FormItem>
+
+      <FormItem {...formItemLayout} label="Slides URL" hasFeedback>
+        {getFieldDecorator('slidesUrl', {
+          rules: [{ validator: checkUrl }],
+          initialValue: idea.slidesUrl,
+        })(<Input type="url" placeholder="Slides for your presentation" />)}
+      </FormItem>
+      <FormItem {...formItemLayout} label="Google Docs URL" hasFeedback>
+        {getFieldDecorator('docsUrl', {
+          rules: [{ validator: checkUrl }],
+          initialValue: idea.docsUrl,
+        })(<Input type="url" placeholder="Google docs for your idea" />)}
+      </FormItem>
+      <FormItem {...formItemLayout} label="Video or other file URL" hasFeedback>
+        {getFieldDecorator('courseraVideoUrl', {
+          rules: [{ validator: checkUrl }],
+          initialValue: idea.courseraVideoUrl,
+        })(<Input type="url" placeholder="Google Drive video url, or other file url" />)}
       </FormItem>
 
       <SectionTitle title="Presentation" />
@@ -343,6 +356,9 @@ export const getDefaultIdea = () => ({
   tagline: '',
   title: 'My Awesome New Idea',
   youtubeVideoUrl: null,
+  slidesUrl: null,
+  courseraVideUrl: null,
+  docsUrls: null,
   startTime: '2017-11-01T07:00:00.000Z',
   estimatedFinishTime: '2017-11-03T07:00:00.000Z',
 });
@@ -453,6 +469,8 @@ const IdeaAddEditFormFormHOC = compose(
             if (isMyIdea) {
               variables.createdById = userId;
             }
+            console.warn('variable', variables);
+
             apiPromiseFn = () => updateIdea({ variables });
           } else {
             const variables = {
@@ -467,6 +485,7 @@ const IdeaAddEditFormFormHOC = compose(
                 refetchQueries: [{ query: IdeaListQuery }],
               });
           }
+
           handlePromise({
             apiPromiseFn,
             apiSuccessCallback: (res) => {

@@ -27,6 +27,7 @@ function IdeaNext({
   const charLimit = isPresentationMode ? 80 : 40;
   return (
     <Box
+      rootClassName="text-xs-right"
       alignItems="center"
       tag={Link}
       to={`/ideas/${slug}${isPresentationMode ? '/show' : ''}`}
@@ -44,7 +45,7 @@ function IdeaNext({
           ? ` | ${contributorsText}`
           : ''}`}</h3>
       )}
-      {!isPresentationMode && <FontIcon value="chevron_right" alt="next icon" />}
+      {!isPresentationMode && <FontIcon className="m-l-1s" value="chevron_right" alt="next icon" />}
     </Box>
   );
 }

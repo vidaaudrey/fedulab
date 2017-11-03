@@ -81,7 +81,7 @@ export const IdeaDetailQuery = gql`
 
 export const IdeaListQuery = gql`
   query IdeaListQuery($isPresenting: Boolean, $orderBy: IdeaOrderBy) {
-    allIdeas(filter: { isPresenting: $isPresenting }, orderBy: $orderBy) {
+    allIdeas(filter: { isPresenting: $isPresenting }, orderBy: $orderBy, first: 100) {
       id
       title
       tagline
@@ -139,6 +139,10 @@ export const IdeaEditQuery = gql`
       category
       courseraVideoUrl
       coverBackgroundUrl
+      youtubeVideoUrl
+      pitchedBy
+      slidesUrl
+      docsUrl
       description
       displayOrder
       estimatedFinishTime
@@ -153,8 +157,6 @@ export const IdeaEditQuery = gql`
       startTime
       tagline
       title
-      youtubeVideoUrl
-      pitchedBy
       createdBy {
         name
         id
@@ -175,6 +177,8 @@ export const CreateIdeaMutation = gql`
     $makeathonId: ID
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
+    $docsUrl: String
+    $slidesUrl: String
     $coverBackgroundUrl: String!
     $isBackgroundImageDark: Boolean!
     $description: String!
@@ -200,6 +204,8 @@ export const CreateIdeaMutation = gql`
       makeathonId: $makeathonId
       category: $category
       courseraVideoUrl: $courseraVideoUrl
+      docsUrl: $docsUrl
+      slidesUrl: $slidesUrl
       coverBackgroundUrl: $coverBackgroundUrl
       isBackgroundImageDark: $isBackgroundImageDark
       description: $description
@@ -237,6 +243,8 @@ export const UpdateIdeaMutation = gql`
     $makeathonId: ID
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
+    $docsUrl: String
+    $slidesUrl: String
     $coverBackgroundUrl: String!
     $isBackgroundImageDark: Boolean!
     $description: String!
@@ -263,6 +271,8 @@ export const UpdateIdeaMutation = gql`
       makeathonId: $makeathonId
       category: $category
       courseraVideoUrl: $courseraVideoUrl
+      docsUrl: $docsUrl
+      slidesUrl: $slidesUrl
       coverBackgroundUrl: $coverBackgroundUrl
       isBackgroundImageDark: $isBackgroundImageDark
       description: $description
