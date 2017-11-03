@@ -32,6 +32,8 @@ type Props = {
   toggleIsLatest: () => void,
   showClaimed: boolean,
   toggleShowClaimed: () => void,
+  showSuperuserOp: boolean,
+  toggleShowSuperuserOp: () => void,
 };
 
 export function IdeaList({
@@ -48,6 +50,8 @@ export function IdeaList({
   toggleIsLatest,
   showClaimed,
   toggleShowClaimed,
+  showSuperuserOp,
+  toggleShowSuperuserOp,
   ...rest
 }: Props) {
   return (
@@ -70,7 +74,7 @@ export function IdeaList({
               onChange={onChange}
             />
             <span className="p-x-1">
-              <Switch checked={!!isPresenting} label="Presenting" onChange={toggleIsPresenting} />
+              <Switch checked={!!isPresenting} label="Demo" onChange={toggleIsPresenting} />
             </span>
             <span className="p-x-1">
               <Switch checked={!!isLatest} label="Latest First" onChange={toggleIsLatest} />
@@ -78,6 +82,15 @@ export function IdeaList({
             <span className="p-x-1">
               <Switch checked={!!showClaimed} label="Show Claimed" onChange={toggleShowClaimed} />
             </span>
+            {isSuperuser && (
+              <span className="p-x-1">
+                <Switch
+                  checked={!!showSuperuserOp}
+                  label="Enable Superuser"
+                  onChange={toggleShowSuperuserOp}
+                />
+              </span>
+            )}
           </Box>
           {allIdeas.length === 0 && (
             <div className="text-xs-center p-a-3">
@@ -104,6 +117,7 @@ export function IdeaList({
                   isSuperuser={isSuperuser}
                   userId={userId}
                   userEmail={user.emailAddress}
+                  showSuperuserOp={showSuperuserOp}
                 />
               </Col>
             ))}
@@ -116,8 +130,9 @@ export function IdeaList({
 
 export default compose(
   withRouter,
+  withState('showSuperuserOp', 'showSuperuserOpSet', ({ isSuperuser }) => isSuperuser),
   withState('isPresenting', 'isPresentingSet', undefined),
-  withState('isLatest', 'isLatestSet', false),
+  withState('isLatest', 'isLatestSet', true),
   withState('showClaimed', 'showClaimedSet', false),
   graphql(IdeaListQuery, {
     options: ({ isPresenting, isLatest }) => {
@@ -166,20 +181,15 @@ export default compose(
         isPresentingSet(true);
       }
     },
-    toggleIsLatest: ({ isLatest, isLatestSet }) => (data) => {
+    toggleIsLatest: ({ isLatest, isLatestSet }) => () => {
       // Only toggle between all ideas and presenting ideas
-      if (isLatest) {
-        isLatestSet(false);
-      } else {
-        isLatestSet(true);
-      }
+      isLatestSet(!isLatest);
     },
-    toggleShowClaimed: ({ showClaimed, showClaimedSet }) => (data) => {
-      if (showClaimed) {
-        showClaimedSet(false);
-      } else {
-        showClaimedSet(true);
-      }
+    toggleShowClaimed: ({ showClaimed, showClaimedSet }) => () => {
+      showClaimedSet(!showClaimed);
+    },
+    toggleShowSuperuserOp: ({ showSuperuserOp, showSuperuserOpSet }) => () => {
+      showSuperuserOpSet(!showSuperuserOp);
     },
   }),
   withProps(({ filteredIdeas: filteredIdeasAlt, showClaimed }) => {

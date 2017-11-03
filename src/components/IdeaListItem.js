@@ -22,6 +22,7 @@ type Props = {
   userId: string,
   userEmail: string,
   onCardClick: () => void,
+  showSuperuserOp: boolean,
 };
 
 export function IdeaListItem({
@@ -45,9 +46,11 @@ export function IdeaListItem({
   isSuperuser,
   userId,
   userEmail,
+  showSuperuserOp,
 }: Props) {
   const isUserCreated = userId === (createdBy && createdBy.id);
-
+  const canClaim = !isUserCreated && userEmail === pitchedBy;
+  const enableQuickAdmin = isSuperuser && ENABLE_QUICK_ADMIN_OP;
   return (
     <Box
       tag={Card}
@@ -84,7 +87,7 @@ export function IdeaListItem({
             overflow: 'scroll',
           }}
         >
-          <TextTruncate rootClassName="h4 m-b-1s" line={3} truncateText="…" text={title} />
+          <TextTruncate rootClassName="h4 m-b-1s" line={2} text={title} />
           <Box rootClassName="font-sm text-secondary m-b-1s" flexWrap="wrap">
             <span className="d-inline-block m-r-1">{createdBy.name}</span>
             <span className="font-italic m-r-1">
@@ -103,8 +106,18 @@ export function IdeaListItem({
             truncateText="…"
             text={tagline}
           />
+          <IdeaActions
+            hideLikes
+            canDelete={showSuperuserOp || enableQuickAdmin}
+            canEdit={showSuperuserOp || enableQuickAdmin || isUserCreated}
+            canClaim={canClaim}
+            id={id}
+            slug={slug}
+            userId={userId}
+            isSuperuser={isSuperuser}
+            noRightMargin
+          />
         </Box>
-
         <Box
           justifyContent="between"
           alignSelf="end"
@@ -114,17 +127,6 @@ export function IdeaListItem({
           flexWrap="wrap"
         >
           <span className="font-sm">{contributorsText}</span>
-          <IdeaActions
-            hideLikes
-            canDelete={ENABLE_QUICK_ADMIN_OP}
-            canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
-            canClaim={!isUserCreated && userEmail === pitchedBy}
-            id={id}
-            slug={slug}
-            userId={userId}
-            isSuperuser={isSuperuser}
-            noRightMargin
-          />
         </Box>
       </div>
     </Box>

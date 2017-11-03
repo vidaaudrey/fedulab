@@ -4,7 +4,6 @@ import React from 'react';
 import Switch from 'react-toolbox/lib/switch/Switch';
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
-import _ from 'underscore';
 
 import { HEADER_HEIGHT, PHOTO_LIST_URL, PHOTO_URL_BASE } from 'src/constants/appConstants';
 
@@ -112,7 +111,10 @@ export default class PhotoGallery extends React.Component<void, State> {
         </div>
         <div className="text-xs-center m-b-2">
           <h2 className="font-xl font-weight-200">Make-A-Thon Moments</h2>
-          <span className="font-weight-200">People from this and past Make-A-Thons.</span>
+          <span className="font-weight-200">
+            Photo credits to Alex Wang, Connor Close and more. If you liked to add yours, please
+            send your Google Photo or Drive link to Hannah.
+          </span>
         </div>
         <div className="m-b-3">
           <Gallery photos={photos} onClick={this.openLightbox} />

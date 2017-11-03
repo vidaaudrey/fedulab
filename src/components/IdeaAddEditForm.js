@@ -286,14 +286,12 @@ function IdeaAddEditFormForm({
           <span className="p-l-1">I'm presenting on my laptop</span>
         </div>
       </FormItem>
-      {isSuperuser && (
-        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-          <div>
-            <Switch defaultChecked={idea.isPresenting} onChange={toggleIsPresenting} />
-            <span className="p-l-1">Presenting in the final round (Edit by SU only)</span>
-          </div>
-        </FormItem>
-      )}
+      <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+        <div>
+          <Switch defaultChecked={idea.isPresenting} onChange={toggleIsPresenting} />
+          <span className="p-l-1"> I'm Demoing </span>
+        </div>
+      </FormItem>
       <FormItem style={{ textAlign: 'right' }} className="p-t-2 m-b-1">
         {!isCreateSuccess && (
           <Button

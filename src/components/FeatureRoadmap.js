@@ -10,7 +10,7 @@ const FEATURE_ROADMAP = [
   },
   {
     name: 'Enhance design of idea details page',
-    isDone: false,
+    isDone: true,
     by: 'Kalan',
   },
   {
@@ -20,17 +20,17 @@ const FEATURE_ROADMAP = [
   },
   {
     name: 'General UI cleanup',
-    isDone: false,
+    isDone: true,
     by: 'Hannah',
   },
   {
     name: 'Final Presentation View',
-    isDone: false,
+    isDone: true,
     by: 'Ronald',
   },
   {
     name: 'User Dashboard',
-    isDone: false,
+    isDone: true,
     by: 'Hannah',
   },
   {
@@ -39,6 +39,50 @@ const FEATURE_ROADMAP = [
   },
   {
     name: 'Voting (less priority)',
+    isDone: false,
+  },
+  {
+    name: 'Enhance global state updates',
+    isDone: false,
+  },
+  {
+    name: 'Commenting (GraphQL Subscription)',
+    isDone: false,
+  },
+  {
+    name: 'Make-A-Thon Photos Sharing',
+    isDone: false,
+  },
+  {
+    name: 'Chat',
+    isDone: false,
+  },
+  {
+    name: 'Notification',
+    isDone: false,
+  },
+  {
+    name: 'Multiple Makeathon Support',
+    isDone: false,
+  },
+  {
+    name: 'Code splitting',
+    isDone: false,
+  },
+  {
+    name: 'Speed up image loading',
+    isDone: false,
+  },
+  {
+    name: 'Service worker revisit',
+    isDone: false,
+  },
+  {
+    name: 'Benchmark with lighthouse and fix issues',
+    isDone: false,
+  },
+  {
+    name: 'Accessibility',
     isDone: false,
   },
 ];

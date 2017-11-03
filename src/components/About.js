@@ -27,7 +27,7 @@ export default function About({ match }: MatchProps) {
               {' '}
               #fedulab {' '}
             </a>
-            or
+            /
             <a
               href="https://coursera.slack.com/messages/context-fe-learn"
               target="_blank"

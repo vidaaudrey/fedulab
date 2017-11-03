@@ -43,6 +43,9 @@ export default function UserMenu({
         <Link to="/ideas" className="hidden-sm-up">
           <MenuItem value="browse" icon="explore" caption="Browse" />
         </Link>
+        <Link to="/moments">
+          <MenuItem value="moments" icon="photo" caption="Moments" />
+        </Link>
         {isSuperuser && (
           <Link to="/su">
             <MenuItem value="help" icon="whatshot" caption="Superuser" />
