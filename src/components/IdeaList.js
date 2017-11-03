@@ -30,8 +30,6 @@ type Props = {
   searchText: string,
   isLatest: boolean,
   toggleIsLatest: () => void,
-  showDemo: boolean,
-  toggleShowDemo: () => void,
   showSuperuserOp: boolean,
   toggleShowSuperuserOp: () => void,
   showFinal: boolean,
@@ -50,8 +48,6 @@ export function IdeaList({
   searchText,
   isLatest,
   toggleIsLatest,
-  showDemo,
-  toggleShowDemo,
   showSuperuserOp,
   toggleShowSuperuserOp,
   showFinal,
@@ -62,10 +58,7 @@ export function IdeaList({
     <div className="bg-light p-y-3">
       <Container>
         <div className="text-xs-center">
-          <h2 className="font-xl font-weight-200">
-            {allIdeas.length} {(showDemo || isPresenting) && <span>/ {filteredIdeas.length} </span>}
-            Ideas
-          </h2>
+          <h2 className="font-xl font-weight-200">{filteredIdeas.length}   Ideas</h2>
           <span className="font-weight-200">Browse ideas for Coursera 9th Make-A-Thon</span>
           <Box rootClassName="m-b-1" flexWrap="wrap" alignItems="center" justifyContent="center">
             <Input
@@ -77,13 +70,10 @@ export function IdeaList({
               onChange={onChange}
             />
             <span className="p-x-1">
-              <Switch checked={!!isPresenting} label="Demo" onChange={toggleIsPresenting} />
-            </span>
-            <span className="p-x-1">
               <Switch checked={!!isLatest} label="Latest First" onChange={toggleIsLatest} />
             </span>
             <span className="p-x-1">
-              <Switch checked={!!showDemo} label="Demo" onChange={toggleShowDemo} />
+              <Switch checked={!!isPresenting} label="Demo" onChange={toggleIsPresenting} />
             </span>
             <span className="p-x-1">
               <Switch checked={!!showFinal} label="Final" onChange={toggleShowFinal} />
@@ -139,7 +129,6 @@ export default compose(
   withState('showSuperuserOp', 'showSuperuserOpSet', false),
   withState('isPresenting', 'isPresentingSet', undefined),
   withState('isLatest', 'isLatestSet', true),
-  withState('showDemo', 'showDemoSet', false),
   withState('showFinal', 'showFinalSet', false),
   graphql(IdeaListQuery, {
     options: ({ isPresenting, showFinal, isLatest }) => {
@@ -194,9 +183,6 @@ export default compose(
     toggleIsLatest: ({ isLatest, isLatestSet }) => () => {
       // Only toggle between all ideas and presenting ideas
       isLatestSet(!isLatest);
-    },
-    toggleShowDemo: ({ showDemo, showDemoSet }) => () => {
-      showDemoSet(!showDemo);
     },
     toggleShowSuperuserOp: ({ showSuperuserOp, showSuperuserOpSet }) => () => {
       showSuperuserOpSet(!showSuperuserOp);

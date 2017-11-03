@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Card, Tag } from 'antd';
+import { Card } from 'antd';
 import { Box } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
