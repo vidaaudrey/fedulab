@@ -30,10 +30,12 @@ type Props = {
   searchText: string,
   isLatest: boolean,
   toggleIsLatest: () => void,
-  showClaimed: boolean,
-  toggleShowClaimed: () => void,
+  showDemo: boolean,
+  toggleShowDemo: () => void,
   showSuperuserOp: boolean,
   toggleShowSuperuserOp: () => void,
+  showFinal: boolean,
+  toggleShowFinal: () => void,
 };
 
 export function IdeaList({
@@ -48,10 +50,12 @@ export function IdeaList({
   searchText,
   isLatest,
   toggleIsLatest,
-  showClaimed,
-  toggleShowClaimed,
+  showDemo,
+  toggleShowDemo,
   showSuperuserOp,
   toggleShowSuperuserOp,
+  showFinal,
+  toggleShowFinal,
   ...rest
 }: Props) {
   return (
@@ -59,8 +63,7 @@ export function IdeaList({
       <Container>
         <div className="text-xs-center">
           <h2 className="font-xl font-weight-200">
-            {allIdeas.length}{' '}
-            {(showClaimed || isPresenting) && <span>/ {filteredIdeas.length} </span>}
+            {allIdeas.length} {(showDemo || isPresenting) && <span>/ {filteredIdeas.length} </span>}
             Ideas
           </h2>
           <span className="font-weight-200">Browse ideas for Coursera 9th Make-A-Thon</span>
@@ -80,7 +83,10 @@ export function IdeaList({
               <Switch checked={!!isLatest} label="Latest First" onChange={toggleIsLatest} />
             </span>
             <span className="p-x-1">
-              <Switch checked={!!showClaimed} label="Show Claimed" onChange={toggleShowClaimed} />
+              <Switch checked={!!showDemo} label="Demo" onChange={toggleShowDemo} />
+            </span>
+            <span className="p-x-1">
+              <Switch checked={!!showFinal} label="Final" onChange={toggleShowFinal} />
             </span>
             {isSuperuser && (
               <span className="p-x-1">
@@ -130,15 +136,19 @@ export function IdeaList({
 
 export default compose(
   withRouter,
-  withState('showSuperuserOp', 'showSuperuserOpSet', ({ isSuperuser }) => isSuperuser),
+  withState('showSuperuserOp', 'showSuperuserOpSet', false),
   withState('isPresenting', 'isPresentingSet', undefined),
   withState('isLatest', 'isLatestSet', true),
-  withState('showClaimed', 'showClaimedSet', false),
+  withState('showDemo', 'showDemoSet', false),
+  withState('showFinal', 'showFinalSet', false),
   graphql(IdeaListQuery, {
-    options: ({ isPresenting, isLatest }) => {
+    options: ({ isPresenting, showFinal, isLatest }) => {
       const variables = { orderBy: isLatest ? 'createdAt_DESC' : 'createdAt_ASC' };
       if (isPresenting) {
         variables.isPresenting = true;
+      }
+      if (showFinal) {
+        variables.isInFinalRound = true;
       }
       // TODO(Audrey): figure out why toggle presenting, then latest, then back not triggering render
       return { variables };
@@ -185,17 +195,20 @@ export default compose(
       // Only toggle between all ideas and presenting ideas
       isLatestSet(!isLatest);
     },
-    toggleShowClaimed: ({ showClaimed, showClaimedSet }) => () => {
-      showClaimedSet(!showClaimed);
+    toggleShowDemo: ({ showDemo, showDemoSet }) => () => {
+      showDemoSet(!showDemo);
     },
     toggleShowSuperuserOp: ({ showSuperuserOp, showSuperuserOpSet }) => () => {
       showSuperuserOpSet(!showSuperuserOp);
     },
+    toggleShowFinal: ({ showFinal, showFinalSet }) => () => {
+      showFinalSet(!showFinal);
+    },
   }),
-  withProps(({ filteredIdeas: filteredIdeasAlt, showClaimed }) => {
+  withProps(({ filteredIdeas: filteredIdeasAlt, showDemo }) => {
     const filteredIdeas = filteredIdeasAlt.filter(({ id, createdBy }) => {
       const createdById = createdBy.id;
-      if (showClaimed) {
+      if (showDemo) {
         return createdById !== AUDREY_ID || id === FEDULAB_ID;
       }
       return true;

@@ -101,7 +101,6 @@ export default function withPromiseHandler({
         });
 
         if (apiInProgressCallback) apiInProgressCallback();
-        console.warn('handleApiPromise', apiPromise);
 
         apiPromise
           .then((response) => {

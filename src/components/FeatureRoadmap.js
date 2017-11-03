@@ -46,6 +46,10 @@ const FEATURE_ROADMAP = [
     isDone: false,
   },
   {
+    name: 'Globally enable or disable Superuse UI',
+    isDone: false,
+  },
+  {
     name: 'Commenting (GraphQL Subscription)',
     isDone: false,
   },

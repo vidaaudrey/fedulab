@@ -61,6 +61,8 @@ export const IdeaDetailQuery = gql`
       createdAt
       updatedAt
       pitchedBy
+      isPresenting
+      isInFinalRound
       createdBy {
         name
         id
@@ -81,8 +83,12 @@ export const IdeaDetailQuery = gql`
 `;
 
 export const IdeaListQuery = gql`
-  query IdeaListQuery($isPresenting: Boolean, $orderBy: IdeaOrderBy) {
-    allIdeas(filter: { isPresenting: $isPresenting }, orderBy: $orderBy, first: 100) {
+  query IdeaListQuery($isPresenting: Boolean, $isInFinalRound: Boolean, $orderBy: IdeaOrderBy) {
+    allIdeas(
+      filter: { isPresenting: $isPresenting, isInFinalRound: $isInFinalRound }
+      orderBy: $orderBy
+      first: 100
+    ) {
       id
       title
       tagline
@@ -90,6 +96,7 @@ export const IdeaListQuery = gql`
       coverBackgroundUrl
       slug
       isPresenting
+      isInFinalRound
       createdAt
       contributorsText
       pitchedBy
@@ -180,6 +187,7 @@ export const IdeaEditQuery = gql`
       needPower
       needMonitor
       isPresenting
+      isInFinalRound
       slackUrl
       slug
       startTime
@@ -217,6 +225,7 @@ export const CreateIdeaMutation = gql`
     $needPower: Boolean
     $needMonitor: Boolean
     $isPresenting: Boolean
+    $isInFinalRound: Boolean
     $slackUrl: String
     $slug: String!
     $startTime: DateTime!
@@ -244,6 +253,7 @@ export const CreateIdeaMutation = gql`
       needPower: $needPower
       needMonitor: $needMonitor
       isPresenting: $isPresenting
+      isInFinalRound: $isInFinalRound
       slackUrl: $slackUrl
       slug: $slug
       startTime: $startTime
@@ -283,6 +293,7 @@ export const UpdateIdeaMutation = gql`
     $needPower: Boolean
     $needMonitor: Boolean
     $isPresenting: Boolean
+    $isInFinalRound: Boolean
     $slackUrl: String
     $slug: String!
     $startTime: DateTime!
@@ -311,6 +322,7 @@ export const UpdateIdeaMutation = gql`
       needPower: $needPower
       needMonitor: $needMonitor
       isPresenting: $isPresenting
+      isInFinalRound: $isInFinalRound
       slackUrl: $slackUrl
       slug: $slug
       startTime: $startTime
@@ -337,6 +349,21 @@ export const ClaimIdeaMutation = gql`
       id
       title
       slug
+      createdBy {
+        name
+        id
+      }
+    }
+  }
+`;
+
+export const UpdateFinalRoundMutation = gql`
+  mutation UpdateFinalRoundMutation($id: ID!, $isInFinalRound: Boolean) {
+    updateIdea(id: $id, isInFinalRound: $isInFinalRound) {
+      id
+      title
+      slug
+      isInFinalRound
       createdBy {
         name
         id

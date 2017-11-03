@@ -79,6 +79,7 @@ type Props = {
   isCreateSuccess: boolean,
   isEditingMode: boolean,
   isPresenting: boolean,
+  isInFinalRound: boolean,
   isSuperuser: boolean,
   onDeleteIdea: () => void,
   onImgUploaded: url => void,
@@ -89,6 +90,7 @@ type Props = {
   toggleNeedMonitor: boolean => void,
   toggleIsMyIdea: boolean => void,
   toggleIsBackgroundImageDark: boolean => void,
+  toggleIsInFinalRound: boolean => void,
 };
 
 function SectionTitle({ title, tag: Tag = 'h3' }: { title: String, tag: String }) {
@@ -127,6 +129,8 @@ function IdeaAddEditFormForm({
   isCreateSuccess,
   isEditingMode,
   isPresenting,
+  isInFinalRound,
+  toggleIsInFinalRound,
   isSuperuser,
   coverBackgroundUrlSet,
   onDeleteIdea,
@@ -292,6 +296,14 @@ function IdeaAddEditFormForm({
           <span className="p-l-1"> I'm Demoing </span>
         </div>
       </FormItem>
+      {isSuperuser && (
+        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+          <div>
+            <Switch defaultChecked={idea.isInFinalRound} onChange={toggleIsInFinalRound} />
+            <span className="p-l-1"> This is in Final Presentations. (SU Only) </span>
+          </div>
+        </FormItem>
+      )}
       <FormItem style={{ textAlign: 'right' }} className="p-t-2 m-b-1">
         {!isCreateSuccess && (
           <Button
@@ -406,6 +418,7 @@ const IdeaAddEditFormFormHOC = compose(
   withState('needMonitor', 'toggleNeedMonitor', ({ idea }) => idea.needMonitor),
   withState('isMyIdea', 'toggleIsMyIdea', ({ idea }) => idea.isMyIdea),
   withState('isPresenting', 'toggleIsPresenting', ({ idea }) => idea.isPresenting),
+  withState('isInFinalRound', 'toggleIsInFinalRound', ({ idea }) => idea.isInFinalRound),
   withState(
     'isBackgroundImageDark',
     'toggleIsBackgroundImageDark',
@@ -422,6 +435,7 @@ const IdeaAddEditFormFormHOC = compose(
       needMonitor,
       isMyIdea,
       isPresenting,
+      isInFinalRound,
       createIdea,
       updateIdea,
       history,
@@ -444,6 +458,7 @@ const IdeaAddEditFormFormHOC = compose(
             needPower,
             needMonitor,
             isPresenting,
+            isInFinalRound,
             contributorsText: contributorsText.join(', '),
             startTime,
             estimatedFinishTime,

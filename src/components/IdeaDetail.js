@@ -12,6 +12,7 @@ import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 import IdeaNext from 'src/components/IdeaNext';
 import IdeaPrev from 'src/components/IdeaPrev';
 import IdeaDetailLinks from 'src/components/IdeaDetailLinks';
+import IdeaTags from 'src/components/IdeaTags';
 
 import animationUtils from 'src/utils/animationUtils';
 
@@ -57,6 +58,8 @@ function IdeaDetail({
     coverBackgroundUrl,
     howToContribute,
     isBackgroundImageDark,
+    isInFinalRound,
+    isPresenting,
     slackUrl,
     youtubeVideoUrl,
     contributorsText,
@@ -91,19 +94,25 @@ function IdeaDetail({
           <Box flexDirection="column" rootClassName="text-xs-center color-white font-md">
             <span>
               <span className="d-inline-block m-r-1s">Created by {createdBy.name} </span>
-              <span className="font-italic">
+              <span className="font-italic m-r-1s">
                 <HumanTime time={createdAt} />
               </span>
+              <IdeaTags isPresenting={isPresenting} isInFinalRound={isInFinalRound} />
             </span>
+
             {contributorsText && <span>{contributorsText}</span>}
             <CenterBox rootClassName="m-b-0">
               <IdeaActions
                 shouldRedirectToListAfterDelete
+                canDelete={isSuperuser}
+                canToggleFinal={isSuperuser}
                 canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
+                isInFinalRound={isInFinalRound}
                 id={id}
                 slug={slug}
                 likes={idea.likes}
                 userId={userId}
+                isSuperuser={isSuperuser}
                 showPresent
                 enhanceBg
                 inverse

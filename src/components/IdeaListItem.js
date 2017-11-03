@@ -9,6 +9,7 @@ import TextTruncate from 'src/components/hoc/TextTruncate';
 import IdeaActions from 'src/components/IdeaActions';
 import HumanTime from 'src/components/HumanTime';
 import IdeaLike from 'src/components/IdeaLike';
+import IdeaTags from 'src/components/IdeaTags';
 import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
@@ -41,6 +42,7 @@ export function IdeaListItem({
     slug,
     contributorsText,
     isPresenting,
+    isInFinalRound,
   },
   onCardClick,
   isSuperuser,
@@ -60,7 +62,7 @@ export function IdeaListItem({
       style={{
         width: '100%',
         maxWidth: MAX_WIDTH,
-        height: CARD_HEIGHT,
+        height: showSuperuserOp ? CARD_HEIGHT + 40 : CARD_HEIGHT,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
@@ -93,12 +95,7 @@ export function IdeaListItem({
             <span className="font-italic m-r-1">
               <HumanTime time={createdAt} />
             </span>
-            {isPresenting &&
-              isSuperuser && (
-                <span>
-                  <Tag color="#87d068">Demo</Tag>
-                </span>
-              )}
+            <IdeaTags isPresenting={isPresenting} isInFinalRound={isInFinalRound} />
           </Box>
           <TextTruncate
             rootClassName="h5 m-b-0 font-italic"
@@ -111,7 +108,9 @@ export function IdeaListItem({
             canDelete={showSuperuserOp || enableQuickAdmin}
             canEdit={showSuperuserOp || enableQuickAdmin || isUserCreated}
             canClaim={canClaim}
+            canToggleFinal={showSuperuserOp}
             id={id}
+            isInFinalRound={isInFinalRound}
             slug={slug}
             userId={userId}
             isSuperuser={isSuperuser}
