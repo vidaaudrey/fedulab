@@ -115,6 +115,7 @@ export function IdeaListItem({
             slug={slug}
             userId={userId}
             isSuperuser={isSuperuser}
+            noRightMargin
           />
         </Box>
       </div>

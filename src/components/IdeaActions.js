@@ -25,6 +25,7 @@ type Props = {
   hideLikes: boolean,
   showPresent: boolean,
   inverse: boolean,
+  noRightMargin: boolean,
 };
 
 function IdeaActions({
@@ -42,6 +43,7 @@ function IdeaActions({
   hideLikes,
   showPresent,
   inverse,
+  noRightMargin,
   ...rest
 }: Props) {
   return (
@@ -52,7 +54,12 @@ function IdeaActions({
         </span>
       )}
       {canClaim && (
-        <ActionIconButton onClick={onClaimIdea} className="m-r-1" minWidth={80} inverse={inverse}>
+        <ActionIconButton
+          onClick={onClaimIdea}
+          className={noRightMargin ? '' : 'm-r-1'}
+          minWidth={80}
+          inverse={inverse}
+        >
           Claim my idea
         </ActionIconButton>
       )}
@@ -61,7 +68,7 @@ function IdeaActions({
           icon="edit"
           size="large"
           onClick={onEdit}
-          className="m-r-1"
+          className={noRightMargin ? '' : 'm-r-1'}
           inverse={inverse}
         />
       )}
@@ -69,7 +76,7 @@ function IdeaActions({
         <ActionIconButton
           icon="delete"
           onClick={onDeleteIdea}
-          className={showPresent ? 'm-r-1' : ''}
+          className={showPresent || noRightMargin ? 'm-r-1' : ''}
           inverse={inverse}
         />
       )}

@@ -108,12 +108,11 @@ export default compose(
   withState('isLatest', 'isLatestSet', false),
   graphql(IdeaListQuery, {
     options: ({ isPresenting, isLatest }) => {
-      console.warn('isPre');
       const variables = { orderBy: isLatest ? 'createdAt_DESC' : 'createdAt_ASC' };
       if (isPresenting) {
         variables.isPresenting = true;
       }
-
+      // TODO(Audrey): figure out why toggle presenting, then latest, then back not triggering render
       return { variables };
     },
   }),
@@ -154,8 +153,6 @@ export default compose(
       }
     },
     toggleIsLatest: ({ isLatest, isLatestSet }) => (data) => {
-      console.warn('data', data);
-
       // Only toggle between all ideas and presenting ideas
       if (isLatest) {
         isLatestSet(false);

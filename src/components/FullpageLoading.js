@@ -11,7 +11,7 @@ type Props = {
   minHeight: string | number,
 };
 
-export default function FullpageLoading({ data, minHeight = '90vh' }: Props) {
+export default function FullpageLoading({ data, minHeight = '90vh', ...rest }: Props) {
   return (
     <CenterBox rootClassName="FullpageLoading p-y-1 w-100 h-100" style={{ minHeight }}>
       {data && data.loading && <Loading />}
