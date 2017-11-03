@@ -27,6 +27,10 @@ export const DEMO_COUNTDOWN = 'Until demos begin!';
 export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon8.json";
 export const PHOTO_URL_BASE = "http://res.cloudinary.com/fedulab/image/upload/v1/";
 
+// Photo gallery constants
+export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon8.json";
+export const PHOTO_URL_BASE = "http://res.cloudinary.com/fedulab/image/upload/v1/";
+
 // TODO(Audrey): replace with real names
 export const COURSERA_NAMES = [
   'Audrey Li',
