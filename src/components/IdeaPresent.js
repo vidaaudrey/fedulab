@@ -55,10 +55,10 @@ function IdeaPresent({
     createdBy,
     courseraVideoUrl,
     youtubeVideoUrl,
-    slideUrl,
+    slidesUrl,
     contributorsText,
   } = idea;
-  const haveLink = courseraVideoUrl || youtubeVideoUrl || slideUrl;
+  const haveLink = courseraVideoUrl || youtubeVideoUrl || slidesUrl;
   return (
     <div {...css('IdeaPresent header-margin-offset', animationUtils.fadeInSlow)}>
       <Box
@@ -111,8 +111,8 @@ function IdeaPresent({
                     <FontIcon value="videocam" style={{ fontSize: '2rem' }} />
                   </a>
                 )}
-                {slideUrl && (
-                  <a {...css('p-a-1', styles.slideIcon)} href={slideUrl} target="_blank">
+                {slidesUrl && (
+                  <a {...css('p-a-1', styles.slideIcon)} href={slidesUrl} target="_blank">
                     <FontIcon value="assessment" style={{ fontSize: '2rem' }} />
                   </a>
                 )}

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Card } from 'antd';
+import { Card, Tag } from 'antd';
 import { Box } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
@@ -39,6 +39,7 @@ export function IdeaListItem({
     description,
     slug,
     contributorsText,
+    isPresenting,
   },
   onCardClick,
   isSuperuser,
@@ -46,6 +47,7 @@ export function IdeaListItem({
   userEmail,
 }: Props) {
   const isUserCreated = userId === (createdBy && createdBy.id);
+  console.warn('isPresenting', idea, isPresenting);
 
   return (
     <Box
@@ -106,6 +108,12 @@ export function IdeaListItem({
           style={{ height: CARD_FOOTER_HEIGHT }}
         >
           <span className="font-sm">{contributorsText}</span>
+          {isPresenting &&
+            isSuperuser && (
+              <span>
+                <Tag color="#87d068">Demo</Tag>
+              </span>
+            )}
           <IdeaActions
             hideLikes
             canDelete={ENABLE_QUICK_ADMIN_OP}

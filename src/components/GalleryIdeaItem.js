@@ -24,7 +24,7 @@ export default function GalleryIdeaItem({
     creator,
     contributors,
     contributorsDescription,
-    slideUrl,
+    slidesUrl,
     youtubeVideoId,
     courseraVideoId,
   },
@@ -59,8 +59,8 @@ export default function GalleryIdeaItem({
             {contributorsDescription && (
               <span className="font-sm d-inline-block truncate">{contributorsDescription}</span>
             )}
-            {slideUrl && (
-              <a href={slideUrl} title="slide" className="d-inline-block m-r-1">
+            {slidesUrl && (
+              <a href={slidesUrl} title="slide" className="d-inline-block m-r-1">
                 Slide
               </a>
             )}

@@ -50,14 +50,13 @@ export const IdeaDetailQuery = gql`
       description
       category
       courseraVideoUrl
-      slidesUrl
       docsUrl
+      slidesUrl
       youtubeVideoUrl
       coverBackgroundUrl
       isBackgroundImageDark
       howToContribute
       slackUrl
-      slideUrl
       youtubeVideoUrl
       createdAt
       updatedAt
@@ -94,6 +93,7 @@ export const IdeaListQuery = gql`
       createdAt
       contributorsText
       pitchedBy
+      isPresenting
       createdBy {
         name
         id
@@ -110,7 +110,11 @@ export const IdeaListQuery = gql`
 
 export const IdeaNextQuery = gql`
   query IdeaNextQuery($first: Int, $after: String) {
-    allIdeas(first: $first, after: $after) {
+    allIdeas(
+      first: $first
+      after: $after
+      filter: { id_not: "cj9evxdi0tgc50128yx72w9cc", isPresenting: true }
+    ) {
       id
       slug
       title
@@ -124,7 +128,11 @@ export const IdeaNextQuery = gql`
 
 export const IdeaPrevQuery = gql`
   query IdeaPrevQuery($last: Int, $before: String) {
-    allIdeas(last: $last, before: $before) {
+    allIdeas(
+      last: $last
+      before: $before
+      filter: { id_not: "cj9evxdi0tgc50128yx72w9cc", isPresenting: true }
+    ) {
       id
       slug
       title

@@ -17,7 +17,7 @@ type Props = {
     title: string,
     slug: string,
   },
-  isPresentationMode: boolean,
+  isPresentationMode?: boolean,
 };
 
 function IdeaNext({
