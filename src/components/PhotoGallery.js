@@ -15,7 +15,7 @@ import {
 } from 'src/constants/appConstants';
 
 const SWITCH_MARGIN = 20;
-const SCROLL_HEIGHT = 5;
+const SCROLL_DISTANCE = 10;
 const SCROLL_TIME = 50;
 
 type State = {
@@ -52,7 +52,7 @@ export default class PhotoGallery extends React.Component<void, State> {
   startAutoScroll() {
     this.setState({ isScrolling: true });
     this.scrollHandle = setInterval(() => {
-      window.scrollBy({ top: SCROLL_HEIGHT, left: 0, behavior: 'smooth' });
+      window.scrollBy({ top: SCROLL_DISTANCE, left: 0, behavior: 'smooth' });
     }, SCROLL_TIME);
   }
 
@@ -113,7 +113,7 @@ export default class PhotoGallery extends React.Component<void, State> {
             position: 'fixed',
             top: HEADER_HEIGHT,
             right: 0,
-            background: 'rgba(247, 247, 247, .88)', // bg-light
+            background: 'rgba(247, 247, 247, .8)', // bg-light
             borderRadius: '0 0 10px 10px',
           }}
         >

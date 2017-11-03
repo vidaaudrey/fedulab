@@ -24,11 +24,7 @@ export const MAKEATHON_TIMES = {
 export const DEMO_COUNTDOWN = 'Until demos begin!';
 
 // Photo gallery constants
-export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon8.json";
-export const PHOTO_URL_BASE = "http://res.cloudinary.com/fedulab/image/upload/v1/";
-
-// Photo gallery constants
-export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon8.json";
+export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon.json";
 export const PHOTO_URL_BASE = "http://res.cloudinary.com/fedulab/image/upload/v1/";
 
 // TODO(Audrey): replace with real names
