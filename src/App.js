@@ -19,6 +19,7 @@ import IdeaPresent from 'src/components/IdeaPresent';
 import About from 'src/components/About';
 import Superuser from 'src/components/Superuser';
 import Gallery from 'src/components/Gallery';
+import PhotoGallery from 'src/components/PhotoGallery';
 import MyDashboard from 'src/components/MyDashboard';
 import Home from 'src/components/Home';
 import Footer from 'src/components/Footer';
@@ -129,6 +130,7 @@ function App({
           <Route path="/loading" component={FullpageLoading} />
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
+          <Route path="/photoGallery" component={PhotoGallery} />
           {isLoggedIn && <Route path="/me" component={MyDashboard} />}
           {!isLoggedIn && <Route exact path="/signup" component={UserCreate} />}
         </div>

@@ -104,7 +104,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo4OQ==',
           title: 'Coursera for Refugees ',
           tagline: '',
@@ -217,7 +217,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo4NA==',
           title: 'Coursera AMP',
           tagline: 'Coursera Accelerated Mobile Pages ',
@@ -414,7 +414,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo3NA==',
           title: 'Points of Interest',
           tagline: 'Your learning journey will be more fun with points of interest!',
@@ -501,7 +501,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo2OQ==',
           title: 'Coursera for Social Awareness',
           tagline:
@@ -644,7 +644,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo2MQ==',
           title: 'Widget Authoring',
           tagline: 'Author your widget _in_ your widget',
@@ -674,7 +674,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo2MA==',
           title: 'Piano Widget',
           tagline: 'Progress through your music course by playing piano',
@@ -845,7 +845,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo1Mw==',
           title: 'A Brief History of Coursera',
           tagline:
@@ -905,7 +905,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo1MQ==',
           title: 'Boardgame-a-thon',
           tagline: 'Getting more boardgames for Courserians to play',
@@ -1076,7 +1076,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo0NA==',
           title: 'She Speaks!',
           tagline: 'Female voices from the past and present inspired by our company values',
@@ -1163,7 +1163,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYTo0MQ==',
           title: 'Women@ Projects',
           tagline:
@@ -1367,7 +1367,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYToyNg==',
           title: 'Coursera Everywhere',
           tagline: 'Putting Coursera everywhere ',
@@ -1396,7 +1396,7 @@ export const MAKEATHON_8 = {
       },
       {
         node: {
-          showInGallerySection: true,
+          showInPastIdeas: true,
           id: 'SWRlYToyMQ==',
           title: 'Component-A-Thon',
           tagline: "Let's make some Coursera-UI  components!",
@@ -1502,5 +1502,5 @@ export const MAKEATHON_8 = {
 export const MAKEATHON_8_IDEAS = MAKEATHON_8.allIdeas.edges.map(item => item.node);
 
 export const MAKEATHON_8_GALLERY_IDEAS = MAKEATHON_8.allIdeas.edges
-  .filter(({ node: { showInGallerySection } }) => showInGallerySection)
+  .filter(({ node: { showInPastIdeas } }) => showInPastIdeas)
   .map(item => item.node);

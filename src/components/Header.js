@@ -8,7 +8,7 @@ import { Route, Link, withRouter } from 'react-router-dom';
 import UserMenu from 'src/components/UserMenu';
 import Logo from 'src/assets/logo_light.svg';
 
-import { ADD_IDEA_TEXT } from 'src/constants/appConstants';
+import { HEADER_HEIGHT, ADD_IDEA_TEXT } from 'src/constants/appConstants';
 
 const { Header } = Layout;
 
@@ -43,7 +43,7 @@ function HeaderAlt({
         width: '100%',
         background: 'rgba(255, 255, 255, .88)',
         zIndex: 1000,
-        height: 72,
+        height: HEADER_HEIGHT,
       }}
     >
       <Box rootClassName="w-100 h-100" justifyContent="between" alignItems="center">
