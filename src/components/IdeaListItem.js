@@ -80,7 +80,7 @@ export function IdeaListItem({
           flexDirection="column"
           flex={1}
           style={{
-            height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - CARD_FOOTER_HEIGHT,
+            height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - CARD_FOOTER_HEIGHT - 16,
             overflow: 'scroll',
           }}
         >
@@ -109,8 +109,9 @@ export function IdeaListItem({
           justifyContent="between"
           alignSelf="end"
           alignItems="end"
-          rootClassName="p-a-1"
-          style={{ height: CARD_FOOTER_HEIGHT }}
+          rootClassName="p-x-1 m-b-1"
+          style={{ height: CARD_FOOTER_HEIGHT, overflow: 'scroll' }}
+          flexWrap="wrap"
         >
           <span className="font-sm">{contributorsText}</span>
           <IdeaActions
