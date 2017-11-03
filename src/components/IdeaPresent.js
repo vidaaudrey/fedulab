@@ -4,7 +4,6 @@ import { StyleSheet, Box, css, color } from '@coursera/coursera-ui';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import { Icon } from 'antd';
 import cx from 'classnames';
 
 import { FontIcon } from 'react-toolbox/lib/font_icon/FontIcon';

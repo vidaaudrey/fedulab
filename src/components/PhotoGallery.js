@@ -1,20 +1,13 @@
-//@flow
+// @flow
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Switch from 'react-toolbox/lib/switch/Switch';
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
-import { Container } from '@coursera/coursera-ui';
 import _ from 'underscore';
 
-import {
-  HEADER_HEIGHT,
-  PHOTO_LIST_URL,
-  PHOTO_URL_BASE
-} from 'src/constants/appConstants';
+import { HEADER_HEIGHT, PHOTO_LIST_URL, PHOTO_URL_BASE } from 'src/constants/appConstants';
 
-const SWITCH_MARGIN = 20;
 const SCROLL_DISTANCE = 10;
 const SCROLL_TIME = 50;
 
@@ -31,16 +24,12 @@ export default class PhotoGallery extends React.Component<void, State> {
     imageIndex: 0,
     lightboxIsOpen: false,
     isScrolling: false,
-  }
-
-  scrollHandle = undefined;
+  };
 
   componentDidMount() {
     fetch(PHOTO_LIST_URL)
-      .then(result => {
-        return result.json();
-      })
-      .then(data => {
+      .then(result => result.json())
+      .then((data) => {
         this.setState({ gallery: data.resources });
       });
   }
@@ -48,6 +37,8 @@ export default class PhotoGallery extends React.Component<void, State> {
   componentWillUnmount() {
     this.stopAutoScroll();
   }
+
+  scrollHandle = undefined;
 
   startAutoScroll() {
     this.setState({ isScrolling: true });
@@ -67,7 +58,7 @@ export default class PhotoGallery extends React.Component<void, State> {
     } else {
       this.startAutoScroll();
     }
-  }
+  };
 
   openLightbox = (event, photo) => {
     this.stopAutoScroll();
@@ -75,26 +66,26 @@ export default class PhotoGallery extends React.Component<void, State> {
       imageIndex: photo.index,
       lightboxIsOpen: true,
     });
-  }
+  };
 
   closeLightbox = () => {
     this.setState({
       imageIndex: 0,
       lightboxIsOpen: false,
     });
-  }
+  };
 
   goToPrevious = () => {
     this.setState({
       imageIndex: this.state.imageIndex - 1,
     });
-  }
+  };
 
   goToNext = () => {
     this.setState({
       imageIndex: this.state.imageIndex + 1,
     });
-  }
+  };
 
   render() {
     const { gallery, isScrolling, imageIndex, lightboxIsOpen } = this.state;
@@ -117,21 +108,16 @@ export default class PhotoGallery extends React.Component<void, State> {
             borderRadius: '0 0 10px 10px',
           }}
         >
-          <Switch
-            checked={isScrolling}
-            label="Auto-scroll gallery"
-            onChange={this.toggleScroll}
-          />
+          <Switch checked={isScrolling} label="Auto-scroll gallery" onChange={this.toggleScroll} />
         </div>
         <div className="text-xs-center m-b-2">
           <h2 className="font-xl font-weight-200">Make-A-Thon Moments</h2>
-          <span className="font-weight-200">
-            People from this and past Make-A-Thons.
-          </span>
+          <span className="font-weight-200">People from this and past Make-A-Thons.</span>
         </div>
         <div className="m-b-3">
           <Gallery photos={photos} onClick={this.openLightbox} />
-          <Lightbox images={photos}
+          <Lightbox
+            images={photos}
             onClose={this.closeLightbox}
             onClickPrev={this.goToPrevious}
             onClickNext={this.goToNext}

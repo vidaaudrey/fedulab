@@ -130,7 +130,7 @@ function App({
           <Route path="/loading" component={FullpageLoading} />
           <Route path="/about" component={About} />
           <Route path="/gallery" component={Gallery} />
-          <Route path="/photoGallery" component={PhotoGallery} />
+          <Route path="/moments" component={PhotoGallery} />
           {isLoggedIn && <Route path="/me" component={MyDashboard} />}
           {!isLoggedIn && <Route exact path="/signup" component={UserCreate} />}
         </div>

@@ -84,12 +84,18 @@ export function IdeaListItem({
             overflow: 'scroll',
           }}
         >
-          <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
+          <TextTruncate rootClassName="h4 m-b-1s" line={3} truncateText="…" text={title} />
           <Box rootClassName="font-sm text-secondary m-b-1s" flexWrap="wrap">
             <span className="d-inline-block m-r-1">{createdBy.name}</span>
-            <span className="font-italic">
+            <span className="font-italic m-r-1">
               <HumanTime time={createdAt} />
             </span>
+            {isPresenting &&
+              isSuperuser && (
+                <span>
+                  <Tag color="#87d068">Demo</Tag>
+                </span>
+              )}
           </Box>
           <TextTruncate
             rootClassName="h5 m-b-0 font-italic"
@@ -107,12 +113,6 @@ export function IdeaListItem({
           style={{ height: CARD_FOOTER_HEIGHT }}
         >
           <span className="font-sm">{contributorsText}</span>
-          {isPresenting &&
-            isSuperuser && (
-              <span>
-                <Tag color="#87d068">Demo</Tag>
-              </span>
-            )}
           <IdeaActions
             hideLikes
             canDelete={ENABLE_QUICK_ADMIN_OP}

@@ -55,7 +55,7 @@ export default class PhotoGallerySection extends React.Component {
         <p className="font-weight-200 m-b-1">
           People from this and past Make-A-Thons.
           <Link
-            to="photoGallery"
+            to="moments"
             className="text-secondary d-inline-block p-x-1s font-style-italic font-sm"
           >
             See all
