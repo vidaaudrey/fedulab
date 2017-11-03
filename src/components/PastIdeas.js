@@ -25,12 +25,12 @@ export function ImageCover({ image, title }: { image: string, title: string }) {
   );
 }
 
-export default function GallerySection() {
+export default function PastIdeas() {
   return (
-    <div className="GallerySection bg-white text-xs-center p-y-3">
-      <h2 className="font-xl font-weight-200">Gallery</h2>
+    <div className="PastIdeas bg-light text-xs-center p-y-3">
+      <h2 className="font-xl font-weight-200">Past Ideas</h2>
       <p className="font-weight-200 m-b-1">
-        Ideas and people from the past Make-a-thons.
+        Inspiration from past Make-a-thons.
         <Link
           to="gallery"
           className="text-secondary d-inline-block p-x-1s font-style-italic font-sm"

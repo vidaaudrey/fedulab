@@ -1,4 +1,5 @@
 // @flow
+export const HEADER_HEIGHT = 72;
 export const LOGIN_BUTTON_TEXT = 'Register for Demo';
 export const USE_WINDOW_LOCATION = true;
 export const ADD_IDEA_TEXT = 'Register for Demo';
@@ -10,11 +11,16 @@ export const DEFAULT_CATEGORIES = ['GENERAL'];
 
 export const PRIMARY_COLOR = '#e64a19';
 
+// Countdown constants
 export const MAKEATHON_TIMES = {
   start: new Date('Oct 31 2017, 10:00'),
   end: new Date('Nov 3 2017, 12:30'),
 }
 export const DEMO_COUNTDOWN = "Until demos begin!";
+
+// Photo gallery constants
+export const PHOTO_LIST_URL = "https://res.cloudinary.com/fedulab/image/list/makeathon8.json";
+export const PHOTO_URL_BASE = "http://res.cloudinary.com/fedulab/image/upload/v1/";
 
 // TODO(Audrey): replace with real names
 export const COURSERA_NAMES = [
