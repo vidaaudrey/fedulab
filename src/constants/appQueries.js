@@ -56,7 +56,8 @@ export const IdeaDetailQuery = gql`
       coverBackgroundUrl
       isBackgroundImageDark
       howToContribute
-      slackUrl
+      slideUrl
+      youtubeVideoUrl
       createdAt
       updatedAt
       pitchedBy
@@ -116,7 +117,6 @@ export const IdeaNextQuery = gql`
         name
         id
       }
-      contributorsText
     }
   }
 `;
@@ -127,6 +127,25 @@ export const IdeaPrevQuery = gql`
       id
       slug
       title
+    }
+  }
+`;
+
+export const IdeaPresentBarQuery = gql`
+  query IdeaPresentBarQuery($id: String) {
+    before: allIdeas(last: 1, before: $id) {
+      id
+      slug
+      title
+    }
+    after: allIdeas(first: 1, after: $id) {
+      id
+      slug
+      title
+      createdBy {
+        name
+        id
+      }
     }
   }
 `;

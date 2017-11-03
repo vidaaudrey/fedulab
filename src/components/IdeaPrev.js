@@ -21,7 +21,6 @@ type Props = {
 };
 
 function IdeaPrev({ idea: { title, slug } }: Props) {
-  const charLimit = 40;
   return (
     <Box alignItems="center" tag={Link} to={`/ideas/${slug}`}>
       <FontIcon className="m-r-1s" value="chevron_left" alt="next icon" />

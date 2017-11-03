@@ -13,18 +13,13 @@ import { IdeaNextQuery } from 'src/constants/appQueries';
 import { LOADER_SIZE } from 'src/components/IdeaPrev';
 
 type Props = {
-  isPresentationMode: boolean,
   idea: {
     title: string,
     slug: string,
   },
 };
 
-function IdeaNext({
-  idea: { title, slug, createdBy, contributorsText },
-  isPresentationMode,
-}: Props) {
-  const charLimit = isPresentationMode ? 80 : 40;
+function IdeaNext({ idea: { title, slug, createdBy, contributorsText } }: Props) {
   return (
     <Box
       rootClassName="text-xs-right"
