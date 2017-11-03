@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
-import { Button } from 'antd';
-
-import { withRouter } from 'react-router-dom';
+import IdeaLike from 'src/components/IdeaLike';
 import { compose, withHandlers } from 'recompose';
+import { withRouter, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
+
+import ActionIconButton from 'src/components/ActionIconButton';
 
 import { DeleteIdeaMutation, ClaimIdeaMutation, IdeaListQuery } from 'src/constants/appQueries';
 
@@ -19,6 +20,12 @@ type Props = {
   onClaimIdea: () => void,
   onEdit: () => void,
   slug: string,
+  userId: string,
+  likes: Array<Object>,
+  hideLikes: boolean,
+  showPresent: boolean,
+  inverse: boolean,
+  noRightMargin: boolean,
 };
 
 function IdeaActions({
@@ -31,19 +38,53 @@ function IdeaActions({
   canDelete,
   canEdit,
   canClaim,
+  likes,
+  userId,
+  hideLikes,
+  showPresent,
+  inverse,
+  noRightMargin,
   ...rest
 }: Props) {
   return (
-    <div>
+    <div className="IdeaActions">
+      {!hideLikes && (
+        <span className="d-inline-block m-r-1">
+          <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} />
+        </span>
+      )}
       {canClaim && (
-        <Button type="primary" onClick={onClaimIdea} className="m-r-1s">
+        <ActionIconButton
+          onClick={onClaimIdea}
+          className={noRightMargin ? '' : 'm-r-1'}
+          minWidth={80}
+          inverse={inverse}
+        >
           Claim my idea
-        </Button>
+        </ActionIconButton>
+      )}
+      {canEdit && (
+        <ActionIconButton
+          icon="edit"
+          size="large"
+          onClick={onEdit}
+          className={noRightMargin ? '' : 'm-r-1'}
+          inverse={inverse}
+        />
       )}
       {canDelete && (
-        <Button type="danger" size="large" icon="delete" onClick={onDeleteIdea} className="m-r-1s" />
+        <ActionIconButton
+          icon="delete"
+          onClick={onDeleteIdea}
+          className={showPresent || noRightMargin ? 'm-r-1' : ''}
+          inverse={inverse}
+        />
       )}
-      {canEdit && <Button icon="edit" size="large" onClick={onEdit} />}
+      {showPresent && (
+        <Link to={`/ideas/${slug}/show`}>
+          <ActionIconButton icon="airplay" inverse={inverse} />
+        </Link>
+      )}
     </div>
   );
 }
@@ -60,7 +101,7 @@ export default compose(
         window.event.cancelBubble = true;
       }
 
-      claimIdea({ variables: { id: id, createdById: userId }})
+      claimIdea({ variables: { id, createdById: userId } })
         .then((res) => {
           console.warn('res', res);
         })

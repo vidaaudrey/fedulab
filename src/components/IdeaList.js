@@ -16,6 +16,7 @@ import IdeaListItem from 'src/components/IdeaListItem';
 import FullpageLoading from 'src/components/FullpageLoading';
 
 import { IdeaListQuery, UserDetailsQuery } from 'src/constants/appQueries';
+import { AUDREY_ID, FEDULAB_ID } from 'src/constants/appConstants';
 
 type Props = {
   allIdeas: [Object],
@@ -25,8 +26,12 @@ type Props = {
   isSuperuser: boolean,
   isPresenting: boolean,
   onChange: (SyntheticInputEvent<>) => void,
-  toggleIsPresenting: boolean => void,
+  toggleIsPresenting: () => void,
   searchText: string,
+  isLatest: boolean,
+  toggleIsLatest: () => void,
+  showClaimed: boolean,
+  toggleShowClaimed: () => void,
 };
 
 export function IdeaList({
@@ -39,13 +44,21 @@ export function IdeaList({
   isPresenting,
   toggleIsPresenting,
   searchText,
+  isLatest,
+  toggleIsLatest,
+  showClaimed,
+  toggleShowClaimed,
   ...rest
 }: Props) {
   return (
     <div className="bg-light p-y-3">
       <Container>
         <div className="text-xs-center">
-          <h2 className="font-xl font-weight-200"> {allIdeas.length} Ideas</h2>
+          <h2 className="font-xl font-weight-200">
+            {allIdeas.length}{' '}
+            {(showClaimed || isPresenting) && <span>/ {filteredIdeas.length} </span>}
+            Ideas
+          </h2>
           <span className="font-weight-200">Browse ideas for Coursera 9th Make-A-Thon</span>
           <Box rootClassName="m-b-1" flexWrap="wrap" alignItems="center" justifyContent="center">
             <Input
@@ -58,6 +71,12 @@ export function IdeaList({
             />
             <span className="p-x-1">
               <Switch checked={!!isPresenting} label="Presenting" onChange={toggleIsPresenting} />
+            </span>
+            <span className="p-x-1">
+              <Switch checked={!!isLatest} label="Latest First" onChange={toggleIsLatest} />
+            </span>
+            <span className="p-x-1">
+              <Switch checked={!!showClaimed} label="Show Claimed" onChange={toggleShowClaimed} />
             </span>
           </Box>
           {allIdeas.length === 0 && (
@@ -98,8 +117,17 @@ export function IdeaList({
 export default compose(
   withRouter,
   withState('isPresenting', 'isPresentingSet', undefined),
+  withState('isLatest', 'isLatestSet', false),
+  withState('showClaimed', 'showClaimedSet', false),
   graphql(IdeaListQuery, {
-    options: ({ isPresenting }) => ({ variables: isPresenting ? { isPresenting } : {} }),
+    options: ({ isPresenting, isLatest }) => {
+      const variables = { orderBy: isLatest ? 'createdAt_DESC' : 'createdAt_ASC' };
+      if (isPresenting) {
+        variables.isPresenting = true;
+      }
+      // TODO(Audrey): figure out why toggle presenting, then latest, then back not triggering render
+      return { variables };
+    },
   }),
   graphql(UserDetailsQuery, {
     name: 'userDetailsQuery',
@@ -107,12 +135,13 @@ export default compose(
   withProps(() => ({ dataFieldName: 'allIdeas' })),
   withGQLLoadingOrError(FullpageLoading),
   withState('searchText', 'searchTextSet', ''),
-  withProps(({ data, searchText }) => {
+  withProps(({ data, searchText, isClaimed }) => {
     if (searchText.length === 0) {
       return { filteredIdeas: data.allIdeas, allIdeas: data.allIdeas };
     }
     const search = new Search(['id']);
     search.addIndex('title');
+    search.addIndex('tagline');
     search.addIndex('contributorsText');
     search.addIndex('description');
     search.addIndex('category');
@@ -137,5 +166,30 @@ export default compose(
         isPresentingSet(true);
       }
     },
+    toggleIsLatest: ({ isLatest, isLatestSet }) => (data) => {
+      // Only toggle between all ideas and presenting ideas
+      if (isLatest) {
+        isLatestSet(false);
+      } else {
+        isLatestSet(true);
+      }
+    },
+    toggleShowClaimed: ({ showClaimed, showClaimedSet }) => (data) => {
+      if (showClaimed) {
+        showClaimedSet(false);
+      } else {
+        showClaimedSet(true);
+      }
+    },
+  }),
+  withProps(({ filteredIdeas: filteredIdeasAlt, showClaimed }) => {
+    const filteredIdeas = filteredIdeasAlt.filter(({ id, createdBy }) => {
+      const createdById = createdBy.id;
+      if (showClaimed) {
+        return createdById !== AUDREY_ID || id === FEDULAB_ID;
+      }
+      return true;
+    });
+    return { filteredIdeas };
   }),
 )(IdeaList);

@@ -12,8 +12,9 @@ import IdeaLike from 'src/components/IdeaLike';
 import { ENABLE_QUICK_ADMIN_OP } from 'src/constants/appConstants';
 
 const MAX_WIDTH = 560;
-const CARD_HEIGHT = 420;
+const CARD_HEIGHT = 440;
 const CARD_IMAGE_HEIGHT = 160;
+const CARD_FOOTER_HEIGHT = 80;
 
 type Props = {
   idea: Object,
@@ -24,6 +25,7 @@ type Props = {
 };
 
 export function IdeaListItem({
+  idea,
   idea: {
     pitchedBy,
     tagline,
@@ -36,13 +38,13 @@ export function IdeaListItem({
     title,
     description,
     slug,
+    contributorsText,
   },
   onCardClick,
   isSuperuser,
   userId,
   userEmail,
 }: Props) {
-  const allContributorNames = contributors.map(item => item.name).join(',  ');
   const isUserCreated = userId === (createdBy && createdBy.id);
 
   return (
@@ -54,50 +56,69 @@ export function IdeaListItem({
       style={{
         width: '100%',
         maxWidth: MAX_WIDTH,
-        height: 420,
+        height: CARD_HEIGHT,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
       bodyStyle={{ padding: 0 }}
     >
-      <div
-        className="text-xs-right color-white"
-        style={{
-          minHeight: CARD_IMAGE_HEIGHT,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundImage: `url(${coverBackgroundUrl})`,
-        }}
-      >
-        <IdeaLike ideaId={id} ideaLikes={likes} userId={userId} isOverIdeaCard />
-      </div>
-      <Box
-        rootClassName="p-a-1"
-        flexDirection="column"
-        flex={1}
-        style={{ height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - 64, overflow: 'scroll' }}
-      >
-        <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
-        <Box rootClassName="font-sm text-secondary" flexWrap="wrap">
-          <span>{(pitchedBy && pitchedBy.split('@')[0]) || createdBy.name}</span>
-          <span className="p-l-1 font-italic">
-            <HumanTime time={createdAt} />
-          </span>
+      <div className="h-100">
+        <div
+          className="text-xs-right color-white"
+          style={{
+            minHeight: CARD_IMAGE_HEIGHT,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundImage: `url(${coverBackgroundUrl})`,
+          }}
+        >
+          <IdeaLike ideaId={id} ideaLikes={likes || []} userId={userId} isOverIdeaCard />
+        </div>
+        <Box
+          rootClassName="p-a-1"
+          flexDirection="column"
+          flex={1}
+          style={{
+            height: CARD_HEIGHT - CARD_IMAGE_HEIGHT - CARD_FOOTER_HEIGHT,
+            overflow: 'scroll',
+          }}
+        >
+          <TextTruncate rootClassName="h4 m-b-0" line={3} truncateText="…" text={title} />
+          <Box rootClassName="font-sm text-secondary m-b-1s" flexWrap="wrap">
+            <span className="d-inline-block m-r-1">{createdBy.name}</span>
+            <span className="font-italic">
+              <HumanTime time={createdAt} />
+            </span>
+          </Box>
+          <TextTruncate
+            rootClassName="h5 m-b-0 font-italic"
+            line={2}
+            truncateText="…"
+            text={tagline}
+          />
         </Box>
-        <h4>{allContributorNames}</h4>
-        <p style={{ color: 'gray' }}>{tagline}</p>
-      </Box>
-      <Box rootClassName="p-a-1" justifyContent="end" alignSelf="end">
-        <IdeaActions
-          canDelete={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
-          canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
-          canClaim={!isUserCreated && userEmail === pitchedBy}
-          id={id}
-          slug={slug}
-          userId={userId}
-          isSuperuser={isSuperuser}
-        />
-      </Box>
+
+        <Box
+          justifyContent="between"
+          alignSelf="end"
+          alignItems="end"
+          rootClassName="p-a-1"
+          style={{ height: CARD_FOOTER_HEIGHT }}
+        >
+          <span className="font-sm">{contributorsText}</span>
+          <IdeaActions
+            hideLikes
+            canDelete={ENABLE_QUICK_ADMIN_OP}
+            canEdit={(isSuperuser && ENABLE_QUICK_ADMIN_OP) || isUserCreated}
+            canClaim={!isUserCreated && userEmail === pitchedBy}
+            id={id}
+            slug={slug}
+            userId={userId}
+            isSuperuser={isSuperuser}
+            noRightMargin
+          />
+        </Box>
+      </div>
     </Box>
   );
 }

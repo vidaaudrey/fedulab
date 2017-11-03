@@ -28,7 +28,7 @@ const LOGO_SIZE = 220;
 
 export default function LearnMakeTeach() {
   return (
-    <div className="LearnMakeTeach text-xs-center bg-white p-y-3">
+    <div className="LearnMakeTeach text-xs-center bg-light p-y-3">
       <Container>
         <Row gutter={16} className="p-t-3">
           {CONFIG.map(({ title, icon, description }) => (

@@ -16,7 +16,7 @@ const networkInterface = createNetworkInterface({
   uri: API_END_POINT,
 });
 
-const client = new ApolloClient({ networkInterface });
+const client = new ApolloClient({ networkInterface, connectToDevTools: true });
 
 // use the auth0IdToken in localStorage for authorized requests
 networkInterface.use([

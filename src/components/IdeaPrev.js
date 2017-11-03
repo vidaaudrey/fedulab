@@ -1,5 +1,7 @@
 // @flow
 import React from 'react';
+import FontIcon from 'react-toolbox/lib/font_icon/FontIcon';
+import { Box } from '@coursera/coursera-ui';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { graphql } from 'react-apollo';
@@ -20,12 +22,10 @@ type Props = {
 
 function IdeaPrev({ idea: { title, slug } }: Props) {
   return (
-    <div className="p-r-1">
-      <Link to={`/ideas/${slug}`}>
-        {' '}
-        {`< ${title.substring(0, 30)}${title.length >= 30 ? '...' : ''}`}
-      </Link>
-    </div>
+    <Box alignItems="center" tag={Link} to={`/ideas/${slug}`}>
+      <FontIcon className="m-r-1s" value="chevron_left" alt="next icon" />
+      {`${title.substring(0, charLimit)}${title.length >= charLimit ? '...' : ''}`}
+    </Box>
   );
 }
 

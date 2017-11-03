@@ -11,7 +11,7 @@ import JON from 'src/assets/imgs/jon.jpg';
 
 export default function JoinDiscussion() {
   return (
-    <div className="JoinDiscussion p-y-3 bg-white">
+    <div className="JoinDiscussion p-y-3 bg-light">
       <Row gutter={16}>
         <Col xs={24} sm={12} className="p-a-1 m-b-2">
           <div className="p-a-3">

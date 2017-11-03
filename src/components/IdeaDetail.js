@@ -1,11 +1,9 @@
 // @flow
 import React from 'react';
-import Button from 'react-toolbox/lib/button/Button';
-import { StyleSheet, Box, css } from '@coursera/coursera-ui';
-import { withRouter, Link } from 'react-router-dom';
+import { StyleSheet, Box, css, CenterBox } from '@coursera/coursera-ui';
+import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
-import cx from 'classnames';
 
 import { withGQLLoadingOrError } from 'src/components/withBranches';
 import IdeaActions from 'src/components/IdeaActions';
@@ -13,7 +11,7 @@ import HumanTime from 'src/components/HumanTime';
 import IdeaLoadPreCheck from 'src/components/IdeaLoadPreCheck';
 import IdeaNext from 'src/components/IdeaNext';
 import IdeaPrev from 'src/components/IdeaPrev';
-import IdeaLike from 'src/components/IdeaLike';
+import IdeaDetailLinks from 'src/components/IdeaDetailLinks';
 
 import animationUtils from 'src/utils/animationUtils';
 
@@ -23,9 +21,15 @@ import { DEFAULT_COVER_BG } from 'src/constants/appConstants';
 const styles = StyleSheet.create({
   banner: {
     textAlign: 'center',
-    minHeight: 800,
+    minHeight: 720,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+  },
+  metaInfoContainer: {
+    background: 'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .7))',
+  },
+  inverse: {
+    color: '#fff',
   },
 });
 
@@ -56,15 +60,18 @@ function IdeaDetail({
     slackUrl,
     youtubeVideoUrl,
     contributorsText,
-    contributors,
     createdBy,
     createdAt,
     pitchedBy,
+    slidesUrl,
+    docsUrl,
   } = idea;
-  const allContributorNames = contributors.map(item => item.name).join(',  ');
 
   return (
-    <div {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}>
+    <div
+      {...css('IdeaDetail header-margin-offset', animationUtils.fadeInSlow)}
+      style={{ minHeight: '96vh' }}
+    >
       <Box
         rootClassName={styles.banner}
         flexDirection="column"
@@ -72,58 +79,92 @@ function IdeaDetail({
         alignItems="center"
         style={{ backgroundImage: `url(${coverBackgroundUrl || DEFAULT_COVER_BG})` }}
       >
-        <div className={cx('p-a-3', { inverse: isBackgroundImageDark })}>
-          <h1 className="font-weight-900" style={{ fontSize: '3.2rem' }}>
-            {title}
-          </h1>
-          <h2 className="m-b-1">{tagline}</h2>
-          <h3>
-            <Link to={`/ideas/${slug}/show`}>
-              <Button icon="airplay" className="m-r-1s" label="Present" raised />
-            </Link>
-          </h3>
+        <div
+          {...css(
+            'p-a-2 inverse w-100',
+            styles.metaInfoContainer,
+            isBackgroundImageDark && styles.inverse,
+          )}
+        >
+          <h1 className="font-weight-900">{title}</h1>
+          <h2 className="m-b-1s h3 font-italic">{tagline}</h2>
+          <Box flexDirection="column" rootClassName="text-xs-center color-white font-md">
+            <span>
+              <span className="d-inline-block m-r-1s">Created by {createdBy.name} </span>
+              <span className="font-italic">
+                <HumanTime time={createdAt} />
+              </span>
+            </span>
+            {contributorsText && <span>{contributorsText}</span>}
+            <CenterBox rootClassName="m-b-0">
+              <IdeaActions
+                shouldRedirectToListAfterDelete
+                canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
+                id={id}
+                slug={slug}
+                likes={idea.likes}
+                userId={userId}
+                showPresent
+                enhanceBg
+                inverse
+              />
+            </CenterBox>
+          </Box>
         </div>
       </Box>
+
       <Box
         key={id}
         justifyContent="center"
         flexDirection="column"
-        rootClassName="max-text-width m-x-auto"
+        rootClassName="max-text-width m-x-auto bg-white p-a-1 m-y-1 overflow-hidden"
       >
-        <div className="p-a-2 bg-white m-b-1">
-          <span className="text-secondary">By {createdBy && createdBy.name}</span>
-          {contributorsText && (
-            <div className="text-secondary">Contributors:{contributorsText}</div>
-          )}
-          {allContributorNames && (
-            <div className="text-secondary">Contributors:{allContributorNames}</div>
-          )}
-          <IdeaActions
-            shouldRedirectToListAfterDelete
-            canDelete={isSuperuser || userId === (createdBy && createdBy.id)}
-            canEdit={isSuperuser || userId === (createdBy && createdBy.id)}
-            id={id}
-            slug={slug}
-          />
-          <HumanTime time={createdAt} />
-          <IdeaLike ideaId={idea.id} ideaLikes={idea.likes} userId={userId} />
-          <span>{category}</span>
-          <p style={{ color: 'gray' }}>{description}</p>
-          <p>{howToContribute}</p>
-          <p>Pitched by {pitchedBy}</p>
-          <p>{youtubeVideoUrl}</p>
-          <p>{slackUrl}</p>
-          <p>{courseraVideoUrl}</p>
-          <p>{courseraVideoUrl}</p>
-        </div>
-        <Box rootClassName="m-b-1 bg-white p-a-2" justifyContent="between" flexWrap="wrap">
-          <div className="p-r-1">
-            <IdeaPrev last={1} before={idea.id} />
+        <Box flexDirection="column">
+          <div className="m-b-2">
+            <h2 className="font-xl font-weight-200"> Idea Details</h2>
+            <div className="font-sm m-b-1">
+              <div className="m-b-1s">
+                <span className="m-r-1">
+                  <span className="text-secondary text-uppercase"> Category: </span>
+                  {category}
+                </span>
+                {pitchedBy && (
+                  <span className="font-sm">
+                    <span className="text-secondary text-uppercase"> Pitched By: </span>
+                    {pitchedBy}
+                  </span>
+                )}
+              </div>
+              <IdeaDetailLinks
+                slackUrl={slackUrl}
+                youtubeVideoUrl={youtubeVideoUrl}
+                slidesUrl={slidesUrl}
+                docsUrl={docsUrl}
+                courseraVideoUrl={courseraVideoUrl}
+              />
+            </div>
+            <p className="m-b-1" style={{ overflow: 'scroll' }}>
+              <span className="text-secondary text-uppercase font-sm">Description: </span> <br />
+              {description}
+            </p>
           </div>
-          <div className="p-l-1">
-            <IdeaNext first={1} after={idea.id} />
+
+          <div className="m-b-1">
+            <h2 className="font-xl font-weight-200">Collaborate</h2>
+            <span className="m-r-1">
+              <span className="font-sm text-secondary text-uppercase"> How to conribute: </span>
+              {howToContribute}
+            </span>
           </div>
         </Box>
+      </Box>
+      <Box rootClassName="max-text-width m-x-auto m-b-1 p-a-1 bg-white" justifyContent="between">
+        <div className="p-r-1">
+          <IdeaPrev last={1} before={idea.id} />
+        </div>
+        <div className="p-l-1">
+          <IdeaNext first={1} after={idea.id} />
+        </div>
       </Box>
     </div>
   );

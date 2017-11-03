@@ -66,10 +66,10 @@ function HeaderAlt({
               <Link to="/about">About</Link>
             </Menu.Item> */}
               <Link to="/add-idea">
-                <Button label={ADD_IDEA_TEXT} primary={pathname === '/add-idea'} />
+                <Button icon="add" label={ADD_IDEA_TEXT} primary={pathname === '/add-idea'} />
               </Link>
               <Link to="/ideas">
-                <Button label="Browse" primary={pathname === '/ideas'} />
+                <Button icon="explore" label="Browse" primary={pathname === '/ideas'} />
               </Link>
             </Box>
 

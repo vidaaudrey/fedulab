@@ -8,7 +8,18 @@ export const ENABLE_NON_COURSERA_SIGN_IN = false;
 export const DEFAULT_COVER_BG = 'https://i.imgur.com/bvMAeMw.jpg';
 export const DEFAULT_CATEGORIES = ['GENERAL'];
 
+export const AUDREY_ID = 'cj9f7t1tp1zs20128rqcpalid';
+export const AUDREY_IDEA_IDS = ['cj9fxwqh28xa80168a2qsvudp', 'cj9evxdi0tgc50128yx72w9cc'];
+export const FEDULAB_ID = 'cj9fxwqh28xa80168a2qsvudp';
+export const COCO_ID = 'cj9evxdi0tgc50128yx72w9cc';
+
 export const PRIMARY_COLOR = '#e64a19';
+
+export const MAKEATHON_TIMES = {
+  start: new Date('Oct 31 2017, 10:00'),
+  end: new Date('Nov 3 2017, 12:30'),
+};
+export const DEMO_COUNTDOWN = 'Until demos begin!';
 
 // TODO(Audrey): replace with real names
 export const COURSERA_NAMES = [

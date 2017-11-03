@@ -8,6 +8,33 @@ export const UserDetailsQuery = gql`
       picture
       isSuperuser
       emailAddress
+      myIdeas {
+        id
+        slug
+        title
+        tagline
+        coverBackgroundUrl
+        pitchedBy
+        createdBy {
+          name
+          id
+        }
+      }
+      likes {
+        id
+        idea {
+          id
+          slug
+          title
+          tagline
+          coverBackgroundUrl
+          pitchedBy
+          createdBy {
+            name
+            id
+          }
+        }
+      }
     }
   }
 `;
@@ -23,10 +50,12 @@ export const IdeaDetailQuery = gql`
       description
       category
       courseraVideoUrl
+      slidesUrl
+      docsUrl
+      youtubeVideoUrl
       coverBackgroundUrl
       isBackgroundImageDark
       howToContribute
-      slackUrl
       slideUrl
       youtubeVideoUrl
       createdAt
@@ -52,8 +81,8 @@ export const IdeaDetailQuery = gql`
 `;
 
 export const IdeaListQuery = gql`
-  query IdeaListQuery($isPresenting: Boolean) {
-    allIdeas(filter: { isPresenting: $isPresenting }) {
+  query IdeaListQuery($isPresenting: Boolean, $orderBy: IdeaOrderBy) {
+    allIdeas(filter: { isPresenting: $isPresenting }, orderBy: $orderBy, first: 100) {
       id
       title
       tagline
@@ -62,9 +91,7 @@ export const IdeaListQuery = gql`
       slug
       isPresenting
       createdAt
-      contributors {
-        name
-      }
+      contributorsText
       pitchedBy
       createdBy {
         name
@@ -131,6 +158,10 @@ export const IdeaEditQuery = gql`
       category
       courseraVideoUrl
       coverBackgroundUrl
+      youtubeVideoUrl
+      pitchedBy
+      slidesUrl
+      docsUrl
       description
       displayOrder
       estimatedFinishTime
@@ -145,8 +176,6 @@ export const IdeaEditQuery = gql`
       startTime
       tagline
       title
-      youtubeVideoUrl
-      pitchedBy
       createdBy {
         name
         id
@@ -167,6 +196,8 @@ export const CreateIdeaMutation = gql`
     $makeathonId: ID
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
+    $docsUrl: String
+    $slidesUrl: String
     $coverBackgroundUrl: String!
     $isBackgroundImageDark: Boolean!
     $description: String!
@@ -192,6 +223,8 @@ export const CreateIdeaMutation = gql`
       makeathonId: $makeathonId
       category: $category
       courseraVideoUrl: $courseraVideoUrl
+      docsUrl: $docsUrl
+      slidesUrl: $slidesUrl
       coverBackgroundUrl: $coverBackgroundUrl
       isBackgroundImageDark: $isBackgroundImageDark
       description: $description
@@ -229,6 +262,8 @@ export const UpdateIdeaMutation = gql`
     $makeathonId: ID
     $category: [IdeaCategory!]
     $courseraVideoUrl: String
+    $docsUrl: String
+    $slidesUrl: String
     $coverBackgroundUrl: String!
     $isBackgroundImageDark: Boolean!
     $description: String!
@@ -255,6 +290,8 @@ export const UpdateIdeaMutation = gql`
       makeathonId: $makeathonId
       category: $category
       courseraVideoUrl: $courseraVideoUrl
+      docsUrl: $docsUrl
+      slidesUrl: $slidesUrl
       coverBackgroundUrl: $coverBackgroundUrl
       isBackgroundImageDark: $isBackgroundImageDark
       description: $description
@@ -345,6 +382,30 @@ export const IdeaUnlikeMutation = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const CreateUserMutation = gql`
+  mutation(
+    $idToken: String!
+    $name: String!
+    $userName: String!
+    $emailAddress: String!
+    $picture: String!
+  ) {
+    createUser(
+      authProvider: { auth0: { idToken: $idToken } }
+      name: $name
+      userName: $userName
+      emailAddress: $emailAddress
+      picture: $picture
+    ) {
+      id
+      name
+      userName
+      emailAddress
+      picture
     }
   }
 `;

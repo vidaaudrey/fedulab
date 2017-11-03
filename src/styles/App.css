@@ -183,3 +183,7 @@ h6,
 .ant-layout-footer {
   font-size: inherit;
 }
+
+.ant-card-body {
+  height: 100%;
+}
