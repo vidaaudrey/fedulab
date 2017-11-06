@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     backgroundImage: `url(${BANNER_BG})`,
   },
   bannerImage: {
+    maxWidth: 440,
     width: '100%',
     marginBottom: '-5%',
   },
@@ -36,7 +37,7 @@ export default function BannerStatic({ isLoggedout }: Props) {
       justifyContent="center"
       alignItems="center"
     >
-      <Box rootClassName="p-a-1 m-t-3" flexDirection="column" alignItems="center">
+      <Box rootClassName="p-a-1 m-t-2" flexDirection="column" alignItems="center">
         <img src={MAKEATHON_LOGO} {...css(styles.bannerImage)} alt="Makeathon Logo" />
         {isLoggedout && (
           <div className="inverse">
