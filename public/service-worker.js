@@ -1,8 +1,8 @@
 // Set this to true for production
-var doCache = false;
+var doCache = true;
 
 // Name our cache
-var CACHE_NAME = 'my-pwa-cache-v2';
+var CACHE_NAME = 'fedulab-pwa-v1';
 
 // Delete old caches that are not our current one!
 self.addEventListener("activate", event => {

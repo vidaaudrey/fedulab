@@ -34,6 +34,22 @@ const FEATURE_ROADMAP = [
     by: 'Hannah',
   },
   {
+    name: 'Explain Fedulab (requested by Courserian)',
+    isDone: true,
+  },
+  {
+    name: 'Voice recognition for start and stop (requested by Courserian)',
+  },
+  {
+    name: 'MEME voter? (requested by Courserian)',
+  },
+  {
+    name: 'List layout (requested by Courserian)',
+  },
+  {
+    name: 'Video wall (requested by Courserian)',
+  },
+  {
     name: 'Idea Progress Tracking',
     isDone: false,
   },

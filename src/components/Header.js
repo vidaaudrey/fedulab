@@ -50,6 +50,18 @@ function HeaderAlt({
         <Box tag={Link} rootClassName="logo" alignItems="center" to="/" flex={1}>
           <img src={Logo} alt="fedulab" width="144px" />
         </Box>
+        {!isLoggedIn && (
+          <Box>
+            <Box
+              rootClassName="hidden-sm-down"
+              style={{ lineHeight: '68px', borderBottom: 'none' }}
+            >
+              <Link to="/about">
+                <Button icon="info" label="About" primary={pathname === '/about'} />
+              </Link>
+            </Box>
+          </Box>
+        )}
         {isLoggedIn && (
           <Box>
             <Box

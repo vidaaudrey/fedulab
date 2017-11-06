@@ -12,7 +12,16 @@ export default function About({ match }: MatchProps) {
         </div>
         <div className="m-b-2">
           <h3>Our Mission</h3>
-          <p>Help push ideas into reality.</p>
+          <p>Help turn ideas into reality.</p>
+        </div>
+
+        <div className="m-b-2">
+          <h3>{"What's FEDU"}</h3>
+          <p>
+            FEDU stands for <strong>Future Of Education</strong>.{' '}
+            {`That's what we ultimately
+            want to do which is to explore innovative ways to help people learn.`}
+          </p>
         </div>
 
         <div className="m-b-2">

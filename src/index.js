@@ -44,4 +44,5 @@ ReactDOM.render(
   </LocaleProvider>,
   document.getElementById('root'),
 );
+
 registerServiceWorker();

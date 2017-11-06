@@ -1,6 +1,6 @@
 // @flow
 export const HEADER_HEIGHT = 72;
-export const LOGIN_BUTTON_TEXT = 'Register for Demo';
+export const LOGIN_BUTTON_TEXT = 'Login';
 export const USE_WINDOW_LOCATION = true;
 export const ADD_IDEA_TEXT = 'Register for Demo';
 export const ENABLE_QUICK_ADMIN_OP = false;

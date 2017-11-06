@@ -10,6 +10,7 @@ import BANNER_BG from 'src/assets/imgs/banner.jpg';
 import MAKEATHON_LOGO from 'src/assets/makeathon_logos/makeathon.png';
 import { BUTTON_LG_HEIGHT } from 'src/constants/theme';
 import { CLIENT_ID, DOMAIN } from 'src/constants/config';
+import { LOGIN_BUTTON_TEXT } from 'src/constants/appConstants';
 
 const styles = StyleSheet.create({
   banner: {
@@ -43,11 +44,11 @@ export default function BannerStatic({ isLoggedout }: Props) {
           </div>
         )}
         {!isLoggedout && (
-          <Link to="/add-idea">
+          <Link to="/ideas">
             <Button
-              style={{ height: BUTTON_LG_HEIGHT, width: 240 }}
+              style={{ height: BUTTON_LG_HEIGHT, width: 120 }}
               icon="arrow_forward"
-              label="Register For Demo"
+              label={LOGIN_BUTTON_TEXT}
               raised
               primary
             />

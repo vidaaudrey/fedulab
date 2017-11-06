@@ -50,7 +50,11 @@ function App({
   ...rest
 }: Props) {
   if (!isLoggedIn && !loading && !error) {
-    if (location.pathname !== '/' && location.pathname !== '/signup') {
+    if (
+      location.pathname !== '/' &&
+      location.pathname !== '/signup' &&
+      location.pathname !== '/about'
+    ) {
       return <Redirect to={{ pathname: '/' }} />;
     }
   }

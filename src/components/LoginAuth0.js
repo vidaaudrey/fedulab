@@ -25,7 +25,7 @@ function LoginAuth0({ onShowLogin, error }: Props) {
     <Box flexDirection="column" justifyContent="center" alignItems="center">
       <Button
         className="m-b-1"
-        style={{ height: BUTTON_LG_HEIGHT, width: 240 }}
+        style={{ height: BUTTON_LG_HEIGHT, width: 120 }}
         icon="navigate_next"
         label={LOGIN_BUTTON_TEXT}
         raised
