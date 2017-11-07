@@ -63,6 +63,7 @@ export const IdeaDetailQuery = gql`
       pitchedBy
       isPresenting
       isInFinalRound
+      winningCategory
       createdBy {
         name
         id
@@ -101,6 +102,7 @@ export const IdeaListQuery = gql`
       contributorsText
       pitchedBy
       isPresenting
+      winningCategory
       createdBy {
         name
         id
@@ -193,6 +195,7 @@ export const IdeaEditQuery = gql`
       startTime
       tagline
       title
+      winningCategory
       createdBy {
         name
         id
@@ -233,6 +236,7 @@ export const CreateIdeaMutation = gql`
     $title: String!
     $youtubeVideoUrl: String
     $pitchedBy: String
+    $winningCategory: String
   ) {
     createIdea(
       contributorsIds: $contributorsIds
@@ -261,6 +265,7 @@ export const CreateIdeaMutation = gql`
       title: $title
       youtubeVideoUrl: $youtubeVideoUrl
       pitchedBy: $pitchedBy
+      winningCategory: $winningCategory
     ) {
       id
       category
@@ -301,6 +306,7 @@ export const UpdateIdeaMutation = gql`
     $title: String!
     $youtubeVideoUrl: String
     $pitchedBy: String
+    $winningCategory: String
   ) {
     updateIdea(
       id: $id
@@ -330,6 +336,7 @@ export const UpdateIdeaMutation = gql`
       title: $title
       youtubeVideoUrl: $youtubeVideoUrl
       pitchedBy: $pitchedBy
+      winningCategory: $winningCategory
     ) {
       id
       category

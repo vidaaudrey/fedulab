@@ -68,6 +68,7 @@ function IdeaDetail({
     pitchedBy,
     slidesUrl,
     docsUrl,
+    winningCategory,
   } = idea;
 
   return (
@@ -97,7 +98,11 @@ function IdeaDetail({
               <span className="font-italic m-r-1s">
                 <HumanTime time={createdAt} />
               </span>
-              <IdeaTags isPresenting={isPresenting} isInFinalRound={isInFinalRound} />
+              <IdeaTags
+                isPresenting={isPresenting}
+                isInFinalRound={isInFinalRound}
+                winningCategory={winningCategory}
+              />
             </span>
 
             {contributorsText && <span>{contributorsText}</span>}

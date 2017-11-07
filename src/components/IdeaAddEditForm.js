@@ -300,8 +300,16 @@ function IdeaAddEditFormForm({
         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
           <div>
             <Switch defaultChecked={idea.isInFinalRound} onChange={toggleIsInFinalRound} />
-            <span className="p-l-1"> This is in Final Presentations. (SU Only) </span>
+            <span className="p-l-1"> This is in Final Presentations. (Superuser) </span>
           </div>
+        </FormItem>
+      )}
+      {isSuperuser && (
+        <FormItem {...formItemLayout} label="Winning Category (Superuser)" hasFeedback>
+          {getFieldDecorator('winningCategory', {
+            rules: [{ pattern: '.{3,50}', message: '3 - 50 characters' }],
+            initialValue: idea.winningCategory,
+          })(<Input placeholder="Winning Category" />)}
         </FormItem>
       )}
       <FormItem style={{ textAlign: 'right' }} className="p-t-2 m-b-1">
@@ -371,6 +379,7 @@ export const getDefaultIdea = () => ({
   docsUrls: null,
   startTime: '2017-11-01T07:00:00.000Z',
   estimatedFinishTime: '2017-11-03T07:00:00.000Z',
+  winningCategory: null,
 });
 
 const IdeaAddEditFormFormHOC = compose(

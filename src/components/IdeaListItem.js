@@ -43,6 +43,7 @@ export function IdeaListItem({
     contributorsText,
     isPresenting,
     isInFinalRound,
+    winningCategory,
   },
   onCardClick,
   isSuperuser,
@@ -95,7 +96,11 @@ export function IdeaListItem({
             <span className="font-italic m-r-1">
               <HumanTime time={createdAt} />
             </span>
-            <IdeaTags isPresenting={isPresenting} isInFinalRound={isInFinalRound} />
+            <IdeaTags
+              isPresenting={isPresenting}
+              isInFinalRound={isInFinalRound}
+              winningCategory={winningCategory}
+            />
           </Box>
           <TextTruncate
             rootClassName="h5 m-b-0 font-italic"
