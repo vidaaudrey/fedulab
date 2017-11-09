@@ -47,9 +47,9 @@ export default function BannerStatic({ isLoggedout }: Props) {
         {!isLoggedout && (
           <Link to="/ideas">
             <Button
-              style={{ height: BUTTON_LG_HEIGHT, width: 120 }}
+              style={{ height: BUTTON_LG_HEIGHT, width: 240 }}
               icon="arrow_forward"
-              label={LOGIN_BUTTON_TEXT}
+              label="View All Ideas"
               raised
               primary
             />
